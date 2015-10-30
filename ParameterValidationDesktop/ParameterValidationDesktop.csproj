@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NerdyDuck.ParameterValidation</RootNamespace>
     <AssemblyName>NerdyDuck.ParameterValidation</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +46,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -70,14 +73,131 @@
     </ResWFiles> -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ParameterValidationUniversal\Constraint.cs">
+      <Link>Constraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ConstraintAttribute.cs">
+      <Link>ConstraintAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ConstraintConfigurationException.cs">
+      <Link>ConstraintConfigurationException.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ConstraintParser.cs">
+      <Link>ConstraintParser.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ConstraintParserException.cs">
+      <Link>ConstraintParserException.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\AllowedSchemeConstraint.cs">
+      <Link>Constraints\AllowedSchemeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\CharacterSetConstraint.cs">
+      <Link>Constraints\CharacterSetConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\DatabaseConstraint.cs">
+      <Link>Constraints\DatabaseConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\DecimalPlacesConstraint.cs">
+      <Link>Constraints\DecimalPlacesConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\EncryptedConstraint.cs">
+      <Link>Constraints\EncryptedConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\EndpointConstraint.cs">
+      <Link>Constraints\EndpointConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\EnumTypeConstraint.cs">
+      <Link>Constraints\EnumTypeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\EnumValuesConstraint.cs">
+      <Link>Constraints\EnumValuesConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\FileNameConstraint.cs">
+      <Link>Constraints\FileNameConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\HostnameConstraint.cs">
+      <Link>Constraints\HostnameConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\LengthConstraint.cs">
+      <Link>Constraints\LengthConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\LowerCaseConstraint.cs">
+      <Link>Constraints\LowerCaseConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\MaximumLengthConstraint.cs">
+      <Link>Constraints\MaximumLengthConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\MaximumValueConstraint.cs">
+      <Link>Constraints\MaximumValueConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\MinimumLengthConstraint.cs">
+      <Link>Constraints\MinimumLengthConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\MinimumValueConstraint.cs">
+      <Link>Constraints\MinimumValueConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\NullConstraint.cs">
+      <Link>Constraints\NullConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\PasswordConstraint.cs">
+      <Link>Constraints\PasswordConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\PathConstraint.cs">
+      <Link>Constraints\PathConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\RegexConstraint.cs">
+      <Link>Constraints\RegexConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\StepConstraint.cs">
+      <Link>Constraints\StepConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\TypeConstraint.cs">
+      <Link>Constraints\TypeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\UpperCaseConstraint.cs">
+      <Link>Constraints\UpperCaseConstraint.cs</Link>
+    </Compile>
     <Compile Include="..\ParameterValidationUniversal\Errors.cs">
       <Link>Errors.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\InvalidDataTypeException.cs">
+      <Link>InvalidDataTypeException.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ParameterConversionException.cs">
+      <Link>ParameterConversionException.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ParameterConvert.cs">
+      <Link>ParameterConvert.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ParameterDataType.cs">
+      <Link>ParameterDataType.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ParameterValidationErrorEventArgs.cs">
+      <Link>ParameterValidationErrorEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ParameterValidationEventArgs.cs">
+      <Link>ParameterValidationEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ParameterValidationException.cs">
+      <Link>ParameterValidationException.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ParameterValidationResult.cs">
+      <Link>ParameterValidationResult.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ParameterValidator.cs">
+      <Link>ParameterValidator.cs</Link>
     </Compile>
     <Compile Include="..\ParameterValidationUniversal\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="..\ParameterValidationUniversal\Properties\Resources.cs">
       <Link>Properties\Resources.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\UnknownConstraintEventArgs.cs">
+      <Link>UnknownConstraintEventArgs.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -100,4 +220,7 @@
       </EmbeddedResource>
     </ItemGroup>
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)"=="Release" $(SolutionDir)sign_assemblies.bat "$(TargetDir)" $(TargetName) $(TargetExt)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

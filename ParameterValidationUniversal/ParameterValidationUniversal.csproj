@@ -113,25 +113,94 @@
     </None>
     <None Include="ErrorCodes.csv" />
     <None Include="project.json" />
-    <PRIResource Include="Strings\en-US\Resources.resw" />
+    <PRIResource Include="Strings\de-DE\Resources.resw" />
+    <PRIResource Include="Strings\en-US\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constraint.cs" />
+    <Compile Include="ConstraintAttribute.cs" />
+    <Compile Include="ConstraintConfigurationException.cs" />
+    <Compile Include="ConstraintParser.cs" />
+    <Compile Include="ConstraintParserException.cs" />
+    <Compile Include="Constraints\AllowedSchemeConstraint.cs" />
+    <Compile Include="Constraints\CharacterSetConstraint.cs" />
+    <Compile Include="Constraints\DatabaseConstraint.cs" />
+    <Compile Include="Constraints\DecimalPlacesConstraint.cs" />
+    <Compile Include="Constraints\EncryptedConstraint.cs" />
+    <Compile Include="Constraints\EndpointConstraint.cs" />
+    <Compile Include="Constraints\EnumTypeConstraint.cs" />
+    <Compile Include="Constraints\EnumValuesConstraint.cs" />
+    <Compile Include="Constraints\FileNameConstraint.cs" />
+    <Compile Include="Constraints\HostnameConstraint.cs" />
+    <Compile Include="Constraints\LengthConstraint.cs" />
+    <Compile Include="Constraints\LowerCaseConstraint.cs" />
+    <Compile Include="Constraints\MaximumLengthConstraint.cs" />
+    <Compile Include="Constraints\MaximumValueConstraint.cs" />
+    <Compile Include="Constraints\MinimumLengthConstraint.cs" />
+    <Compile Include="Constraints\MinimumValueConstraint.cs" />
+    <Compile Include="Constraints\NullConstraint.cs" />
+    <Compile Include="Constraints\PasswordConstraint.cs" />
+    <Compile Include="Constraints\PathConstraint.cs" />
+    <Compile Include="Constraints\RegexConstraint.cs" />
+    <Compile Include="Constraints\StepConstraint.cs" />
+    <Compile Include="Constraints\TypeConstraint.cs" />
+    <Compile Include="Constraints\UpperCaseConstraint.cs" />
     <Compile Include="Errors.cs" />
+    <Compile Include="InvalidDataTypeException.cs" />
+    <Compile Include="ParameterConversionException.cs" />
+    <Compile Include="ParameterConvert.cs" />
+    <Compile Include="ParameterDataType.cs" />
+    <Compile Include="ParameterValidationErrorEventArgs.cs" />
+    <Compile Include="ParameterValidationEventArgs.cs" />
+    <Compile Include="ParameterValidationException.cs" />
+    <Compile Include="ParameterValidationResult.cs" />
+    <Compile Include="ParameterValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Resources.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="UnknownConstraintEventArgs.cs" />
     <Content Include="Properties\ParameterValidationUniversal.rd.xml" />
+    <Content Include="Properties\Resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Resources.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
     <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TransformOnBuild>true</TransformOnBuild>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\NerdyDuck.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)"=="Release" $(SolutionDir)sign_assemblies.bat "$(TargetDir)" $(TargetName) $(TargetExt)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

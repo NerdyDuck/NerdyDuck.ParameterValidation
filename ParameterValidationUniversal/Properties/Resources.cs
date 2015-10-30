@@ -19,7 +19,7 @@
  * <assembly name="NerdyDuck.ParameterValidation">
  * Validation and serialization of parameter values for .NET
  * </assembly>
- * <file name="Resources.cs" date="2015-09-25">
+ * <file name="Resources.cs" date="2015-10-30">
  * Helper class to access localized string resources.
  * </file>
  ******************************************************************************/
@@ -36,11 +36,667 @@ namespace NerdyDuck.ParameterValidation.Properties
 	{
 		#region String resource properties
 		/// <summary>
-		/// Gets a lozalized string similar to "Temp.".
+		/// Gets a lozalized string similar to "At least one of the specified scheme strings is null or empty or contains only white-space.".
 		/// </summary>
-		internal static string Temp
+		internal static string AllowedSchemeConstraint_CheckSchemes_InvalidScheme
 		{
-			get { return GetResource("Temp"); }
+			get { return GetResource("AllowedSchemeConstraint_CheckSchemes_InvalidScheme"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "The list of allowed schemes is empty.".
+		/// </summary>
+		internal static string AllowedSchemeConstraint_CheckSchemes_NoScheme
+		{
+			get { return GetResource("AllowedSchemeConstraint_CheckSchemes_NoScheme"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "URI scheme '{0}' is not supported. Allowed schemes: {1}.".
+		/// </summary>
+		internal static string AllowedSchemeConstraint_Validate_Failed
+		{
+			get { return GetResource("AllowedSchemeConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "No allowed schemes set.".
+		/// </summary>
+		internal static string AllowedSchemeConstraint_Validate_NotConfigured
+		{
+			get { return GetResource("AllowedSchemeConstraint_Validate_NotConfigured"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "ASCII".
+		/// </summary>
+		internal static string CharacterSetConstraint_CharSet_Ascii
+		{
+			get { return GetResource("CharacterSetConstraint_CharSet_Ascii"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "ISO-646-IRV Odette Subset".
+		/// </summary>
+		internal static string CharacterSetConstraint_CharSet_Iso646Odette
+		{
+			get { return GetResource("CharacterSetConstraint_CharSet_Iso646Odette"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "ISO 8859-1".
+		/// </summary>
+		internal static string CharacterSetConstraint_CharSet_Iso8859
+		{
+			get { return GetResource("CharacterSetConstraint_CharSet_Iso8859"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Windows-1252".
+		/// </summary>
+		internal static string CharacterSetConstraint_CharSet_Windows1252
+		{
+			get { return GetResource("CharacterSetConstraint_CharSet_Windows1252"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Parameter value '{0}' is not a valid supported character set.".
+		/// </summary>
+		internal static string CharacterSetConstraint_SetParameters_InvalidValue
+		{
+			get { return GetResource("CharacterSetConstraint_SetParameters_InvalidValue"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value contains at least one character not defined in the {0} character set.".
+		/// </summary>
+		internal static string CharacterSetConstraint_Validate_Failed
+		{
+			get { return GetResource("CharacterSetConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot configure constraint.".
+		/// </summary>
+		internal static string ConstraintConfigurationException_Message
+		{
+			get { return GetResource("ConstraintConfigurationException_Message"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Data type '{0}' is not supported by constraint '{1}'.".
+		/// </summary>
+		internal static string Constraint_AssertDataType_Failed
+		{
+			get { return GetResource("Constraint_AssertDataType_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Enumeration value has one or more flags that are not defined or not valid for this parameter.".
+		/// </summary>
+		internal static string EnumConstraint_Validate_InvalidFlag
+		{
+			get { return GetResource("EnumConstraint_Validate_InvalidFlag"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value '{0}' is not defined in enumeration, or not valid for this parameter.".
+		/// </summary>
+		internal static string EnumConstraint_Validate_NotDefined
+		{
+			get { return GetResource("EnumConstraint_Validate_NotDefined"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value type '{0}' is not supported by enumeration.".
+		/// </summary>
+		internal static string EnumConstraint_Validate_NotSupported
+		{
+			get { return GetResource("EnumConstraint_Validate_NotSupported"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Enumeration type of value ('{0}') does not match expected parameter enumeration type ('{1}').".
+		/// </summary>
+		internal static string EnumTypeConstraint_Validate_WrongEnum
+		{
+			get { return GetResource("EnumTypeConstraint_Validate_WrongEnum"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Type '{0}' does not match underlying data type {1} of the enumeration and cannot be converted into this type.".
+		/// </summary>
+		internal static string EnumValuesConstraint_InvalidValueType
+		{
+			get { return GetResource("EnumValuesConstraint_InvalidValueType"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Data type is not one of the integer types.".
+		/// </summary>
+		internal static string EnumValuesConstraint_NotInteger
+		{
+			get { return GetResource("EnumValuesConstraint_NotInteger"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value '{0}' is not a valid hexadecimal value.".
+		/// </summary>
+		internal static string EnumValuesConstraint_SetParameters_InvalidHex
+		{
+			get { return GetResource("EnumValuesConstraint_SetParameters_InvalidHex"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Parameter '{0}' is not a valid key/value pair of format 'Name=Value'.".
+		/// </summary>
+		internal static string EnumValuesConstraint_SetParameters_InvalidValue
+		{
+			get { return GetResource("EnumValuesConstraint_SetParameters_InvalidValue"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "First parameter ist not a valid value of the ParameterDataType enumeration.".
+		/// </summary>
+		internal static string EnumValuesConstraint_SetParameters_NotDataType
+		{
+			get { return GetResource("EnumValuesConstraint_SetParameters_NotDataType"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "No enumeration values specified for the {0} constraint.".
+		/// </summary>
+		internal static string EnumValuesConstraint_SetParameters_NoValues
+		{
+			get { return GetResource("EnumValuesConstraint_SetParameters_NoValues"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Constraint is not sufficiently configured.".
+		/// </summary>
+		internal static string EnumValuesConstraint_Validate_NotConfigured
+		{
+			get { return GetResource("EnumValuesConstraint_Validate_NotConfigured"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value contains at least one character not allowed in a file name. Actual value: '{0}'".
+		/// </summary>
+		internal static string FileNameConstraint_Validate_Failed
+		{
+			get { return GetResource("FileNameConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Data type is not supported by the {0} constraint.".
+		/// </summary>
+		internal static string Global_CheckDataType_NotSupported
+		{
+			get { return GetResource("Global_CheckDataType_NotSupported"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Parameter data type '{0}' cannot be converted into alternative comparison data type '{1}'.".
+		/// </summary>
+		internal static string Global_CheckValueType_AltNotConvertible
+		{
+			get { return GetResource("Global_CheckValueType_AltNotConvertible"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Parameter data type '{0}' cannot be converted into expected data type '{1}'.".
+		/// </summary>
+		internal static string Global_CheckValueType_NotConvertible
+		{
+			get { return GetResource("Global_CheckValueType_NotConvertible"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Data type may not be 'None'.".
+		/// </summary>
+		internal static string Global_ParameterDataType_None
+		{
+			get { return GetResource("Global_ParameterDataType_None"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Parameter for constraint {0} is invalid.".
+		/// </summary>
+		internal static string Global_SetParameters_Invalid
+		{
+			get { return GetResource("Global_SetParameters_Invalid"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Invalid number of constraint parameters. Constraint {0} requires {1} parameter(s).".
+		/// </summary>
+		internal static string Global_SetParameters_InvalidCount
+		{
+			get { return GetResource("Global_SetParameters_InvalidCount"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Invalid number of constraint parameters. Constraint {0} requires {1} to {2} parameter(s).".
+		/// </summary>
+		internal static string Global_SetParameters_InvalidCountVariable
+		{
+			get { return GetResource("Global_SetParameters_InvalidCountVariable"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Invalid number of constraint parameters. Constraint {0} requires at least {1} parameter(s).".
+		/// </summary>
+		internal static string Global_SetParameters_InvalidMinCount
+		{
+			get { return GetResource("Global_SetParameters_InvalidMinCount"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value is empty or contains only white-space.".
+		/// </summary>
+		internal static string Global_Validate_StringEmpty
+		{
+			get { return GetResource("Global_Validate_StringEmpty"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Type '{0}' cannot be validated by the {1} constraint.".
+		/// </summary>
+		internal static string Global_Validate_TypeMismatch
+		{
+			get { return GetResource("Global_Validate_TypeMismatch"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot  compare data type '{0}' to data type '{1}', and no conversion to a comparable data type exists.".
+		/// </summary>
+		internal static string Global_Validate_TypeNotConvertible
+		{
+			get { return GetResource("Global_Validate_TypeNotConvertible"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "The data type is not supported.".
+		/// </summary>
+		internal static string InvalidDataTypeException_Message
+		{
+			get { return GetResource("InvalidDataTypeException_Message"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Length may not be negative.".
+		/// </summary>
+		internal static string LengthConstraint_LengthNegative
+		{
+			get { return GetResource("LengthConstraint_LengthNegative"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Length must be {0} byte(s). Current length: {1} byte(s).".
+		/// </summary>
+		internal static string LengthConstraint_Validate_FailedBytes
+		{
+			get { return GetResource("LengthConstraint_Validate_FailedBytes"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Length must be {0} character(s). Current length: {1} character(s).".
+		/// </summary>
+		internal static string LengthConstraint_Validate_FailedString
+		{
+			get { return GetResource("LengthConstraint_Validate_FailedString"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value contains at least one upper-case character.".
+		/// </summary>
+		internal static string LowerCaseConstraint_Validate_Failed
+		{
+			get { return GetResource("LowerCaseConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Maximum length may not be negative.".
+		/// </summary>
+		internal static string MaximumLengthConstraint_LengthNegative
+		{
+			get { return GetResource("MaximumLengthConstraint_LengthNegative"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Length may not be greater than {0} byte(s). Current length: {1} byte(s).".
+		/// </summary>
+		internal static string MaximumLengthConstraint_Validate_FailedBytes
+		{
+			get { return GetResource("MaximumLengthConstraint_Validate_FailedBytes"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Length may not be greater than {0} character(s). Current length: {1} character(s).".
+		/// </summary>
+		internal static string MaximumLengthConstraint_Validate_FailedString
+		{
+			get { return GetResource("MaximumLengthConstraint_Validate_FailedString"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value may not be greater than '{0}'. Actual value: '{1}'.".
+		/// </summary>
+		internal static string MaximumValueConstraint_Validate_Failed
+		{
+			get { return GetResource("MaximumValueConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Minimum length may not be negative.".
+		/// </summary>
+		internal static string MinimumLengthConstraint_LengthNegative
+		{
+			get { return GetResource("MinimumLengthConstraint_LengthNegative"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Length must be at least {0} byte(s). Current length: {1} byte(s).".
+		/// </summary>
+		internal static string MinimumLengthConstraint_Validate_FailedBytes
+		{
+			get { return GetResource("MinimumLengthConstraint_Validate_FailedBytes"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Length must be at least {0} character(s). Current length: {1} character(s).".
+		/// </summary>
+		internal static string MinimumLengthConstraint_Validate_FailedString
+		{
+			get { return GetResource("MinimumLengthConstraint_Validate_FailedString"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value may not be less than '{0}'. Actual value: '{1}'.".
+		/// </summary>
+		internal static string MinimumValueConstraint_Validate_Failed
+		{
+			get { return GetResource("MinimumValueConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Parameter conversion failed.".
+		/// </summary>
+		internal static string ParameterConversionException_Message
+		{
+			get { return GetResource("ParameterConversionException_Message"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot decrypt parameter data.".
+		/// </summary>
+		internal static string ParameterConvert_Decrypt_Failed
+		{
+			get { return GetResource("ParameterConvert_Decrypt_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot encrypt parameter data.".
+		/// </summary>
+		internal static string ParameterConvert_Encrypt_Failed
+		{
+			get { return GetResource("ParameterConvert_Encrypt_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Data type {0} is not supported by parameter validation.".
+		/// </summary>
+		internal static string ParameterConvert_NetToParameterDataType_NoMatch
+		{
+			get { return GetResource("ParameterConvert_NetToParameterDataType_NoMatch"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Parameter data type {0} cannot be matched to a .NET data type.".
+		/// </summary>
+		internal static string ParameterConvert_ParameterToNetDataType_NoMatch
+		{
+			get { return GetResource("ParameterConvert_ParameterToNetDataType_NoMatch"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Parameter validation failed.".
+		/// </summary>
+		internal static string ParameterValidationException_Message
+		{
+			get { return GetResource("ParameterValidationException_Message"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "No validation error.".
+		/// </summary>
+		internal static string ParameterValidationResult_Success
+		{
+			get { return GetResource("ParameterValidationResult_Success"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value contains at least one character not allowed in a file or directory path. Actual value: '{0}'".
+		/// </summary>
+		internal static string PathConstraint_Validate_FailedChars
+		{
+			get { return GetResource("PathConstraint_Validate_FailedChars"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "The options are not valid.".
+		/// </summary>
+		internal static string RegexConstraint_OptionsInvalid
+		{
+			get { return GetResource("RegexConstraint_OptionsInvalid"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "The regular expression pattern is not valid.".
+		/// </summary>
+		internal static string RegexConstraint_PatternInvalid
+		{
+			get { return GetResource("RegexConstraint_PatternInvalid"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value does not match regular expression '{0}'.".
+		/// </summary>
+		internal static string RegexConstraint_Validate_Failed
+		{
+			get { return GetResource("RegexConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value contains at least one lower-case character.".
+		/// </summary>
+		internal static string UpperCaseConstraint_Validate_Failed
+		{
+			get { return GetResource("UpperCaseConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot deserialize XML into an object of type '{0}'.".
+		/// </summary>
+		internal static string ParameterConvert_FromXml_Failed
+		{
+			get { return GetResource("ParameterConvert_FromXml_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot find a type constraint to determine the target data type.".
+		/// </summary>
+		internal static string ParameterConvert_ToDataType_NoTypeConstraint
+		{
+			get { return GetResource("ParameterConvert_ToDataType_NoTypeConstraint"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot resolve type '{0}' from type constraint.".
+		/// </summary>
+		internal static string ParameterConvert_ToDataType_ResolveFailed
+		{
+			get { return GetResource("ParameterConvert_ToDataType_ResolveFailed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot convert string '{0}' to enumeration of type '{1}'.".
+		/// </summary>
+		internal static string ParameterConvert_ToEnumeration_Failed
+		{
+			get { return GetResource("ParameterConvert_ToEnumeration_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Type '{0}' is not an enumeration.".
+		/// </summary>
+		internal static string ParameterConvert_ToEnumeration_NotEnum
+		{
+			get { return GetResource("ParameterConvert_ToEnumeration_NotEnum"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Object data type '{0}' does not match parameter data type '{1}'.".
+		/// </summary>
+		internal static string ParameterConvert_ToString_TypeMismatch
+		{
+			get { return GetResource("ParameterConvert_ToString_TypeMismatch"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot serialize parameter of type '{0}'.".
+		/// </summary>
+		internal static string ParameterConvert_ToXml_Failed
+		{
+			get { return GetResource("ParameterConvert_ToXml_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Data type '{0}' is not supported.".
+		/// </summary>
+		internal static string ParameterConvert_To_DataTypeNotSupported
+		{
+			get { return GetResource("ParameterConvert_To_DataTypeNotSupported"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot convert string '{0}' to data type '{1}'.".
+		/// </summary>
+		internal static string ParameterConvert_To_Failed
+		{
+			get { return GetResource("ParameterConvert_To_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Cannot parse constraint string.".
+		/// </summary>
+		internal static string ConstraintParserException_Message
+		{
+			get { return GetResource("ConstraintParserException_Message"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Constraint string contains an empty constraint.".
+		/// </summary>
+		internal static string ConstraintParser_Parse_EmptyConstraint
+		{
+			get { return GetResource("ConstraintParser_Parse_EmptyConstraint"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "At least one argument of constraint [{0}] is invalid.".
+		/// </summary>
+		internal static string ConstraintParser_Parse_ParametersInvalid
+		{
+			get { return GetResource("ConstraintParser_Parse_ParametersInvalid"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Invalid data outside of constraints at position {0}.".
+		/// </summary>
+		internal static string ConstraintParser_SplitConstraints_InvalidContent
+		{
+			get { return GetResource("ConstraintParser_SplitConstraints_InvalidContent"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Invalid '[' at position {0}.".
+		/// </summary>
+		internal static string ConstraintParser_SplitConstraints_InvalidLBracket
+		{
+			get { return GetResource("ConstraintParser_SplitConstraints_InvalidLBracket"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Invalid ']' at position {0}.".
+		/// </summary>
+		internal static string ConstraintParser_SplitConstraints_InvalidRBracket
+		{
+			get { return GetResource("ConstraintParser_SplitConstraints_InvalidRBracket"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Constraint has no name, only parameters '{0}'.".
+		/// </summary>
+		internal static string ConstraintParser_SplitConstraint_NoName
+		{
+			get { return GetResource("ConstraintParser_SplitConstraint_NoName"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "'{0}' is not a valid IP endpoint, host name is invalid.".
+		/// </summary>
+		internal static string EndpointConstraint_Validate_Failed
+		{
+			get { return GetResource("EndpointConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "'{0}' is not a valid IP endpoint, port number is invalid.".
+		/// </summary>
+		internal static string EndpointConstraint_Validate_FailedPort
+		{
+			get { return GetResource("EndpointConstraint_Validate_FailedPort"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "'{0}' is not a valid host name or IP address.".
+		/// </summary>
+		internal static string HostnameConstraint_Validate_Failed
+		{
+			get { return GetResource("HostnameConstraint_Validate_Failed"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Constraint '{0}' is not defined for data type '{1}'.".
+		/// </summary>
+		internal static string ConstraintParser_HandleUnknownConstraint_NotDefined
+		{
+			get { return GetResource("ConstraintParser_HandleUnknownConstraint_NotDefined"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Unknown constraint name '{0}'.".
+		/// </summary>
+		internal static string ConstraintParser_HandleUnknownConstraint_UnknownName
+		{
+			get { return GetResource("ConstraintParser_HandleUnknownConstraint_UnknownName"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Missing ')' at end of constraint '{0}'.".
+		/// </summary>
+		internal static string ConstraintParser_SplitConstraint_MissingRBracket
+		{
+			get { return GetResource("ConstraintParser_SplitConstraint_MissingRBracket"); }
+		}
+
+		/// <summary>
+		/// Gets a lozalized string similar to "Value may not be null.".
+		/// </summary>
+		internal static string ParameterValidator_Validate_ValueNull
+		{
+			get { return GetResource("ParameterValidator_Validate_ValueNull"); }
 		}
 		#endregion
 
@@ -77,13 +733,13 @@ namespace NerdyDuck.ParameterValidation.Properties
 		}
 		#endregion
 
-		#region Private methods
+		#region Methods
 		/// <summary>
 		/// Retrieves a string resource using the resource map.
 		/// </summary>
 		/// <param name="name">The name of the string resource.</param>
 		/// <returns>A localized string.</returns>
-		private static string GetResource(string name)
+		internal static string GetResource(string name)
 		{
 			Windows.ApplicationModel.Resources.Core.ResourceContext context = Context;
 			if (context == null)
@@ -95,7 +751,7 @@ namespace NerdyDuck.ParameterValidation.Properties
 
 			if (resourceCandidate == null)
 			{
-				throw new ArgumentOutOfRangeException("name");
+				throw new ArgumentOutOfRangeException(nameof(name));
 			}
 
 			return resourceCandidate.ValueAsString;
@@ -138,13 +794,13 @@ namespace NerdyDuck.ParameterValidation.Properties
 		}
 		#endregion
 
-		#region Private methods
+		#region Methods
 		/// <summary>
 		/// Retrieves a string resource using the resource manager.
 		/// </summary>
 		/// <param name="name">The name of the string resource.</param>
 		/// <returns>A localized string.</returns>
-		private static string GetResource(string name)
+		internal static string GetResource(string name)
 		{
 			return ResourceManager.GetString(name, mResourceCulture);
 		}
