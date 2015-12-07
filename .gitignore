@@ -71,7 +71,8 @@ publish/
 *.publishproj
 
 # Sandcastle Help file builder
-# TODO
+*.shfbproj_*
+**/Help/
 
 
 # NuGet Packages
@@ -128,6 +129,5 @@ $RECYCLE.BIN/
 ###################
 ## Project specific
 ###################
-ParameterValidationNuGet/NerdyDuck.ParameterValidation.*.nupkg
-ParameterValidationDoc/Help/
+**/NerdyDuck.ParameterValidation.*.nupkg
 NuGet.exe

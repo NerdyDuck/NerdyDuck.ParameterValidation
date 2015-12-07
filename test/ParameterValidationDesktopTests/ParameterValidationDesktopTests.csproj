@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C9AE0929-EA3F-4652-9550-7F3F5F697F24}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NerdyDuck.Tests.ParameterValidation</RootNamespace>
+    <AssemblyName>NerdyDuck.Tests.ParameterValidation</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINDOWS_DESKTOP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS_DESKTOP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\NerdyDuck.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NerdyDuck.CodedExceptions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=d767295c0faf356a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NerdyDuck.CodedExceptions.1.1.1\lib\net46\NerdyDuck.CodedExceptions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <None Include="..\..\NerdyDuck.snk">
+      <Link>NerdyDuck.snk</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ParameterValidationDesktop\ParameterValidationDesktop.csproj">
+      <Project>{5bc20e49-5b5c-4293-9abc-cef1884773fd}</Project>
+      <Name>ParameterValidationDesktop</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\ParameterValidationUniversalTests\Constants.cs">
+      <Link>Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\CustomAssert.cs">
+      <Link>CustomAssert.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\DummyConstraint.cs">
+      <Link>DummyConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ConstraintAttributeTest.cs">
+      <Link>Tests\ConstraintAttributeTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ConstraintConfigurationExceptionTest.cs">
+      <Link>Tests\ConstraintConfigurationExceptionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ConstraintParserExceptionTest.cs">
+      <Link>Tests\ConstraintParserExceptionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ConstraintParserTest.cs">
+      <Link>Tests\ConstraintParserTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\AllowedSchemeConstraintTest.cs">
+      <Link>Tests\Constraints\AllowedSchemeConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\CharacterSetConstraintTest.cs">
+      <Link>Tests\Constraints\CharacterSetConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\DatabaseConstraintTest.cs">
+      <Link>Tests\Constraints\DatabaseConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\DecimalPlacesConstraintTest.cs">
+      <Link>Tests\Constraints\DecimalPlacesConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\EncryptedConstraintTest.cs">
+      <Link>Tests\Constraints\EncryptedConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\EndpointConstraintTest.cs">
+      <Link>Tests\Constraints\EndpointConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\EnumTypeConstraintTest.cs">
+      <Link>Tests\Constraints\EnumTypeConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\EnumValuesConstraintTest.cs">
+      <Link>Tests\Constraints\EnumValuesConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\FileNameConstraintTest.cs">
+      <Link>Tests\Constraints\FileNameConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\HostNameConstraintTest.cs">
+      <Link>Tests\Constraints\HostNameConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\LengthConstraintTest.cs">
+      <Link>Tests\Constraints\LengthConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\LowercaseConstraintTest.cs">
+      <Link>Tests\Constraints\LowercaseConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\MaximumLengthConstraintTest.cs">
+      <Link>Tests\Constraints\MaximumLengthConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\MaximumValueConstraintTest.cs">
+      <Link>Tests\Constraints\MaximumValueConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\MinimumLengthConstraintTest.cs">
+      <Link>Tests\Constraints\MinimumLengthConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\MinimumValueConstraintTest.cs">
+      <Link>Tests\Constraints\MinimumValueConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\NullConstraintTest.cs">
+      <Link>Tests\Constraints\NullConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\PasswordConstraintTest.cs">
+      <Link>Tests\Constraints\PasswordConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\PathConstraintTest.cs">
+      <Link>Tests\Constraints\PathConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\RegexConstraintTest.cs">
+      <Link>Tests\Constraints\RegexConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\StepConstraintTest.cs">
+      <Link>Tests\Constraints\StepConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\TypeConstraintTest.cs">
+      <Link>Tests\Constraints\TypeConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\UppercaseConstraintTest.cs">
+      <Link>Tests\Constraints\UppercaseConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ConstraintTest.cs">
+      <Link>Tests\ConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ErrorsTest.cs">
+      <Link>Tests\ErrorsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\EventArgsTest.cs">
+      <Link>Tests\EventArgsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\InvalidDataTypeExceptionTest.cs">
+      <Link>Tests\InvalidDataTypeExceptionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ParameterConversionExceptionTest.cs">
+      <Link>Tests\ParameterConversionExceptionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ParameterConvertTest.cs">
+      <Link>Tests\ParameterConvertTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ParameterValidationExceptionTest.cs">
+      <Link>Tests\ParameterValidationExceptionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ParameterValidationResultTest.cs">
+      <Link>Tests\ParameterValidationResultTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\ParameterValidatorTest.cs">
+      <Link>Tests\ParameterValidatorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\TypeExtensionsTest.cs">
+      <Link>Tests\TypeExtensionsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\XmlSerializableObject.cs">
+      <Link>XmlSerializableObject.cs</Link>
+    </Compile>
+    <Compile Include="SerializationHelper.cs" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

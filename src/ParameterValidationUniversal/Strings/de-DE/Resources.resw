@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllowedSchemeConstraint_CheckSchemes_InvalidScheme" xml:space="preserve">
+    <value>Mindestens eines der angegebenen Schemas ist null, leer oder enthält nur nicht-druckbare Zeichen.</value>
+  </data>
+  <data name="AllowedSchemeConstraint_CheckSchemes_NoScheme" xml:space="preserve">
+    <value>Die Liste der erlaubten Schemas ist leer.</value>
+  </data>
+  <data name="AllowedSchemeConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0}: URI-Schema '{1}' wird nicht unterstützt. Erlaubte Schemas: {2}.</value>
+  </data>
+  <data name="AllowedSchemeConstraint_Validate_NotConfigured" xml:space="preserve">
+    <value>Keine erlaubten Schemas angegeben.</value>
+  </data>
+  <data name="CharacterSetConstraint_CharSet_Ascii" xml:space="preserve">
+    <value>ASCII</value>
+  </data>
+  <data name="CharacterSetConstraint_CharSet_Iso646Odette" xml:space="preserve">
+    <value>ISO-646-IRV Odette Subset</value>
+  </data>
+  <data name="CharacterSetConstraint_CharSet_Iso8859" xml:space="preserve">
+    <value>ISO 8859-1</value>
+  </data>
+  <data name="CharacterSetConstraint_CharSet_Windows1252" xml:space="preserve">
+    <value>Windows-1252</value>
+  </data>
+  <data name="CharacterSetConstraint_SetParameters_InvalidValue" xml:space="preserve">
+    <value>Parameter-Wert '{0}' ist kein gültiger, unterstützter Zeichensatz.</value>
+  </data>
+  <data name="CharacterSetConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0} enthält mindestens ein Zeichen, das nicht im Zeichensatz {1} definiert ist.</value>
+  </data>
+  <data name="ConstraintConfigurationException_Message" xml:space="preserve">
+    <value>Das Constraint kann nicht konfiguriert werden.</value>
+  </data>
+  <data name="ConstraintParserException_Message" xml:space="preserve">
+    <value>Constraint-Zeichenkette kann nicht eingelesen werden.</value>
+  </data>
+  <data name="ConstraintParser_HandleUnknownConstraint_NotDefined" xml:space="preserve">
+    <value>Constraint '{0}' ist für den Daten-Typen '{1}' nicht definiert.</value>
+  </data>
+  <data name="ConstraintParser_HandleUnknownConstraint_UnknownName" xml:space="preserve">
+    <value>Unbekannter Constraint-Name '{0}'.</value>
+  </data>
+  <data name="ConstraintParser_Parse_EmptyConstraint" xml:space="preserve">
+    <value>Die Constraint-Zeichenkette enthält ein leeres Constraint.</value>
+  </data>
+  <data name="ConstraintParser_Parse_ParametersInvalid" xml:space="preserve">
+    <value>Mindestens ein parameter von Constraint [{0}] ist ungültig.</value>
+  </data>
+  <data name="ConstraintParser_Parse_InvalidContent" xml:space="preserve">
+    <value>Ungültige Daten ausserhalb von Constraints in Position {0}.</value>
+  </data>
+  <data name="ConstraintParser_Parse_InvalidCharInName" xml:space="preserve">
+    <value>Ungültiges Zeichen '{0}' im Constraint-Namen.</value>
+  </data>
+  <data name="ConstraintParser_Parse_InvalidCharInParameters" xml:space="preserve">
+    <value>Ungültiges Zeichen '{0}' innerhalb der Parameter.</value>
+  </data>
+  <data name="ConstraintParser_Parse_UnmaskedChar" xml:space="preserve">
+    <value>Unmaskiertes Zeichen '{0}' in Parameter.</value>
+  </data>
+  <data name="ConstraintParser_Parse_InvalidCharAfterParam" xml:space="preserve">
+    <value>Ungültiges Zeichen '{0}' nach Parameter-Wert.</value>
+  </data>
+  <data name="EndpointConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0}: '{1}' ist kein gültiger IP-Endpunkt, der Rechnername ist ungültig.</value>
+  </data>
+  <data name="EndpointConstraint_Validate_FailedPort" xml:space="preserve">
+    <value>{0}: '{1}' ist kein gültiger IP-Endpunkt, die Port-Nummer ist ungültig.</value>
+  </data>
+  <data name="EnumConstraint_Validate_InvalidFlag" xml:space="preserve">
+    <value>{0} hat einen oder mehrere Flags, die nicht definiert oder für diesen Parameter nicht gültig sind.</value>
+  </data>
+  <data name="EnumConstraint_Validate_NotDefined" xml:space="preserve">
+    <value>{0}: Wert '{1}' ist in der Enumeration nicht definiert, oder für diesen Parameter nicht gültig.</value>
+  </data>
+  <data name="EnumConstraint_Validate_NotSupported" xml:space="preserve">
+    <value>{0}: Wert-Typ '{1}' wird von der Enumeration nicht unterstützt.</value>
+  </data>
+  <data name="EnumTypeConstraint_Validate_WrongEnum" xml:space="preserve">
+    <value>Der Enumerations-Typ von {0} ('{1}') entspricht nicht dem erwarteten Enumerations-Typen ('{2}').</value>
+  </data>
+  <data name="EnumValuesConstraint_InvalidValueType" xml:space="preserve">
+    <value>Typ '{0}' entspricht nicht dem unterliegenden Datentypen {1} der Enumeration und kann nicht in diesen konvertiert werden.</value>
+  </data>
+  <data name="EnumValuesConstraint_NotInteger" xml:space="preserve">
+    <value>Datentyp ist keiner der Integer-Typen.</value>
+  </data>
+  <data name="EnumValuesConstraint_SetParameters_InvalidHex" xml:space="preserve">
+    <value>Wert '{0}' ist kein gültiger hexadezimaler Wert.</value>
+  </data>
+  <data name="EnumValuesConstraint_SetParameters_InvalidValue" xml:space="preserve">
+    <value>Parameter '{0}' ist kein gültiges Schlüssel/Wert-Paar im Format 'Name=Value'.</value>
+  </data>
+  <data name="EnumValuesConstraint_SetParameters_NotDataType" xml:space="preserve">
+    <value>Der erste Parameter ist kein gültiger Wert der ParameterDataType enumeration.</value>
+  </data>
+  <data name="EnumValuesConstraint_SetParameters_NoValues" xml:space="preserve">
+    <value>Für das {0}-Constraint wurden keine gültigen Enumerations-Werte definiert.</value>
+  </data>
+  <data name="EnumValuesConstraint_Validate_NotConfigured" xml:space="preserve">
+    <value>Das Constraint ist nicht ausreichend konfiguriert.</value>
+  </data>
+  <data name="FileNameConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0} enthält mindestens ein Zeichen, das nicht in einem Datei-Namen erlaubt ist. Aktueller Wert: '{1}'</value>
+  </data>
+  <data name="Global_CheckDataType_NotSupported" xml:space="preserve">
+    <value>Der Datentyp wird von Constraint {0} nicht unterstützt.</value>
+  </data>
+  <data name="Global_CheckValueType_AltNotConvertible" xml:space="preserve">
+    <value>Parameter-Datentyp '{0}' kann nicht in den alternativen Vergleichs-Datentyp '{1}' konvertiert werden.</value>
+  </data>
+  <data name="Global_CheckValueType_NotConvertible" xml:space="preserve">
+    <value>Parameter-Datentyp '{0}' kann nicht in den erwareteten Datentyp '{1}' konvertiert werden.</value>
+  </data>
+  <data name="Global_ParameterDataType_None" xml:space="preserve">
+    <value>Datentyp darf nicht 'None' sein.</value>
+  </data>
+  <data name="Global_SetParameters_Invalid" xml:space="preserve">
+    <value>Die Parameter für Constraint {0} sind ungültig.</value>
+  </data>
+  <data name="Global_SetParameters_InvalidCount" xml:space="preserve">
+    <value>Ungültige Anzahl von Constraint-Parametern. Constraint {0} benötigt {1} Parameter.</value>
+  </data>
+  <data name="Global_SetParameters_InvalidCountVariable" xml:space="preserve">
+    <value>Ungültige Anzahl von Constraint-Parametern. Constraint {0} benötigt {1} bis {2} Parameter.</value>
+  </data>
+  <data name="Global_SetParameters_InvalidMinCount" xml:space="preserve">
+    <value>Ungültige Anzahl von Constraint-Parametern. Constraint {0} benötigt mindestens {1} Parameter.</value>
+  </data>
+  <data name="Global_Validate_StringEmpty" xml:space="preserve">
+    <value>{0} ist leer oder enthält nur nicht-druckbare Zeichen.</value>
+  </data>
+  <data name="Global_Validate_TypeMismatch" xml:space="preserve">
+    <value>Datentyp '{0}' kann mit Constraint {1} nicht validiert werden.</value>
+  </data>
+  <data name="Global_Validate_TypeNotConvertible" xml:space="preserve">
+    <value>Datentyp '{0}' kann nicht mit Datentyp '{1}' verglichen werden, und es existiert keine Konvertierung in einen vergleichbaren Datentyp.</value>
+  </data>
+  <data name="HostNameConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0} ist kein gültiger Rechnername oder IP-Adresse. Aktueller Wert: '{1}'</value>
+  </data>
+  <data name="InvalidDataTypeException_Message" xml:space="preserve">
+    <value>Datentyp '{1}' wird nicht von Constraint '{0}' unterstützt.</value>
+  </data>
+  <data name="InvalidDataTypeException_MessageDefault" xml:space="preserve">
+    <value>Der Datentyp wird nicht unterstützt.</value>
+  </data>
+  <data name="LengthConstraint_LengthNegative" xml:space="preserve">
+    <value>Die Länge darf nicht negativ sein.</value>
+  </data>
+  <data name="LengthConstraint_Validate_FailedBytes" xml:space="preserve">
+    <value>{0} muss {1} Byte(s) lang sein. Aktuelle Länge: {2} Byte(s).</value>
+  </data>
+  <data name="LengthConstraint_Validate_FailedString" xml:space="preserve">
+    <value>{0} muss {1} Zeichen lang sein. Aktuelle Länge: {2} Zeichen.</value>
+  </data>
+  <data name="LowercaseConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0} enthält mindestens einen Grossbuchstaben.</value>
+  </data>
+  <data name="MaximumLengthConstraint_LengthNegative" xml:space="preserve">
+    <value>Die maximale Länge darf nicht negativ sein.</value>
+  </data>
+  <data name="MaximumLengthConstraint_Validate_FailedBytes" xml:space="preserve">
+    <value>{0} darf nicht länger als {1} Byte(s) sein. Aktuelle Länge: {2} Byte(s).</value>
+  </data>
+  <data name="MaximumLengthConstraint_Validate_FailedString" xml:space="preserve">
+    <value>{0} darf nicht länger als {1} Zeichen sein. Aktuelle Länge: {2} Zeichen.</value>
+  </data>
+  <data name="MaximumValueConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0} darf nicht grösser als '{1}' sein. Aktueller Wert: '{2}'.</value>
+  </data>
+  <data name="MinimumLengthConstraint_LengthNegative" xml:space="preserve">
+    <value>Die minimale Länge darf nicht negativ sein.</value>
+  </data>
+  <data name="MinimumLengthConstraint_Validate_FailedBytes" xml:space="preserve">
+    <value>{0} muss mindestens {1} Byte(s) lang sein. Aktuelle Länge: {2} Byte(s).</value>
+  </data>
+  <data name="MinimumLengthConstraint_Validate_FailedString" xml:space="preserve">
+    <value>{0} muss mindestens {1} Zeichen lang sein. Aktuelle Länge: {2} character(s).</value>
+  </data>
+  <data name="MinimumValueConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0} darf nicht kleiner als '{1}' sein. Aktueller Wert: '{2}'.</value>
+  </data>
+  <data name="ParameterConversionException_Message" xml:space="preserve">
+    <value>Die Konvertierung des Parameters ist fehlgeschlagen.</value>
+  </data>
+  <data name="ParameterConvert_Decrypt_Failed" xml:space="preserve">
+    <value>Die Parameter-Daten konnten nicht entschlüsselt werden.</value>
+  </data>
+  <data name="ParameterConvert_Encrypt_Failed" xml:space="preserve">
+    <value>Die Parameter-Daten konnten nicht verschlüsselt werden.</value>
+  </data>
+  <data name="ParameterConvert_FromXml_Failed" xml:space="preserve">
+    <value>Die XML-Daten konnten nicht in ein Object vom Typ '{0}' deserialisiert werden.</value>
+  </data>
+  <data name="ParameterConvert_NetToParameterDataType_NoMatch" xml:space="preserve">
+    <value>Der Datentyp {0} wird von der Parameter-Validierung nicht unterstützt.</value>
+  </data>
+  <data name="ParameterConvert_ParameterToNetDataType_NoMatch" xml:space="preserve">
+    <value>Der Parameter-Datentyp {0} kann keinem .NET-Datentypen zugeordnet werden.</value>
+  </data>
+  <data name="ParameterConvert_ToDataType_NoTypeConstraint" xml:space="preserve">
+    <value>Es wurde kein Constraint vom Typ 'Type' gefunden, um den Datentyp bestimmt werden konnte.</value>
+  </data>
+  <data name="ParameterConvert_ToDataType_ResolveFailed" xml:space="preserve">
+    <value>Der Datentyp '{0}' aus dem 'Type'-Constraint konnte nicht aufgelöst werden.</value>
+  </data>
+  <data name="ParameterConvert_ToEnumeration_Failed" xml:space="preserve">
+    <value>Die Zeichenkette '{0}' konnte nicht in einen Enumerations-Wert vom Typ '{1}' konvertiert werden.</value>
+  </data>
+  <data name="ParameterConvert_ToEnumeration_NotEnum" xml:space="preserve">
+    <value>Typ '{0}' ist kein Enumeration.</value>
+  </data>
+  <data name="ParameterConvert_ToString_TypeMismatch" xml:space="preserve">
+    <value>Object-Datentyp '{0}' entspricht nicht dem Parameter-Datentypen '{1}'.</value>
+  </data>
+  <data name="ParameterConvert_ToXml_Failed" xml:space="preserve">
+    <value>Parameter vom Typ '{0}' konnte nicht serialisiert werden.</value>
+  </data>
+  <data name="ParameterConvert_To_DataTypeNotSupported" xml:space="preserve">
+    <value>Der Datentyp '{0}' wird nicht unterstützt.</value>
+  </data>
+  <data name="ParameterConvert_To_Failed" xml:space="preserve">
+    <value>Die Zeichenkette '{0}' kann nicht in den Datentyp '{1}' konvertiert werden.</value>
+  </data>
+  <data name="ParameterValidationException_Message" xml:space="preserve">
+    <value>Die Parameter-Validierung ist fehlgeschlagen.</value>
+  </data>
+  <data name="ParameterValidationResult_Success" xml:space="preserve">
+    <value>Kein Validierungs-Fehler.</value>
+  </data>
+  <data name="ParameterValidator_Validate_ValueNull" xml:space="preserve">
+    <value>{0} darf nicht null sein.</value>
+  </data>
+  <data name="PathConstraint_Validate_FailedChars" xml:space="preserve">
+    <value>{0} enthält mindestens ein Zeichen, das nicht in einem Datei- oder Verzeichnispfad vorkommen darf. Aktueller Wert: '{1}'</value>
+  </data>
+  <data name="RegexConstraint_OptionsInvalid" xml:space="preserve">
+    <value>Die Optionen sind ungültig.</value>
+  </data>
+  <data name="RegexConstraint_PatternInvalid" xml:space="preserve">
+    <value>Der reguläre Ausdruck ist ungültig.</value>
+  </data>
+  <data name="RegexConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0} entspricht nicht dem regulären Audruck '{1}'.</value>
+  </data>
+  <data name="UppercaseConstraint_Validate_Failed" xml:space="preserve">
+    <value>{0} enthält mindestens einen Kleinbuchstaben.</value>
+  </data>
+  <data name="ConstraintParser_Parse_ConstraintIncomplete" xml:space="preserve">
+    <value>Letztes Constraint is unvollständig.</value>
+  </data>
+  <data name="ConstraintParser_Parse_InvalidCharAfterParams" xml:space="preserve">
+    <value>Ungültiges Zeichen '{0}' nach den Parametern.</value>
+  </data>
+</root>

@@ -1,29 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationDesktop", "ParameterValidationDesktop\ParameterValidationDesktop.csproj", "{5BC20E49-5B5C-4293-9ABC-CEF1884773FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationDesktop", "src\ParameterValidationDesktop\ParameterValidationDesktop.csproj", "{5BC20E49-5B5C-4293-9ABC-CEF1884773FD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3136C9AF-11FA-461D-9943-13D259DE3FC9} = {3136C9AF-11FA-461D-9943-13D259DE3FC9}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationDesktopTests", "ParameterValidationDesktopTests\ParameterValidationDesktopTests.csproj", "{C9AE0929-EA3F-4652-9550-7F3F5F697F24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationDesktopTests", "test\ParameterValidationDesktopTests\ParameterValidationDesktopTests.csproj", "{C9AE0929-EA3F-4652-9550-7F3F5F697F24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationUniversal", "ParameterValidationUniversal\ParameterValidationUniversal.csproj", "{3136C9AF-11FA-461D-9943-13D259DE3FC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationUniversal", "src\ParameterValidationUniversal\ParameterValidationUniversal.csproj", "{3136C9AF-11FA-461D-9943-13D259DE3FC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationUniversalTests", "ParameterValidationUniversalTests\ParameterValidationUniversalTests.csproj", "{A59067F2-06A7-40B9-8594-50112E28F020}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationUniversalTests", "test\ParameterValidationUniversalTests\ParameterValidationUniversalTests.csproj", "{A59067F2-06A7-40B9-8594-50112E28F020}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5E7D0FEE-F9B4-4F1B-B32B-2E1749B22353}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
-		make_certs.bat = make_certs.bat
-		MakeReleaseZip.ps1 = MakeReleaseZip.ps1
+		tools\make_certs.bat = tools\make_certs.bat
+		tools\MakeReleaseZip.ps1 = tools\MakeReleaseZip.ps1
 		NerdyDuck.ParameterValidation-50x50.png = NerdyDuck.ParameterValidation-50x50.png
 		NerdyDuck.snk = NerdyDuck.snk
 		README.md = README.md
-		sign_assemblies.bat = sign_assemblies.bat
+		tools\run_mkrelease.bat = tools\run_mkrelease.bat
+		tools\sign_assemblies.bat = tools\sign_assemblies.bat
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{70061BA5-5173-48A6-8D0C-098142608982}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{47976FAC-8B20-46BD-8A00-0818AF80F9C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,7 +67,6 @@ Global
 		{C9AE0929-EA3F-4652-9550-7F3F5F697F24}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{C9AE0929-EA3F-4652-9550-7F3F5F697F24}.Debug|x86.Build.0 = Debug|Any CPU
 		{C9AE0929-EA3F-4652-9550-7F3F5F697F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9AE0929-EA3F-4652-9550-7F3F5F697F24}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9AE0929-EA3F-4652-9550-7F3F5F697F24}.Release|ARM.ActiveCfg = Release|Any CPU
 		{C9AE0929-EA3F-4652-9550-7F3F5F697F24}.Release|ARM.Build.0 = Release|Any CPU
 		{C9AE0929-EA3F-4652-9550-7F3F5F697F24}.Release|x64.ActiveCfg = Release|Any CPU
@@ -109,5 +113,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5BC20E49-5B5C-4293-9ABC-CEF1884773FD} = {70061BA5-5173-48A6-8D0C-098142608982}
+		{C9AE0929-EA3F-4652-9550-7F3F5F697F24} = {47976FAC-8B20-46BD-8A00-0818AF80F9C3}
+		{3136C9AF-11FA-461D-9943-13D259DE3FC9} = {70061BA5-5173-48A6-8D0C-098142608982}
+		{A59067F2-06A7-40B9-8594-50112E28F020} = {47976FAC-8B20-46BD-8A00-0818AF80F9C3}
 	EndGlobalSection
 EndGlobal

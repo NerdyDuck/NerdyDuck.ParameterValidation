@@ -1,0 +1,168 @@
+﻿Id;Class.Method;Description
+0x0001;TypeExtensions.ToStringAssemblyNameOnly;type is null.
+0x0002;Constraint.ctor;name is null or empty.
+0x0003;Constraint.Validate;dataType is None.
+0x0004;Constraint.SetParameters;dataType is None.
+0x0005;Constraint.SetParameters;parameters is null.
+0x0006;Constraint.AssertDataType;Data Type is not supported by constraint.
+0x0007;FileNameConstraint.Validate;value is empty or whitespace.
+0x0008;FileNameConstraint.Validate;value contains invalid characters.
+0x0009;PathConstraint.Validate;value is empty or whitespace.
+0x000a;PathConstraint.Validate;value contains invalid characters.
+0x000b;LowerCaseConstraint.Validate;value contains at least one upper-case character.
+0x000c;UpperCaseConstraint.Validate;value contains at least one lower-case character.
+0x000d;AllowedSchemeConstraint.ctor(string);scheme is null or empty.
+0x000e;AllowedSchemeConstraint.ctor(IEnumerable<string>);schemes is null.
+0x000f;AllowedSchemeConstraint.CheckSchemes;No schemes provided.
+0x0010;AllowedSchemeConstraint.CheckSchemes;At least one scheme is null, empty or whitespace.
+0x0011;AllowedSchemeConstraint.Validate;Scheme is not allowed.
+0x0012;CharacterSetConstraint.SetParameters;Exactly one parameter required.
+0x0012;CharacterSetConstraint.SetParameters;Not a valid character set.
+0x0013;CharacterSetConstraint.Validate;At least one character is not defined in character set.
+0x0014;MaximumValueConstraint.ctor(ParameterDataType,object);maximumValue is null.
+0x0015;ParameterConvert.ToParameterDataType;type is null.
+0x0016;ParameterConvert.ToParameterDataType;Type is not supported.
+0x0017;ParameterConvert.ToType;Data type cannot be matched to a .NET type.
+0x0018;MaximumValueConstraint.Validate;value is larger than maximum value.
+0x0019;MaximumValueConstraint.SetParameters;Exactly one parameter required.
+0x001a;MaximumValueConstraint.SetParameters;Parameter is invalid.
+0x001b;MaximumValueConstraint.CheckDataType;Data type is not supported by constraint.
+0x001c;MaximumValueConstraint.Validate;Data type not comparable, and no conversion exists.
+0x001d;MaximumValueConstraint.CheckValueType;Data type is not of the expected type, and cannot be converted.
+0x001e;MinimumValueConstraint.ctor(ParameterDataType,object);minimumValue is null.
+0x001f;MinimumValueConstraint.SetParameters;Parameter is invalid.
+0x0020;MinimumValueConstraint.Validate;value is less than minimum value.
+0x0021;MinimumValueConstraint.SetParameters;Exactly one parameter required.
+0x0022;MinimumValueConstraint.Validate;Data type not comparable, and no conversion exists.
+0x0023;MinimumValueConstraint.CheckDataType;Data type is not supported by constraint.
+0x0024;MinimumValueConstraint.CheckValueType;Data type is not of the expected type, and cannot be converted.
+0x0025;StepConstraint.ctor(ParameterDataType,object);stepSize is null.
+0x0026;StepConstraint.SetParameters;Exactly one parameter required.
+0x0027;StepConstraint.SetParameters;Parameter is invalid.
+0x0028;StepConstraint.CheckDataType;Data type is not supported by constraint.
+0x0029;StepConstraint.CheckValueType;Data type is not of the expected type, and cannot be converted.
+0x002a;DecimalPlacesConstraint.SetParameters;Exactly one parameter required.
+0x0027;DecimalPlacesConstraint.SetParameters;Parameter is invalid.
+0x0028;LengthConstraint.ctor(int);length is less than 0.
+0x0029;MaximumLengthConstraint.ctor(int);length is less than 0.
+0x002a;MinimumLengthConstraint.ctor(int);length is less than 0.
+0x002b;LengthConstraint.SetParameters;Exactly one parameter required.
+0x002c;MaximumLengthConstraint.SetParameters;Exactly one parameter required.
+0x002d;MinimumLengthConstraint.SetParameters;Exactly one parameter required.
+0x002e;LengthConstraint.SetParameters;length is less than 0.
+0x002f;MaximumLengthConstraint.SetParameters;length is less than 0.
+0x0030;MinimumLengthConstraint.SetParameters;length is less than 0.
+0x0031;LengthConstraint.SetParameters;Parameter is invalid.
+0x0032;MaximumLengthConstraint.SetParameters;Parameter is invalid.
+0x0033;MinimumLengthConstraint.SetParameters;Parameter is invalid.
+0x0034;LengthConstraint.Validate;Data type cannot be validated by constraint.
+0x0035;MaximumLengthConstraint.Validate;Data type cannot be validated by constraint.
+0x0036;MinimumLengthConstraint.Validate;Data type cannot be validated by constraint.
+0x0037;LengthConstraint.Validate;String or array length does not match.
+0x0038;MaximumLengthConstraint.Validate;String or array is too long.
+0x0039;MinimumLengthConstraint.Validate;String or array is too short.
+0x003a;RegexConstraint.ctor(string,RegexOptions);regularExpression is null or empty.
+0x003b;RegexConstraint.ctor(string,RegexOptions);options are invalid.
+0x003c;RegexConstraint.ctor(string,RegexOptions);regularExpression is invalid.
+0x003d;RegexConstraint.SetParameters;At least one parameter required.
+0x003e;RegexConstraint.SetParameters;regularExpression is invalid.
+0x003f;RegexConstraint.SetParameters;options are invalid.
+0x0040;RegexConstraint.Validate;String does not match regular expression.
+0x0041;TypeConstraint.ctor(string);typeName is null or empty.
+0x0042;TypeConstraint.SetParameters;typeName is null or empty.
+0x0043;EnumTypeConstraint.Validate;value is an enumeration of unexpected type.
+0x0044;EnumValuesConstraint.ctor(ParameterDataType,bool,IDictionary);data type is not an integer.
+0x0045;EnumValuesConstraint.ctor(ParameterDataType,bool,IDictionary);values is null.
+0x0046;EnumValuesConstraint.ctor(ParameterDataType,bool,IDictionary);Value type does not match underlying type of enumeration.
+0x0047;EnumValuesConstraint.SetParameters;First parameter is not a valid ParameterDataType.
+0x0048;EnumValuesConstraint.SetParameters;No enumeration values specified.
+0x0049;EnumValuesConstraint.SetParameters;Invalid name=value pair.
+0x004a;EnumValuesConstraint.SetParameters;Invalid hey value.
+0x004b;EnumValuesConstraint.SetParameters;Cannot convert into underlying data type.
+0x004c;EnumValuesConstraint.Validate;Not set up.
+0x004d;EnumValuesConstraint.Validate;Value contains a flag not in the enumeration.
+0x004e;EnumTypeConstraint.Validate;Value contains a flag not in the enumeration.
+0x004f;EnumValuesConstraint.Validate;Value is not part of the enumeration.
+0x0050;EnumTypeConstraint.Validate;Value is not part of the enumeration.
+0x0051;EnumValuesConstraint.Validate;Data type is not supported.
+0x0052;EnumTypeConstraint.Validate;Data type is not supported.
+0x0053;EnumValuesConstraint.Validate;Value type does not match underlying type of enumeration.
+0x0054;ParameterConvert.Encrypt;Cannot encrypt value.
+0x0055;ParameterConvert.Decrypt;Cannot decrypt value.
+0x0056;ParameterConvert.ToBoolean;value is null.
+0x0057;ParameterConvert.ToBoolean;value string does not represent a bool value.
+0x0058;ParameterConvert.ToByte;value is null.
+0x0059;ParameterConvert.ToByte;value string does not represent a byte value.
+0x005a;ParameterConvert.ToByteArray;value is null.
+0x005b;ParameterConvert.ToByteArray;value string does not represent a byte array.
+0x005c;ParameterConvert.ToDateTimeOffset;value is null.
+0x005d;ParameterConvert.ToDateTimeOffset;value string does not represent a DateTimeOffset.
+0x005e;ParameterConvert.ToDecimal;value is null.
+0x005f;ParameterConvert.ToDecimal;value string does not represent a decimal.
+0x0060;ParameterConvert.ToDecimal;enumType is null.
+0x0061;ParameterConvert.ToDecimal;enumType is not an enumeration.
+0x0062;ParameterConvert.ToDecimal;value is null.
+0x0063;ParameterConvert.ToDecimal;value string does not represent a value of the enumeration.
+0x0064;ParameterConvert.ToGuid;value is null.
+0x0065;ParameterConvert.ToGuid;value string does not represent a Guid.
+0x0066;ParameterConvert.ToInt16;value is null.
+0x0067;ParameterConvert.ToInt16;value string does not represent a Int16.
+0x0068;ParameterConvert.ToInt32;value is null.
+0x0069;ParameterConvert.ToInt32;value string does not represent a Int32.
+0x006a;ParameterConvert.ToInt64;value is null.
+0x006b;ParameterConvert.ToInt64;value string does not represent a Int64.
+0x006c;ParameterConvert.ToTimeSpan;value is null.
+0x006d;ParameterConvert.ToTimeSpan;value string does not represent a TimeSpan.
+0x006e;ParameterConvert.ToUInt16;value is null.
+0x006f;ParameterConvert.ToUInt16;value string does not represent a UInt16.
+0x0070;ParameterConvert.ToUInt32;value is null.
+0x0071;ParameterConvert.ToUInt32;value string does not represent a UInt32.
+0x0072;ParameterConvert.ToUInt64;value is null.
+0x0073;ParameterConvert.ToUInt64;value string does not represent a UInt64.
+0x0074;ParameterConvert.ToUri;value is null.
+0x0075;ParameterConvert.ToUri;value string does not represent a Uri.
+0x0076;ParameterConvert.ToUri;value is null.
+0x0077;ParameterConvert.ToUri;value string does not represent a Version.
+0x0078;ParameterConvert.ToSByte;value is null.
+0x0079;ParameterConvert.ToSByte;value string does not represent a signed byte.
+0x007a;ParameterConvert.ToString(object,ParameterDataype,IList);data type is not supported.
+0x007b;ParameterConvert.ToString(object,ParameterDataype,IList);value type does not match parameter data type.
+0x007c;ParameterConvert.ToDataType;No TypeConstraint found to deduce the type of enumeration.
+0x007d;ParameterConvert.ToDataType;A TypeConstraint was found, but the type of the enumeration could not be resolved.
+0x007e;ParameterConvert.ToDataType;No TypeConstraint found to deduce the type of the XML-serialized object.
+0x007f;ParameterConvert.ToDataType;A TypeConstraint was found, but the type of the XML-serialized object could not be resolved.
+0x0080;ParameterConvert.ToDataType;data type is not supported.
+0x0081;ParameterConvert.FromXml;value is null.
+0x0082;ParameterConvert.FromXml;type is null.
+0x0083;ParameterConvert.FromXml;value cannot be deserialized into an instance of type.
+0x0084;ParameterConvert.ToXml;value cannot be serialized into an XML string.
+0x0085;HostnameConstraint.Validate;value is empty.
+0x0086;HostnameConstraint.Validate;Not a valid host name or IP address.
+0x0087;EndpointConstraint.Validate;value is empty.
+0x0088;EndpointConstraint.Validate;Not a valid host name or IP address.
+0x0089;EndpointConstraint.Validate;Not a valid port number.
+0x008a;ConstraintParser.Parse;String contains an empty constraint.
+0x008b;ConstraintParser.Parse;At least one constraint parameter is invalid.
+0x008c;ConstraintParser.Parse;Data type is none.
+0x008d;ConstraintParser.Parse;Invalid character in constraint name.
+0x008e;ConstraintParser.Parse;Data outside of a constraint.
+0x008f;ConstraintParser.Parse;Invalid character in parameter clause.
+0x0090;ConstraintParser.Parse;Unmasked character in parameter.
+0x0091;ConstraintParser.Parse;Invalid character after parameter value.
+0x0092;ConstraintParser.HandleUnknownConstraint;Constraint name is unknown.
+0x0093;ConstraintParser.HandleUnknownConstraint;Constraint is not defined for this data type.
+0x0094;Constraint.Validate;memberName is null or empty.
+0x0095;Constraint.GetParameters;parameters is null.
+0x0096;ParameterValidator.ValidateWithException;Validation failed.
+0x0097;ConstraintAttribute.ctor;constraints are null or empty.
+0x0098;ConstraintAttribute.ctor;dataType may not be None.
+0x0099;ParameterValidator.Validate;dataType may not be None.
+0x009a;ParameterValidator.Validate;memberName may not be null or empty.
+0x009b;Constraint.GetObjectData;info is null.
+0x009c;Constraint.AssertDataType;expectedTypes is null.
+0x009d;ConstraintParser.Parse;Invalid character after parameters.
+0x009e;ParameterValidationResult.ctor(SerializationInfo,StreamingContext);info is null.
+0x009f;Constraint.OnValidation;results is null.
+0x00a0;Constraint.OnValidation;value is null.
+0x00a1;ConstraintParser.Parse;Last constraint is incomplete.
+0x00a2;ParameterValidationResult.ctor;validationResult is null.
