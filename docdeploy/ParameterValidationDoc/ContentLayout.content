@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topics>
+  <Topic id="70b54150-5403-45c4-92cc-1144011af244" visible="True" isDefault="true" title="NerdyDuck.CodedExceptions Wiki Home" tocTitle="Home" linkText="Home">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="Welcome" />
+    </HelpKeywords>
+  </Topic>
+  <Topic id="0e28eb7d-9c5b-4686-85ea-dc7dfdad924b" visible="True" isExpanded="true" isSelected="true" apiParentMode="InsertAfter" title="Version History">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="version, history" />
+    </HelpKeywords>
+    <Topic id="963188a5-5c69-4510-acfe-129da7ee6ef9" visible="True" title="Version 1.0.0">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="version, 1.0.0" />
+      </HelpKeywords>
+    </Topic>
+  </Topic>
+</Topics>

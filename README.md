@@ -1,7 +1,7 @@
 ## --- Soon to come ---
 # NerdyDuck.ParameterValidation
 
-This project provides a library with a set of constraint classes that can be used to validate arbitrary values, like application settings. It also contains classes to consistently serialize and deserialize various data types into strings that can then be stored in formats like XML or databases.
+This project provides a library with a set of constraint classes that can be used to validate arbitrary values, like application settings. The constraints can be expressed in strings, so they can be stored along with the validated values. It also contains classes to consistently serialize and deserialize various data types into strings that can then be stored in formats like XML or databases.
 
 #### Platforms
 - .NET Framework 4.6 or newer for desktop applications
