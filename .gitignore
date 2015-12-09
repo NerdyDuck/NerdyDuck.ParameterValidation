@@ -130,4 +130,5 @@ $RECYCLE.BIN/
 ## Project specific
 ###################
 **/NerdyDuck.ParameterValidation.*.nupkg
+**/NerdyDuck.ParameterValidation.*.nupkg.bak
 NuGet.exe
