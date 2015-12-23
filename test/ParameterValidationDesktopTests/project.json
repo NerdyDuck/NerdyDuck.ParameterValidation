@@ -1,0 +1,24 @@
+﻿{
+	"version": "1.0.0-*",
+	"description": "Unit test for NerdyDuck.ParameterVvalidation library",
+	"authors": [ "Daniel Kopp" ],
+	"dependencies": {
+		"NerdyDuck.CodedExceptions": "1.1.1"
+	},
+	"frameworks": {
+		"net46": {
+			"frameworkAssemblies": {
+				"System": "4.0.0.0",
+				"System.Xml": "4.0.0.0"
+			}
+		}
+	},
+	"runtimes": {
+		"win": { },
+		"win-anycpu": {
+			"#import": [
+				"win"
+			]
+		}
+	}
+}

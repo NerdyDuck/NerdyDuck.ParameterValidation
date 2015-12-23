@@ -38,7 +38,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 	/// <remarks>
 	/// <para>
 	/// <list type="bullet">
-	/// <item>The textual representation of the constraint is <c>[Regex(value[,option,option...])]</c>. <c>value</c> must be a valid regular expression. <c>option</c> is one of the <see cref="RegexOptions"/> values.</item>
+	/// <item>The textual representation of the constraint is <c>[Regex(expr [,option,option...])]</c>. <c>expr</c> must be a valid regular expression. <c>option</c> is one of the <see cref="RegexOptions"/> values.</item>
 	/// <item>The constraint is applicable to the <see cref="ParameterDataType.String"/> data type only.</item>
 	/// <item>If a parameter with that constraint has a string that does not match <see cref="RegularExpression"/>, a <see cref="ParameterValidationResult"/> is added to the output of <see cref="Constraint.Validate(object, ParameterDataType, string, string)"/>.</item>
 	/// </list>

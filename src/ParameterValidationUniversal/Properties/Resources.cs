@@ -19,7 +19,7 @@
  * <assembly name="NerdyDuck.ParameterValidation">
  * Validation and serialization of parameter values for .NET
  * </assembly>
- * <file name="Resources.cs" date="2015-12-09">
+ * <file name="Resources.cs" date="2015-12-21">
  * Helper class to access localized string resources.
  * </file>
  ******************************************************************************/

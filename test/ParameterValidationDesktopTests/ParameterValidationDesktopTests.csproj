@@ -41,18 +41,6 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\NerdyDuck.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="NerdyDuck.CodedExceptions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=d767295c0faf356a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NerdyDuck.CodedExceptions.1.1.1\lib\net46\NerdyDuck.CodedExceptions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
       <ItemGroup>
@@ -69,9 +57,8 @@
     <None Include="..\..\NerdyDuck.snk">
       <Link>NerdyDuck.snk</Link>
     </None>
-    <None Include="packages.config" />
+    <None Include="project.json" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\src\ParameterValidationDesktop\ParameterValidationDesktop.csproj">
       <Project>{5bc20e49-5b5c-4293-9abc-cef1884773fd}</Project>
@@ -206,6 +193,9 @@
       <Link>XmlSerializableObject.cs</Link>
     </Compile>
     <Compile Include="SerializationHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
