@@ -58,6 +58,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the assembly-qualified name of the type.
 		/// </summary>
+		/// <value>A string containing the full name of a type and the assembly that defines it.</value>
 		public string TypeName
 		{
 			get { return mTypeName; }

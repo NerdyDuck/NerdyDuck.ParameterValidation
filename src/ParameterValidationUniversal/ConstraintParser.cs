@@ -95,6 +95,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets a global instance of the <see cref="ConstraintParser"/>.
 		/// </summary>
+		/// <value>A static instance of a <see cref="ConstraintParser"/>.</value>
 		public static ConstraintParser Parser
 		{
 			get { return mParser.Value; }
@@ -218,7 +219,7 @@ namespace NerdyDuck.ParameterValidation
 		/// </summary>
 		/// <param name="constraintName">The name of the constraint.</param>
 		/// <param name="dataType">The data type that the constraint is used for.</param>
-		/// <returns></returns>
+		/// <returns>The <see cref="Constraint"/> created by an event handler, based on the <paramref name="constraintName"/>, or <see langword="null"/>, if no event handler was present, or the <paramref name="constraintName"/> is unknown.</returns>
 		protected virtual Constraint OnUnknownConstraint(string constraintName, ParameterDataType dataType)
 		{
 			EventHandler<UnknownConstraintEventArgs> ucHandler = UnknownConstraint;

@@ -47,6 +47,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the value that is currently validated.
 		/// </summary>
+		/// <value>The value to validate.</value>
 		public object Value
 		{
 			get { return mValue; }
@@ -55,6 +56,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the data type of <see cref="Value"/>.
 		/// </summary>
+		/// <value>One of the <see cref="ParameterDataType"/> values.</value>
 		public ParameterDataType DataType
 		{
 			get { return mDataType; }
@@ -63,6 +65,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets a list of <see cref="Constraint"/>s that are used to validate <see cref="Value"/>.
 		/// </summary>
+		/// <value>A list of one or more objects derived from <see cref="Constraint"/>.</value>
 		public IReadOnlyList<Constraint> Constraints
 		{
 			get { return mConstraints; }
@@ -71,6 +74,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the name of the property or control that contains <see cref="Value"/>.
 		/// </summary>
+		/// <value>The name of the property or control to validate.</value>
 		public string MemberName
 		{
 			get { return mMemberName; }
@@ -79,6 +83,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the display name of the control that displays <see cref="Value"/>.
 		/// </summary>
+		/// <value>the display name of the property or control to validate.</value>
 		public string DisplayName
 		{
 			get { return mDisplayName; }

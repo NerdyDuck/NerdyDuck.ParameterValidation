@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="63b60f6d-de88-48ea-b1bc-391200a7ef43" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>Version 1.1.0 was released on 2016-01-12.</para>
+		</introduction>
+		<section>
+			<title>Changes in This Release</title>
+			<content>
+				<list class="bullet">
+					<listItem>
+						<para>Changed parameter type of <codeEntityReference qualifyHint="true">M:NerdyDuck.ParameterValidation.ParameterConvert.ToDataType(System.String,NerdyDuck.ParameterValidation.ParameterDataType,System.Collections.Generic.IReadOnlyList{NerdyDuck.ParameterValidation.Constraint})</codeEntityReference>, <codeEntityReference qualifyHint="true">M:NerdyDuck.ParameterValidation.ParameterConvert.ToString(System.Object,NerdyDuck.ParameterValidation.ParameterDataType,System.Collections.Generic.IReadOnlyList{NerdyDuck.ParameterValidation.Constraint})</codeEntityReference>, <codeEntityReference qualifyHint="true">M:NerdyDuck.ParameterValidation.ParameterConvert.TryGetTypeConstraint(System.Collections.Generic.IReadOnlyList{NerdyDuck.ParameterValidation.Constraint}, NerdyDuck.ParameterValidation.Constraints.TypeConstraint)</codeEntityReference> and <codeEntityReference qualifyHint="true">M:NerdyDuck.ParameterValidation.ParameterConvert.HasEncryptedConstraint(System.Collections.Generic.IReadOnlyList{NerdyDuck.ParameterValidation.Constraint})</codeEntityReference> from <codeInline>IList&lt;Constraint&gt; constraints</codeInline> to <codeInline>IReadOnlyList&lt;Constraint&gt; constraints</codeInline>.</para>
+					</listItem>
+					<listItem>
+						<para>Completed XML comments in code.</para>
+					</listItem>
+					<listItem>
+						<para>Added example projects.</para>
+					</listItem>
+				</list>
+			</content>
+		</section>
+		<relatedTopics>
+			<link xlink:href="0e28eb7d-9c5b-4686-85ea-dc7dfdad924b" />
+		</relatedTopics>
+	</developerConceptualDocument>
+</topic>

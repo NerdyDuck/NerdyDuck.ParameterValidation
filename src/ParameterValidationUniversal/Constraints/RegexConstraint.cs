@@ -59,6 +59,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the regular expression to enforce.
 		/// </summary>
+		/// <value>A valid regular expression.</value>
 		public string RegularExpression
 		{
 			get { return mRegularExpression; }
@@ -67,6 +68,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the options to apply when evaluating the <see cref="RegularExpression"/>.
 		/// </summary>
+		/// <value>A combination of the <see cref="RegexOptions"/> values.</value>
 		public RegexOptions Options
 		{
 			get { return mOptions; }

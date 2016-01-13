@@ -106,7 +106,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <remarks><paramref name="constraints"/> are only required, if <paramref name="dataType"/> is <see cref="ParameterDataType.Enum"/> or <see cref="ParameterDataType.Enum"/>.
 		/// In these cases the list is browsed for <see cref="Constraint"/>s that may give a hint to the actual type to convert to.</remarks>
 		/// <exception cref="ParameterConversionException">The value could not be converted into the specified data type, or no constraint was available to specify the actual type to convert to.</exception>
-		public static object ToDataType(string value, ParameterDataType dataType, IList<Constraint> constraints)
+		public static object ToDataType(string value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints)
 		{
 			if (HasEncryptedConstraint(constraints))
 			{
@@ -188,7 +188,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <returns>A string representation of <paramref name="value"/>. The content may vary.</returns>
 		/// <exception cref="ParameterConversionException">The value could not be converted into a string.</exception>
 		/// <exception cref="CodedInvalidOperationException">The data type is not supported.</exception>
-		public static string ToString(object value, ParameterDataType dataType, IList<Constraint> constraints)
+		public static string ToString(object value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints)
 		{
 			if (value == null)
 				return null;
@@ -1227,7 +1227,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <param name="constraints">A list of <see cref="Constraint"/>s to search in.</param>
 		/// <param name="constraint">When the method returns, contains the <see cref="TypeConstraint"/> found in <paramref name="constraints"/>, or <see langword="null"/>, if no matching constraint was found.</param>
 		/// <returns><see langword="true"/>, if a <see cref="TypeConstraint"/> was found in <paramref name="constraints"/>; <see langword="false"/>, otherwise.</returns>
-		public static bool TryGetTypeConstraint(IList<Constraint> constraints, out TypeConstraint constraint)
+		public static bool TryGetTypeConstraint(IReadOnlyList<Constraint> constraints, out TypeConstraint constraint)
 		{
 			if (constraints == null)
 			{
@@ -1245,7 +1245,7 @@ namespace NerdyDuck.ParameterValidation
 		/// </summary>
 		/// <param name="constraints">A list of <see cref="Constraint"/>s to search in. May be <see langword="null"/>.</param>
 		/// <returns><see langword="true"/>, if <paramref name="constraints"/> contains an <see cref="EncryptedConstraint"/>; otherwise, or if <paramref name="constraints"/> is <see langword="null"/>, <see langword="false"/>.</returns>
-		public static bool HasEncryptedConstraint(IList<Constraint> constraints)
+		public static bool HasEncryptedConstraint(IReadOnlyList<Constraint> constraints)
 		{
 			if (constraints == null)
 				return false;

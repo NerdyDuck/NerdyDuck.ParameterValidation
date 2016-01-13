@@ -54,8 +54,6 @@ using System.Runtime.InteropServices;
 #endif
 
 // Version information
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: InternalsVisibleTo("ParameterValidationDesktop.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010027ea12fb39924671c562cc60e894c4b7d185a0d61c18a778022e8e5cf2688990c841e0d397904b8e6b3688f7e99966f7a7f0f4ead7e4abb3bc343f17d45ca05cdc3d86f72646be82c9640e1b2c79339e572699c47745cba4e6ae2e9106956a3da9577cb65add1e2c9d0df679baea4d9e4c6bf9494740ab8d05320083a812c2b0")]
-[assembly: InternalsVisibleTo("NerdyDuck.ParameterValidation.Explorables, PublicKey=002400000480000094000000060200000024000052534131000400000100010027ea12fb39924671c562cc60e894c4b7d185a0d61c18a778022e8e5cf2688990c841e0d397904b8e6b3688f7e99966f7a7f0f4ead7e4abb3bc343f17d45ca05cdc3d86f72646be82c9640e1b2c79339e572699c47745cba4e6ae2e9106956a3da9577cb65add1e2c9d0df679baea4d9e4c6bf9494740ab8d05320083a812c2b0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 

@@ -23,7 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NerdyDuck.snk = NerdyDuck.snk
 		README.md = README.md
 		tools\run_mkrelease.bat = tools\run_mkrelease.bat
-		tools\sign_assemblies.bat = tools\sign_assemblies.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{70061BA5-5173-48A6-8D0C-098142608982}"
@@ -31,14 +30,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{47976FAC-8B20-46BD-8A00-0818AF80F9C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationNuGet", "docdeploy\ParameterValidationNuGet\ParameterValidationNuGet.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5BC20E49-5B5C-4293-9ABC-CEF1884773FD} = {5BC20E49-5B5C-4293-9ABC-CEF1884773FD}
-		{3136C9AF-11FA-461D-9943-13D259DE3FC9} = {3136C9AF-11FA-461D-9943-13D259DE3FC9}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docdeploy", "docdeploy", "{CA475D9F-225C-45A7-B600-ECC7908A7881}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "ParameterValidationDoc", "docdeploy\ParameterValidationDoc\ParameterValidationDoc.shfbproj", "{DBBC3D06-3173-42B6-AD52-95E4E34CD8CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{92F60D22-FAC2-433C-BBFC-847C69B9AE5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleCsharpDesktop", "Examples\ExampleCsharpDesktop\ExampleCsharpDesktop.csproj", "{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,6 +151,22 @@ Global
 		{DBBC3D06-3173-42B6-AD52-95E4E34CD8CC}.Release|x64.Build.0 = Release|Any CPU
 		{DBBC3D06-3173-42B6-AD52-95E4E34CD8CC}.Release|x86.ActiveCfg = Release|Any CPU
 		{DBBC3D06-3173-42B6-AD52-95E4E34CD8CC}.Release|x86.Build.0 = Release|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Debug|x64.Build.0 = Debug|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Debug|x86.Build.0 = Debug|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Release|ARM.Build.0 = Release|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Release|x64.ActiveCfg = Release|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Release|x64.Build.0 = Release|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Release|x86.ActiveCfg = Release|Any CPU
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,5 +178,6 @@ Global
 		{A59067F2-06A7-40B9-8594-50112E28F020} = {47976FAC-8B20-46BD-8A00-0818AF80F9C3}
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {CA475D9F-225C-45A7-B600-ECC7908A7881}
 		{DBBC3D06-3173-42B6-AD52-95E4E34CD8CC} = {CA475D9F-225C-45A7-B600-ECC7908A7881}
+		{9E4EB5DF-03BC-46B3-A647-BED9D0C61259} = {92F60D22-FAC2-433C-BBFC-847C69B9AE5C}
 	EndGlobalSection
 EndGlobal

@@ -65,6 +65,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the minimum value to enforce.
 		/// </summary>
+		/// <value>A value matching the type of <see cref="DataType"/>.</value>
 		public object MinimumValue
 		{
 			get { return mMinimumValue; }
@@ -73,6 +74,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the data type that the constraint can validate.
 		/// </summary>
+		/// <value>One of the <see cref="ParameterDataType"/> values.</value>
 		public ParameterDataType DataType
 		{
 			get { return mDataType; }

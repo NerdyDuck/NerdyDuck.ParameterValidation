@@ -57,6 +57,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the minimum length to enforce.
 		/// </summary>
+		/// <value>A non-negative integer value.</value>
 		public int MinimumLength
 		{
 			get { return mMinimumLength; }

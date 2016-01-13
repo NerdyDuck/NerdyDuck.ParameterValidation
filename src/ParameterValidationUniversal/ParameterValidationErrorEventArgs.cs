@@ -42,6 +42,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets a list of <see cref="ParameterValidationResult"/>s.
 		/// </summary>
+		/// <value>One or more <see cref="ParameterValidationResult"/>s.</value>
 		public IList<ParameterValidationResult> ValidationResults
 		{
 			get { return mValidationResults; }

@@ -56,6 +56,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the length to enforce.
 		/// </summary>
+		/// <value>A non-negative integer value.</value>
 		public int Length
 		{
 			get { return mLength; }

@@ -56,6 +56,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets a collection of allowed <see cref="Uri"/> schemes.
 		/// </summary>
+		/// <value>One or more URI scheme strings.</value>
 		public IEnumerable<string> AllowedSchemes
 		{
 			get { return mAllowedSchemes; }

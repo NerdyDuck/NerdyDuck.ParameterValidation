@@ -48,6 +48,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the <see cref="Constraint"/> that failed to configure.
 		/// </summary>
+		/// <value>A on object derived from <see cref="Constraint"/>, or <see langword="null"/>.</value>
 		public Constraint Constraint
 		{
 			get { return mConstraint; }

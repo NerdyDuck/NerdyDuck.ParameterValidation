@@ -61,6 +61,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the name of the database entity (e.g. table, view, or domain model entity) that stores the value of the parameter.
 		/// </summary>
+		/// <value>A table, view or entity name.</value>
 		public string Entity
 		{
 			get { return mEntity; }
@@ -69,6 +70,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the name of the property (e.g. field name) that contains the value of the parameter.
 		/// </summary>
+		/// <value>A column or property name.</value>
 		public string KeyProperty
 		{
 			get { return mKeyProperty; }
@@ -77,6 +79,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the name of the property (e.g. field name) that should be displayed instead of <see cref="KeyProperty"/>. May be empty.
 		/// </summary>
+		/// <value>A column or property name.</value>
 		public string DisplayProperty
 		{
 			get { return mDisplayProperty; }

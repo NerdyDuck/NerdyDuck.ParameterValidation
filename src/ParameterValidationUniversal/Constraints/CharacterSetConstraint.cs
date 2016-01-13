@@ -97,6 +97,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the character set to use as a constraint.
 		/// </summary>
+		/// <value>One of the <see cref="CharSet"/> values.</value>
 		public CharSet CharacterSet
 		{
 			get { return mCharacterSet; }

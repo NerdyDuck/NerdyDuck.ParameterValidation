@@ -58,6 +58,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the value that was attempted to convert.
 		/// </summary>
+		/// <value>The actual value to convert.</value>
 		public object ActualValue
 		{
 			get { return mActualValue; }
@@ -66,6 +67,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the data type that was attempted to convert from or into.
 		/// </summary>
+		/// <value>One of the <see cref="ParameterDataType"/> values.</value>
 		public ParameterDataType DataType
 		{
 			get { return mDataType; }

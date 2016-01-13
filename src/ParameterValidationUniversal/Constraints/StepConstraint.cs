@@ -62,6 +62,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets or sets the increment step.
 		/// </summary>
+		/// <value>A non-negative value matching the type of <see cref="DataType"/>.</value>
 		public object StepSize
 		{
 			get { return mStepSize; }
@@ -70,6 +71,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the data type that the constraint can validate.
 		/// </summary>
+		/// <value>One of the <see cref="ParameterDataType"/> values.</value>
 		public ParameterDataType DataType
 		{
 			get { return mDataType; }

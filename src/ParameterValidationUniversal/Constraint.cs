@@ -77,6 +77,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the name of the <see cref="Constraint"/>, as it is used in a constraint string.
 		/// </summary>
+		/// <value>The textual name of the constraint.</value>
 		public string Name
 		{
 			get { return mName; }
@@ -88,7 +89,7 @@ namespace NerdyDuck.ParameterValidation
 		/// Initializes a new instance of the <see cref="Constraint"/> class with the specified name.
 		/// </summary>
 		/// <param name="name">The name of the <see cref="Constraint"/>, as it is used in a constraint string.</param>
-		/// <exception cref="CodedArgumentNullOrWhiteSpaceException"><paramref name="name"/> is <see langword="null"/> or empty or white-space.</exception>
+		/// <exception cref="NerdyDuck.CodedExceptions.CodedArgumentNullOrWhiteSpaceException"><paramref name="name"/> is <see langword="null"/> or empty or white-space.</exception>
 		protected Constraint(string name)
 		{
 			if (string.IsNullOrWhiteSpace(name))
@@ -128,6 +129,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <param name="dataType">The data type of the value.</param>
 		/// <param name="memberName">The name of the property or field that is validated.</param>
 		/// <remarks>The default implementation of the method performs no validation.</remarks>
+		/// <returns>An enumeration of <see cref="ParameterValidationResult"/>s. The enumeration is be empty if the <paramref name="value"/> is within the constraint's boundaries.</returns>
 		/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 		/// <exception cref="CodedArgumentNullOrWhiteSpaceException"><paramref name="memberName"/> is <see langword="null"/> or empty or white-space.</exception>
 		/// <exception cref="InvalidDataTypeException"><paramref name="dataType"/> is not supported by the <see cref="Constraint"/>.</exception>
@@ -144,6 +146,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <param name="memberName">The name of the property or field that is validated.</param>
 		/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
 		/// <remarks>The default implementation of the method performs no validation.</remarks>
+		/// <returns>An enumeration of <see cref="ParameterValidationResult"/>s. The enumeration is be empty if the <paramref name="value"/> is within the constraint's boundaries.</returns>
 		/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 		/// <exception cref="CodedArgumentNullOrWhiteSpaceException"><paramref name="memberName"/> is <see langword="null"/> or empty or white-space.</exception>
 		/// <exception cref="InvalidDataTypeException"><paramref name="dataType"/> is not supported by the <see cref="Constraint"/>.</exception>

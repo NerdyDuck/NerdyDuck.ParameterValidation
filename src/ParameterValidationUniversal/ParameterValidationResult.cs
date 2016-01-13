@@ -58,6 +58,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets a <see cref="ParameterValidationResult"/> that specifies a successful validation.
 		/// </summary>
+		/// <value>A <see cref="ParameterValidationResult"/>.</value>
 		public static new ParameterValidationResult Success
 		{
 			get { return mSuccess.Value; }

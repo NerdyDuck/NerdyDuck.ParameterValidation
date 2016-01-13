@@ -44,6 +44,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the name of the constraint that is not known or not by default defined for the specified <see cref="DataType"/>.
 		/// </summary>
+		/// <value>The name of the constraint in its textual representation.</value>
 		public string ConstraintName
 		{
 			get { return mConstraintName; }
@@ -52,6 +53,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the data type of the parameter the unknown constraint is intended for.
 		/// </summary>
+		/// <value>One of the <see cref="ParameterDataType"/> values.</value>
 		public ParameterDataType DataType
 		{
 			get { return mDataType; }
@@ -60,6 +62,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets or sets the constraint that was resolved by the <see cref="ConstraintParser.UnknownConstraint"/> event.
 		/// </summary>
+		/// <value>An object derived from <see cref="Constraint"/>.</value>
 		/// <remarks>When handling the <see cref="ConstraintParser.UnknownConstraint"/> event, set this property if the event handler was able to resolve the constraint.</remarks>
 		public Constraint Constraint
 		{

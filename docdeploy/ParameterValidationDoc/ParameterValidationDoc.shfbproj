@@ -57,7 +57,12 @@
     </DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="NerdyDuck.ParameterValidation.Constraints" isDocumented="True">The *NerdyDuck.ParameterValidation.Constraints* namespace contains a set of classes derived from `Constraint` to validate values of one or several data types, e.g. the `MinimumValueConstraint` can assert that a value of any of the integer types or the decimal type, has at least the minimum value specified in the constraint. Consult the descriptions of the specific constraint for a list of supported data types.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="NerdyDuck.ParameterValidation" isDocumented="True">The *NerdyDuck.ParameterValidation* namespace contains the classes necessary to validate and serialize. The `ParameterValidator` class lets you apply one or more constraints derived from the `Constraint` class to an arbitrary value to determine if the value complies to the set of constraints. The supported types of values can be found in the `ParameterDataType` enumeration. The `ConstraintParser` class reads a set of constraints in a string and generates a list of objects derived from `Constraint`. The class also provides a method to serialize a list of constraints into a string. The `ParameterConvert` class provides methods to serialize and deserialize values, in most cases using the `System.Xml.XmlConvert` class.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="NerdyDuck.ParameterValidation" isDocumented="True">The *NerdyDuck.ParameterValidation* namespace contains the classes necessary to validate and serialize. The `ParameterValidator` class lets you apply one or more constraints derived from the `Constraint` class to an arbitrary value to determine if the value complies to the set of constraints. The supported types of values can be found in the `ParameterDataType` enumeration. The `ConstraintParser` class reads a set of constraints in a string and generates a list of objects derived from `Constraint`. The class also provides a method to serialize a list of constraints into a string. The `ParameterConvert` class provides methods to serialize and deserialize values, in most cases using the `System.Xml.XmlConvert` class.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="NerdyDuck.CodedExceptions (Group)" isGroup="True" isDocumented="False" />
+      <NamespaceSummaryItem name="NerdyDuck.CodedExceptions" isDocumented="False" />
+      <NamespaceSummaryItem name="NerdyDuck.CodedExceptions.IO" isDocumented="False" />
+    </NamespaceSummaries>
+    <PlugInConfigurations />
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -85,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\VersionHistory\v1.0.0.aml" />
+    <None Include="Content\VersionHistory\v1.0.1.aml" />
+    <None Include="Content\VersionHistory\v1.1.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
     <None Include="MoveToWiki.ps1" />
@@ -102,7 +109,7 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>powershell -ExecutionPolicy Bypass -Command ".\MoveToWiki.ps1"</PostBuildEvent>
+    <PostBuildEvent>if '$(Configuration)' == 'Release' powershell -ExecutionPolicy Bypass -Command ".\MoveToWiki.ps1"</PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 </Project>

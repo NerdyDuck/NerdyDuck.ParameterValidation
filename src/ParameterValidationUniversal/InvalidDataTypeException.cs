@@ -48,6 +48,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the <see cref="Constraint"/> that caused the exception.
 		/// </summary>
+		/// <value>A object derived from the <see cref="Constraint"/> class.</value>
 		public Constraint Constraint
 		{
 			get { return mConstraint; }
@@ -56,6 +57,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the data type that caused the exception.
 		/// </summary>
+		/// <value>One of the <see cref="ParameterDataType"/> values.</value>
 		public ParameterDataType DataType
 		{
 			get { return mDataType; }
@@ -211,6 +213,7 @@ namespace NerdyDuck.ParameterValidation
 			mDataType = dataType;
 		}
 		#endregion
+
 		#region Public methods
 #if WINDOWS_DESKTOP
 		/// <summary>

@@ -56,6 +56,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Gets the maximum length to enforce.
 		/// </summary>
+		/// <value>A non-negative integer value.</value>
 		public int MaximumLength
 		{
 			get { return mMaximumLength; }

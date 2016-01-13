@@ -11,7 +11,7 @@
     <AssemblyName>NerdyDuck.ParameterValidation</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -199,14 +199,19 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)"=="Release" $(SolutionDir)tools\sign_assemblies.bat "$(TargetDir)" $(TargetName) $(TargetExt)</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
   <Target Name="AfterBuild">
+    <ItemGroup>
+      <!-- Getting output assemblies and generated satellite assemblies -->
+      <FilesToSign Include="$(TargetDir)**\$(TargetName)*$(TargetExt)" />
+      <FilesToSign Condition="'$(TargetExt)' != '.dll'" Include="$(TargetDir)**\$(TargetName)**.dll" />
+    </ItemGroup>
+    <PropertyGroup>
+      <!-- Get installation path of Windows SDK 7.1A, because it contains signtool.exe -->
+      <WinSDK71Path>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\Windows\v7.1A@InstallationFolder)</WinSDK71Path>
+      <SignHashAlg>sha256</SignHashAlg>
+      <TimestampServer>http://tsa.startssl.com/rfc3161</TimestampServer>
+    </PropertyGroup>
+    <!-- Sign all assemblies, using the default SPC from the user store -->
+    <Exec Condition=" '$(Configuration)' == 'Release' " Command="&quot;$(WinSDK71Path)bin\signtool.exe&quot; sign /a /q /fd $(SignHashAlg) /tr $(TimestampServer) &quot;%(FilesToSign.Identity)&quot;" />
   </Target>
-  -->
 </Project>

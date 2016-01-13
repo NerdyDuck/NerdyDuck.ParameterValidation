@@ -18,5 +18,14 @@ The neutral resource language for all texts is English (en-US). Currently, the o
 For examples and a complete class reference, please see the [Wiki](../../wiki/). :exclamation: **Work in progress**.
 
 #### History
+#####2016-01-12 / v1.1.0 / DAK
+- Changed argument type of [`ParameterConvert.ToDataType`](../../wiki/4b242047-5017-498c-2161-28f426df88dd), [`ParameterConvert.TryGetTypeConstraint`](../../wiki/8ab10564-458a-340d-bd21-07b27b4009b3) and [`ParameterConvert.HasEncryptedConstraint`](../../wiki/cbc2ac67-5f06-636c-aab9-0c9ed58599d8) from `IList<Constraint> constraints` to `IReadOnlyList<Constraint> constraints`.
+- Added example projects.
+
+#####2016-01-11 / v1.0.1 / DAK
+- Changed target version for UWP library to Windows 10 build 10586; minimum version remains build 10240.
+- Changed automatic signing of assemblies from post-compiler batch script to msbuild task.
+- Compiled against [NerdyDuck.CodedExceptions](../NerdyDuck.CodedExceptions) v1.1.2 .
+
 #####2015-12-09 / v1.0.0 / DAK
 - Initial release.

@@ -48,6 +48,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets a collection of <see cref="ParameterValidationResult"/>s that caused the exception.
 		/// </summary>
+		/// <value>One or more <see cref="ParameterValidationResult"/>s.</value>
 		public IEnumerable<ParameterValidationResult> Results
 		{
 			get { return mResults; }
@@ -190,6 +191,7 @@ namespace NerdyDuck.ParameterValidation
 			mResults = results;
 		}
 		#endregion
+
 		#region Public methods
 #if WINDOWS_DESKTOP
 		/// <summary>

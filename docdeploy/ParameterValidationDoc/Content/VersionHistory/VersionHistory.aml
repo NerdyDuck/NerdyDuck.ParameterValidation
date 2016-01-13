@@ -2,17 +2,20 @@
 <topic id="0e28eb7d-9c5b-4686-85ea-dc7dfdad924b" revisionNumber="1">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
-			<para>The topics in this section describe the various changes made to the NerdyDuck.ParameterValidation library over the
-life of the project.</para>
+			<para>The topics in this section describe the various changes made to the NerdyDuck.ParameterValidation library over the life of the project.</para>
 		</introduction>
-
 		<section>
 			<title>Version History</title>
 			<content>
 				<para>Select a version below to see a description of its changes.</para>
-
 				<list class="bullet">
 					<listItem>
+						<para>
+							<link xlink:href="63b60f6d-de88-48ea-b1bc-391200a7ef43" />
+						</para>
+						<para>
+							<link xlink:href="b2fe74bf-6a0a-4b7a-8e3d-3f4118d84159" />
+						</para>
 						<para>
 							<link xlink:href="963188a5-5c69-4510-acfe-129da7ee6ef9" />
 						</para>
@@ -20,10 +23,8 @@ life of the project.</para>
 				</list>
 			</content>
 		</section>
-
 		<relatedTopics>
 			<link xlink:href="70b54150-5403-45c4-92cc-1144011af244" />
 		</relatedTopics>
-
 	</developerConceptualDocument>
 </topic>

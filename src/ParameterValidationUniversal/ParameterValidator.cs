@@ -66,6 +66,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets a global instance of the <see cref="ParameterValidator"/>.
 		/// </summary>
+		/// <value>A singleton instance of <see cref="ParameterValidator"/>.</value>
 		public static ParameterValidator Validator
 		{
 			get { return mValidator.Value; }
@@ -163,6 +164,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <param name="dataType">The data type of <paramref name="value"/>.</param>
 		/// <param name="constraints">A list of <see cref="Constraint"/>s to validate <paramref name="value"/> against.</param>
 		/// <param name="memberName">The name of the property or control containing the <paramref name="value"/> to validate.</param>
+		/// <returns><see langword="true"/>, if <paramref name="value"/> is within the boundaries of the <paramref name="constraints"/>; otherwise, <see langword="false"/>.</returns>
 		public bool IsValid(object value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints, string memberName)
 		{
 			return IsValid(value, dataType, constraints, memberName, null);
@@ -176,6 +178,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <param name="constraints">A list of <see cref="Constraint"/>s to validate <paramref name="value"/> against.</param>
 		/// <param name="memberName">The name of the property or control containing the <paramref name="value"/> to validate.</param>
 		/// <param name="displayName">The display name of the control that contains or displays the <paramref name="value"/> to validate. May be <see langword="null"/>.</param>
+		/// <returns><see langword="true"/>, if <paramref name="value"/> is within the boundaries of the <paramref name="constraints"/>; otherwise, <see langword="false"/>.</returns>
 		public bool IsValid(object value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints, string memberName, string displayName)
 		{
 			return !GetValidationResult(value, dataType, constraints, memberName, displayName).GetEnumerator().MoveNext();

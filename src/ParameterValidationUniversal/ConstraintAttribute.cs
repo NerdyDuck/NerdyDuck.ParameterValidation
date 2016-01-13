@@ -53,6 +53,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets a string containing one or more constraints.
 		/// </summary>
+		/// <value>A string with one more constraints, e.g. "[Null][MaxValue(5)]".</value>
 		public string Constraints
 		{
 			get { return mConstraints; }
@@ -61,6 +62,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets the data type of the value to validate.
 		/// </summary>
+		/// <value>One of the <see cref="ParameterDataType"/> values.</value>
 		public ParameterDataType DataType
 		{
 			get { return mDataType; }
@@ -69,6 +71,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Gets a read-only list of <see cref="Constraint"/>s parsed from <see cref="Constraints"/>.
 		/// </summary>
+		/// <value>One or more <see cref="Constraint"/>s.</value>
 		public IReadOnlyList<Constraint> ParsedConstraints
 		{
 			get
