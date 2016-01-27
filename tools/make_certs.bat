@@ -1,7 +1,7 @@
 # make_certs.bat
 # Creates a PFX file to sign the Universal Windows Unit Test App, if the file does not exist.
 # Create a strong name key file (.snk) in the solution folder to sign all assemblies, if the file does not exist.
-# Copyright 2015 Daniel Kopp
+# Copyright 2015-2016 Daniel Kopp
 # Licensed under the Apache License, Version 2.0
 
 @SET PfxPath="..\TemporaryKey.pfx"

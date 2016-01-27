@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="Resources.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
  * <assembly name="NerdyDuck.ParameterValidation">
  * Validation and serialization of parameter values for .NET
  * </assembly>
- * <file name="Resources.cs" date="2016-01-13">
+ * <file name="Resources.cs" date="2016-01-27">
  * Helper class to access localized string resources.
  * </file>
  ******************************************************************************/
@@ -713,6 +713,30 @@ namespace NerdyDuck.ParameterValidation.Properties
 		internal static string ConstraintParser_Parse_InvalidCharAfterParams
 		{
 			get { return GetResource("ConstraintParser_Parse_InvalidCharAfterParams"); }
+		}
+
+		/// <summary>
+		/// Gets a localized string similar to "At least one of the specified parameter strings is null or empty or contains only white-space.".
+		/// </summary>
+		internal static string DisplayHintConstraint_CheckParameters_InvalidParameter
+		{
+			get { return GetResource("DisplayHintConstraint_CheckParameters_InvalidParameter"); }
+		}
+
+		/// <summary>
+		/// Gets a localized string similar to "The list of parameters is empty.".
+		/// </summary>
+		internal static string DisplayHintConstraint_CheckParameters_NoParameter
+		{
+			get { return GetResource("DisplayHintConstraint_CheckParameters_NoParameter"); }
+		}
+
+		/// <summary>
+		/// Gets a localized string similar to "Type '{0}' is not an enumeration.".
+		/// </summary>
+		internal static string ParameterConvert_ExamineEnumeration_NotEnum
+		{
+			get { return GetResource("ParameterConvert_ExamineEnumeration_NotEnum"); }
 		}
 		#endregion
 

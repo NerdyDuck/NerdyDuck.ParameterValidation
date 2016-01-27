@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="EnumTypeConstraint.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -186,14 +186,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
 		protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
 		{
-			if (results == null)
-			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x9f), nameof(results));
-			}
-			if (value == null)
-			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0xa0), nameof(value));
-			}
+			base.OnBaseValidation(results, value, dataType, memberName, displayName);
 			AssertDataType(dataType, ParameterDataType.Enum);
 
 			if (UnderlyingType == null)
@@ -213,10 +206,23 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					return;
 				}
 
-				ValType = ParameterConvert.GetEnumUnderlyingType(ValType);
+				if (mHasFlags)
+				{
+					long value2 = Convert.ToInt64(value);
+					if (((value2 ^ FlagMask) & value2) != 0)
+					{
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x4e), string.Format(Properties.Resources.EnumConstraint_Validate_InvalidFlag, displayName), memberName, this));
+					}
+				}
+				else
+				{
+					if (!mEnumValues.ContainsValue(value))
+					{
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x50), string.Format(Properties.Resources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
+					}
+				}
 			}
-
-			if (ValType == typeof(int) || ValType == typeof(long) || ValType == typeof(short) || ValType == typeof(byte) ||
+			else if (ValType == typeof(int) || ValType == typeof(long) || ValType == typeof(short) || ValType == typeof(byte) ||
 				ValType == typeof(uint) || ValType == typeof(ulong) || ValType == typeof(ushort) || ValType == typeof(sbyte))
 			{
 				if (mHasFlags)
@@ -262,29 +268,13 @@ namespace NerdyDuck.ParameterValidation.Constraints
 				if (EnumType == null)
 					return;
 
-				TypeInfo EnumInfo = EnumType.GetTypeInfo();
-				if (!EnumInfo.IsEnum)
-					return;
-
-
-				mUnderlyingType = ParameterConvert.GetEnumUnderlyingType(EnumType);
-				if (EnumInfo.GetCustomAttribute(typeof(FlagsAttribute)) != null)
+				try
 				{
-					mHasFlags = true;
+					mEnumValues = ParameterConvert.ExamineEnumeration(EnumType, false, out mUnderlyingType, out mHasFlags);
 				}
-
-				mEnumValues = new Dictionary<string, object>();
-				foreach (FieldInfo field in EnumInfo.DeclaredFields)
+				catch (CodedArgumentException)
 				{
-					if (field.IsLiteral)
-					{
-#if WINDOWS_UWP
-						mEnumValues.Add(field.Name, Convert.ChangeType(field.GetValue(null), mUnderlyingType));
-#endif
-#if WINDOWS_DESKTOP
-						mEnumValues.Add(field.Name, field.GetRawConstantValue());
-#endif
-					}
+					return;
 				}
 
 				if (mHasFlags)

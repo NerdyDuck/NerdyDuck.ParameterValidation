@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="ParameterDataType.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,121 +42,121 @@ namespace NerdyDuck.ParameterValidation
 		/// <summary>
 		/// Unknown parameter type. Do not use.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		None = 0,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.Boolean"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Bool = 1,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.Byte"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Byte = 2,
 
 		/// <summary>
 		/// The parameter has a value representing an array of bytes.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Bytes = 3,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.DateTimeOffset"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		DateTimeOffset = 4,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.Decimal"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Decimal = 5,
 
 		/// <summary>
 		/// The parameter has a value representing an enumeration.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Enum = 6,
 
 		/// <summary>
 		/// The parameter has a value representing a globally unique identifier <see cref="System.Guid"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Guid = 7,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.Int16"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Int16 = 8,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.Int32"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Int32 = 9,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.Int64"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Int64 = 10,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.SByte"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		SignedByte = 11,
 
 		/// <summary>
 		/// The parameter has a value representing a string.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		String = 12,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.TimeSpan"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		TimeSpan = 13,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.UInt16"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		UInt16 = 14,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.UInt32"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		UInt32 = 15,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.UInt64"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		UInt64 = 16,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.Uri"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Uri = 17,
 
 		/// <summary>
 		/// The parameter has a value representing a <see cref="System.Version"/>.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Version = 18,
 
 		/// <summary>
 		/// The parameter has a value representing an XML fragment or document.
 		/// </summary>
-		[DataMember]
+		[EnumMember]
 		Xml = 19
 	}
 }

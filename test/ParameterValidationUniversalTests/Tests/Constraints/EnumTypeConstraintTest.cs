@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="EnumTypeConstraintTest.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -127,6 +127,20 @@ namespace NerdyDuck.Tests.ParameterValidation.Constraints
 			Assert.AreEqual(type, c.TypeName);
 			Assert.IsNotNull(c.ResolvedType);
 		}
+		[TestMethod]
+		public void SetParameters_ParamsNullOrNoDataType_Error()
+		{
+			CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+			{
+				EnumTypeConstraint c = new EnumTypeConstraint();
+				c.SetParametersInternal(new string[0], ParameterDataType.None);
+			});
+			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+			{
+				EnumTypeConstraint c = new EnumTypeConstraint();
+				c.SetParametersInternal(null, ParameterDataType.Enum);
+			});
+		}
 
 		[TestMethod]
 		public void SetParameters_TooManyParams_Error()
@@ -156,6 +170,36 @@ namespace NerdyDuck.Tests.ParameterValidation.Constraints
 			IEnumerable<ParameterValidationResult> result = c.Validate(System.UriKind.Absolute, ParameterDataType.Enum, Constants.MemberName);
 			Assert.IsNotNull(result);
 			Assert.IsFalse(result.GetEnumerator().MoveNext());
+		}
+
+		[TestMethod]
+		public void Validate_FlagsEnum_Success()
+		{
+			string type = typeof(System.Text.RegularExpressions.RegexOptions).AssemblyQualifiedName;
+			EnumTypeConstraint c = new EnumTypeConstraint(type);
+			IEnumerable<ParameterValidationResult> result = c.Validate(System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Multiline, ParameterDataType.Enum, Constants.MemberName);
+			Assert.IsNotNull(result);
+			Assert.IsFalse(result.GetEnumerator().MoveNext());
+		}
+
+		[TestMethod]
+		public void Validate_InvEnum_Success()
+		{
+			string type = typeof(System.DayOfWeek).AssemblyQualifiedName;
+			EnumTypeConstraint c = new EnumTypeConstraint(type);
+			IEnumerable<ParameterValidationResult> result = c.Validate((System.DayOfWeek)0x80, ParameterDataType.Enum, Constants.MemberName);
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.GetEnumerator().MoveNext());
+		}
+
+		[TestMethod]
+		public void Validate_InvFlagsEnum_Success()
+		{
+			string type = typeof(System.Text.RegularExpressions.RegexOptions).AssemblyQualifiedName;
+			EnumTypeConstraint c = new EnumTypeConstraint(type);
+			IEnumerable<ParameterValidationResult> result = c.Validate((System.Text.RegularExpressions.RegexOptions)0x80, ParameterDataType.Enum, Constants.MemberName);
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.GetEnumerator().MoveNext());
 		}
 
 		[TestMethod]
@@ -210,7 +254,7 @@ namespace NerdyDuck.Tests.ParameterValidation.Constraints
 		}
 
 		[TestMethod]
-		public void Validate_ValueFlag_Success()
+		public void Validate_ValueFlagsInt_Success()
 		{
 			string type = typeof(System.Text.RegularExpressions.RegexOptions).AssemblyQualifiedName;
 			EnumTypeConstraint c = new EnumTypeConstraint(type);
@@ -220,7 +264,7 @@ namespace NerdyDuck.Tests.ParameterValidation.Constraints
 		}
 
 		[TestMethod]
-		public void Validate_InvValueFlag_Success()
+		public void Validate_InvValueFlagInt_Success()
 		{
 			string type = typeof(System.Text.RegularExpressions.RegexOptions).AssemblyQualifiedName;
 			EnumTypeConstraint c = new EnumTypeConstraint(type);

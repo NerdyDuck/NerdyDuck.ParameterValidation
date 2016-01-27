@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="AssemblyInfo.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NerdyDuck")]
 [assembly: AssemblyProduct("NerdyDuck Core Libraries")]
-[assembly: AssemblyCopyright("Copyright © Daniel Kopp 2015")]
+[assembly: AssemblyCopyright("Copyright © Daniel Kopp 2015-2016")]
 [assembly: AssemblyTrademark("Covered by Apache License 2.0")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-US")]

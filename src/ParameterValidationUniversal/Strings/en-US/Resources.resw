@@ -372,4 +372,13 @@
   <data name="ConstraintParser_Parse_InvalidCharAfterParams" xml:space="preserve">
     <value>Invalid character '{0}' after parameters.</value>
   </data>
+  <data name="DisplayHintConstraint_CheckParameters_InvalidParameter" xml:space="preserve">
+    <value>At least one of the specified parameter strings is null or empty or contains only white-space.</value>
+  </data>
+  <data name="DisplayHintConstraint_CheckParameters_NoParameter" xml:space="preserve">
+    <value>The list of parameters is empty.</value>
+  </data>
+  <data name="ParameterConvert_ExamineEnumeration_NotEnum" xml:space="preserve">
+    <value>Type '{0}' is not an enumeration.</value>
+  </data>
 </root>

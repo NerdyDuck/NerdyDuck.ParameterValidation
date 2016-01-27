@@ -77,7 +77,7 @@
 0x0047;EnumValuesConstraint.SetParameters;First parameter is not a valid ParameterDataType.
 0x0048;EnumValuesConstraint.SetParameters;No enumeration values specified.
 0x0049;EnumValuesConstraint.SetParameters;Invalid name=value pair.
-0x004a;EnumValuesConstraint.SetParameters;Invalid hey value.
+0x004a;EnumValuesConstraint.SetParameters;Invalid key value.
 0x004b;EnumValuesConstraint.SetParameters;Cannot convert into underlying data type.
 0x004c;EnumValuesConstraint.Validate;Not set up.
 0x004d;EnumValuesConstraint.Validate;Value contains a flag not in the enumeration.
@@ -166,3 +166,10 @@
 0x00a0;Constraint.OnValidation;value is null.
 0x00a1;ConstraintParser.Parse;Last constraint is incomplete.
 0x00a2;ParameterValidationResult.ctor;validationResult is null.
+0x00a3;DisplayHintConstraint.ctor(string);parameter is null or empty.
+0x00a4;DisplayHintConstraint.ctor(IEnumerable<string>);parameters is null.
+0x00a5;DisplayHintConstraint.CheckParameters;No parameters provided.
+0x00a6;DisplayHintConstraint.CheckParameters;At least one parameter is null, empty or whitespace.
+0x00a7;ParameterConvert.ExamineEnumeration;type is null.
+0x00a8;ParameterConvert.ExamineEnumeration;type is not an enumeration.
+

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="EnumValuesConstraint.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -189,6 +189,43 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		#endregion
 
 		#region Public methods
+		#region FromType
+		/// <summary>
+		/// Creates a <see cref="EnumValuesConstraint"/> from the specified type.
+		/// </summary>
+		/// <param name="type">The enumeration type to create a constraint for.</param>
+		/// <returns>A <see cref="EnumValuesConstraint"/> containing all constraint values, the underlying type, and the Flags parameter, if appropriate.</returns>
+		/// <exception cref="CodedArgumentNullException"><paramref name="type"/> is <see langword="null"/>.</exception>
+		/// <exception cref="CodedArgumentException"><paramref name="type"/> is not an enumeration.</exception>
+		public static EnumValuesConstraint FromType(Type type)
+		{
+			Type underlyingType;
+			bool hasFlags;
+
+			// Also handles argument checking.
+			Dictionary<string, object> enumValues = ParameterConvert.ExamineEnumeration(type, true, out underlyingType, out hasFlags);
+
+			return new EnumValuesConstraint(ParameterConvert.NetToParameterDataType(underlyingType), hasFlags, enumValues);
+		}
+		#endregion
+
+		#region GetEnumValuesDictionary
+		/// <summary>
+		/// Gets a dictionary of enumeration names and values from the specified enumeration type.
+		/// </summary>
+		/// <param name="type">The type to get enumeration values. of.</param>
+		/// <returns>A dictionary keyed by the enumeration value names, with the actual enumeration values as values.</returns>
+		/// <exception cref="CodedArgumentNullException"><paramref name="type"/> is <see langword="null"/>.</exception>
+		/// <exception cref="CodedArgumentException"><paramref name="type"/> is not an enumeration.</exception>
+		public static IDictionary<string, object> GetEnumValuesDictionary(Type type)
+		{
+			Type underlyingType;
+			bool hasFlags;
+
+			// Also handles argument checking.
+			return ParameterConvert.ExamineEnumeration(type, true, out underlyingType, out hasFlags);
+		}
+		#endregion
 
 #if WINDOWS_DESKTOP
 		#region GetObjectData

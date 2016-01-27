@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="ConstraintParser.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -173,7 +173,7 @@ namespace NerdyDuck.ParameterValidation
 		/// <param name="constraints">A list of <see cref="Constraints"/>s to concatenate into a string.</param>
 		/// <returns>A string containing the string representations of all <see cref="Constraint"/>s in <paramref name="constraints"/>, or <see langword="null"/>, if <paramref name="constraints"/> is <see langword="null"/>.</returns>
 		/// <remarks><see cref="NullConstraint"/>s and <see cref="EncryptedConstraint"/>s are moved to the beginning of the string to improve search speed. All other constraints are written in the provided order.</remarks>
-		public static string ConcatConstraints(IList<Constraint> constraints)
+		public static string ConcatConstraints(IReadOnlyList<Constraint> constraints)
 		{
 			if (constraints == null)
 				return null;

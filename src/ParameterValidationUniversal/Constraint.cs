@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="Constraint.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,6 +47,7 @@ namespace NerdyDuck.ParameterValidation
 		internal const string CharacterSetConstraintName = "CharSet";
 		internal const string DatabaseConstraintName = "Database";
 		internal const string DecimalPlacesConstraintName = "DecimalPlaces";
+		internal const string DisplayHintConstraintName = "DisplayHint";
 		internal const string EncryptedConstraintName = "Encrypted";
 		internal const string EndpointConstraintName = "Endpoint";
 		internal const string EnumValuesConstraintName = "Values";
@@ -61,6 +62,7 @@ namespace NerdyDuck.ParameterValidation
 		internal const string NullConstraintName = "Null";
 		internal const string PasswordConstraintName = "Password";
 		internal const string PathConstraintName = "Path";
+		internal const string ReadOnlyConstraintName = "ReadOnly";
 		internal const string RegexConstraintName = "Regex";
 		internal const string StepConstraintName = "Step";
 		internal const string TypeConstraintName = "Type";

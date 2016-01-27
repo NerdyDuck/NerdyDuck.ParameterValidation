@@ -113,6 +113,7 @@
     <Compile Include="Tests\Constraints\CharacterSetConstraintTest.cs" />
     <Compile Include="Tests\Constraints\DatabaseConstraintTest.cs" />
     <Compile Include="Tests\Constraints\DecimalPlacesConstraintTest.cs" />
+    <Compile Include="Tests\Constraints\DisplayHintConstraintTest.cs" />
     <Compile Include="Tests\Constraints\EncryptedConstraintTest.cs" />
     <Compile Include="Tests\Constraints\EndpointConstraintTest.cs" />
     <Compile Include="Tests\Constraints\EnumTypeConstraintTest.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Tests\Constraints\NullConstraintTest.cs" />
     <Compile Include="Tests\Constraints\PasswordConstraintTest.cs" />
     <Compile Include="Tests\Constraints\PathConstraintTest.cs" />
+    <Compile Include="Tests\Constraints\ReadOnlyConstraintTest.cs" />
     <Compile Include="Tests\Constraints\RegexConstraintTest.cs" />
     <Compile Include="Tests\Constraints\StepConstraintTest.cs" />
     <Compile Include="Tests\Constraints\TypeConstraintTest.cs" />

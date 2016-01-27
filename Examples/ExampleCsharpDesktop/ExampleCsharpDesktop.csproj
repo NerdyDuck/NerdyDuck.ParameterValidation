@@ -63,7 +63,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DateTimeToOffsetConverter.cs" />
+    <Compile Include="DoubleObjectInt32Converter.cs" />
+    <Compile Include="ParameterDataTypeTemplateSelector.cs" />
+    <Compile Include="Gender.cs" />
     <Compile Include="SystemSetting.cs" />
+    <Compile Include="SystemSettings.cs" />
+    <Compile Include="SystemSettingViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,7 +109,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ParameterValidationDesktop\ParameterValidationDesktop.csproj">

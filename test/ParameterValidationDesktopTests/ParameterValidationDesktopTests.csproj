@@ -102,6 +102,9 @@
     <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\DecimalPlacesConstraintTest.cs">
       <Link>Tests\Constraints\DecimalPlacesConstraintTest.cs</Link>
     </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\DisplayHintConstraintTest.cs">
+      <Link>Tests\Constraints\DisplayHintConstraintTest.cs</Link>
+    </Compile>
     <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\EncryptedConstraintTest.cs">
       <Link>Tests\Constraints\EncryptedConstraintTest.cs</Link>
     </Compile>
@@ -146,6 +149,9 @@
     </Compile>
     <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\PathConstraintTest.cs">
       <Link>Tests\Constraints\PathConstraintTest.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\ReadOnlyConstraintTest.cs">
+      <Link>Tests\Constraints\ReadOnlyConstraintTest.cs</Link>
     </Compile>
     <Compile Include="..\ParameterValidationUniversalTests\Tests\Constraints\RegexConstraintTest.cs">
       <Link>Tests\Constraints\RegexConstraintTest.cs</Link>

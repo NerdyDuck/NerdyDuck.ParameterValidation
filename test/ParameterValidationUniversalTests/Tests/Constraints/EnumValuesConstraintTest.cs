@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="EnumValuesConstraintTest.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -327,6 +327,21 @@ namespace NerdyDuck.Tests.ParameterValidation.Constraints
 			});
 		}
 
+		[TestMethod]
+		public void FromType_Success()
+		{
+			EnumValuesConstraint c = EnumValuesConstraint.FromType(typeof(System.DayOfWeek));
+			Assert.AreEqual(7, c.EnumValues.Count);
+			Assert.AreEqual(typeof(int), c.UnderlyingType);
+			Assert.IsFalse(c.HasFlags);
+		}
+
+		[TestMethod]
+		public void GetEnumValuesDictionary_Success()
+		{
+			IDictionary<string, object> enums = EnumValuesConstraint.GetEnumValuesDictionary(typeof(System.DayOfWeek));
+			Assert.AreEqual(7, enums.Count);
+		}
 		#endregion
 
 		#region Private methods

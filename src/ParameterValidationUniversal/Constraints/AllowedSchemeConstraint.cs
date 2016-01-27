@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="AllowedSchemeConstraint.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -215,7 +215,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		/// <summary>
 		/// Checks that the specified list of schemes is not empty, and does not contain null or whitespace values.
 		/// </summary>
-		/// <param name="schemes"></param>
+		/// <param name="schemes">A list of schemes.</param>
 		private static void CheckSchemes(IReadOnlyList<string> schemes)
 		{
 			if (schemes.Count == 0)

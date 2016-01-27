@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="ParameterConvertTest.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1428,6 +1428,48 @@ namespace NerdyDuck.Tests.ParameterValidation
 			CustomAssert.ThrowsException<ParameterConversionException>(() =>
 			{
 				ParameterConvert.Decrypt("narf!"); // FormatException base64
+			});
+		}
+		#endregion
+
+		#region ExamineEnumeration
+		[TestMethod]
+		public void ExamineEnumeration_Success()
+		{
+			Type u;
+			bool f;
+
+			Dictionary<string, object> enums = ParameterConvert.ExamineEnumeration(typeof(System.DayOfWeek), false, out u, out f);
+			Assert.IsNotNull(enums);
+			Assert.AreEqual(7, enums.Count);
+			Assert.AreEqual(typeof(int), u);
+			Assert.IsFalse(f);
+			Assert.IsInstanceOfType(enums["Monday"], typeof(System.DayOfWeek));
+		}
+
+		[TestMethod]
+		public void ExamineEnumeration_Convert_Success()
+		{
+			Type u;
+			bool f;
+
+			Dictionary<string, object> enums = ParameterConvert.ExamineEnumeration(typeof(System.DayOfWeek), true, out u, out f);
+			Assert.IsNotNull(enums);
+			Assert.AreEqual(7, enums.Count);
+			Assert.AreEqual(typeof(int), u);
+			Assert.IsFalse(f);
+			Assert.IsInstanceOfType(enums["Monday"], typeof(int));
+		}
+
+		[TestMethod]
+		public void ExamineEnumeration_TypeNull_Error()
+		{
+			Type u;
+			bool f;
+
+			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+			{
+				Dictionary<string, object> enums = ParameterConvert.ExamineEnumeration(null, false, out u, out f);
 			});
 		}
 		#endregion

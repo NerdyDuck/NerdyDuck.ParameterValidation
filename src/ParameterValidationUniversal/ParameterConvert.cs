@@ -1,7 +1,7 @@
 ﻿#region Copyright
 /*******************************************************************************
  * <copyright file="ParameterConvert.cs" owner="Daniel Kopp">
- * Copyright 2015 Daniel Kopp
+ * Copyright 2015-2016 Daniel Kopp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1382,7 +1382,64 @@ namespace NerdyDuck.ParameterValidation
 		}
 		#endregion
 
-		#region IsIntegerType
+		#region ExamineEnumeration
+		/// <summary>
+		/// Examines and returns the values, underlying type and FlagsAttribute of an enumeration type.
+		/// </summary>
+		/// <param name="enumType">The enumeration type to examine.</param>
+		/// <param name="convertValues">A value indicating if the value in the returned dictionary should be converted to the enumeration's underlying type, instead of the original enumeration type.</param>
+		/// <param name="underlyingType">When the method returns, the underlying type of the enumeration specified by <paramref name="enumType"/>.</param>
+		/// <param name="hasFlags">When the method returns, a value indicating if the enumeration has a FlagsAttribute.</param>
+		/// <returns></returns>
+		internal static Dictionary<string, object> ExamineEnumeration(Type enumType, bool convertValues, out Type underlyingType, out bool hasFlags)
+		{
+			underlyingType = null;
+			hasFlags = false;
+
+			if (enumType == null)
+			{
+				throw new CodedArgumentNullException(Errors.CreateHResult(0xa7), nameof(enumType));
+			}
+
+			TypeInfo EnumInfo = enumType.GetTypeInfo();
+			if (!EnumInfo.IsEnum)
+			{
+				throw new CodedArgumentException(Errors.CreateHResult(0xa8), string.Format(Properties.Resources.ParameterConvert_ExamineEnumeration_NotEnum, enumType.FullName), nameof(enumType), null);
+			}
+
+			underlyingType = GetEnumUnderlyingType(enumType);
+
+			if (EnumInfo.GetCustomAttribute(typeof(FlagsAttribute)) != null)
+			{
+				hasFlags = true;
+			}
+
+			Dictionary<string, object> ReturnValue = new Dictionary<string, object>();
+			foreach (FieldInfo field in EnumInfo.DeclaredFields)
+			{
+				if (field.IsLiteral)
+				{
+					if (convertValues)
+					{
+#if WINDOWS_DESKTOP
+						ReturnValue.Add(field.Name, field.GetRawConstantValue());
+#else
+						ReturnValue.Add(field.Name, Convert.ChangeType(field.GetValue(null), underlyingType));
+#endif
+					}
+					else
+					{
+						ReturnValue.Add(field.Name, field.GetValue(null));
+					}
+				}
+			}
+
+			return ReturnValue;
+
+		}
+#endregion
+
+#region IsIntegerType
 		/// <summary>
 		/// Checks if the specified type represents a an integer type.
 		/// </summary>
@@ -1416,7 +1473,7 @@ namespace NerdyDuck.ParameterValidation
 			return (type == typeof(int) || type == typeof(long) || type == typeof(short) || type == typeof(byte) ||
 				type == typeof(uint) || type == typeof(ulong) || type == typeof(ushort) || type == typeof(sbyte));
 		}
-		#endregion
-		#endregion
+#endregion
+#endregion
 	}
 }

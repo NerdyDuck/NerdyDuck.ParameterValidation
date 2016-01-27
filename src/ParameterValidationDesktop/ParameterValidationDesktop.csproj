@@ -88,6 +88,9 @@
     <Compile Include="..\ParameterValidationUniversal\Constraints\DecimalPlacesConstraint.cs">
       <Link>Constraints\DecimalPlacesConstraint.cs</Link>
     </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\DisplayHintConstraint.cs">
+      <Link>Constraints\DisplayHintConstraint.cs</Link>
+    </Compile>
     <Compile Include="..\ParameterValidationUniversal\Constraints\EncryptedConstraint.cs">
       <Link>Constraints\EncryptedConstraint.cs</Link>
     </Compile>
@@ -132,6 +135,9 @@
     </Compile>
     <Compile Include="..\ParameterValidationUniversal\Constraints\PathConstraint.cs">
       <Link>Constraints\PathConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\Constraints\ReadOnlyConstraint.cs">
+      <Link>Constraints\ReadOnlyConstraint.cs</Link>
     </Compile>
     <Compile Include="..\ParameterValidationUniversal\Constraints\RegexConstraint.cs">
       <Link>Constraints\RegexConstraint.cs</Link>

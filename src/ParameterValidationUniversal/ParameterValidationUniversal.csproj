@@ -129,6 +129,7 @@
     <Compile Include="Constraints\CharacterSetConstraint.cs" />
     <Compile Include="Constraints\DatabaseConstraint.cs" />
     <Compile Include="Constraints\DecimalPlacesConstraint.cs" />
+    <Compile Include="Constraints\DisplayHintConstraint.cs" />
     <Compile Include="Constraints\EncryptedConstraint.cs" />
     <Compile Include="Constraints\EndpointConstraint.cs" />
     <Compile Include="Constraints\EnumTypeConstraint.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Constraints\NullConstraint.cs" />
     <Compile Include="Constraints\PasswordConstraint.cs" />
     <Compile Include="Constraints\PathConstraint.cs" />
+    <Compile Include="Constraints\ReadOnlyConstraint.cs" />
     <Compile Include="Constraints\RegexConstraint.cs" />
     <Compile Include="Constraints\StepConstraint.cs" />
     <Compile Include="Constraints\TypeConstraint.cs" />
