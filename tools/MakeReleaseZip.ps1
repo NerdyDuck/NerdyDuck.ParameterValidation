@@ -39,7 +39,7 @@ Copy-Item -Path $UniversalAnyPath -Destination ($TempPath + "uap10.0\anyCPU\") -
 Copy-Item -Path $UniversalARMPath -Destination ($TempPath + "uap10.0\arm\") -Recurse
 Copy-Item -Path $Universalx86Path -Destination ($TempPath + "uap10.0\x86\") -Recurse
 Copy-Item -Path $Universalx64Path -Destination ($TempPath + "uap10.0\x64\") -Recurse
-Copy-Item -Path $DesktopPath -Destination ($TempPath + "net45\") -Recurse
+Copy-Item -Path $DesktopPath -Destination ($TempPath + "net46\") -Recurse
 
 $OutputFile = $OutputPath + "test.zip"
 Get-Content $AssemblyInfoPath | ForEach-Object {

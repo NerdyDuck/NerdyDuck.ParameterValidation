@@ -6,6 +6,10 @@ This project provides a library with a set of constraint classes that can be use
 - .NET Framework 4.6 or newer for desktop applications
 - Universal Windows Platform (UWP) 10.0 (Windows 10) or newer for Windows Store Apps and [Windows 10 IoT](https://dev.windows.com/en-us/iot).
 
+#### Dependencies
+The project uses the following NuGet packages that are either found on NuGet.org or my own feed (see below):
+- NerdyDuck.CodedExceptions
+
 #### Languages
 The neutral resource language for all texts is English (en-US). Currently, the only localization available is German (de-DE). If you like to add other languages, feel free to send a pull request with the translated resources!
 
@@ -23,7 +27,7 @@ For examples and a complete class reference, please see the [Wiki](../../wiki/).
 - Added [`ReadOnlyConstraint`](../../wiki/4b242047-5017-498c-2161-28f426df88dd) and [`DisplayHintConstraint`](../../wiki/4b242047-5017-498c-2161-28f426df88dd)
 - Added [`EnumValuesConstraint.FromType`](../../wiki/4b242047-5017-498c-2161-28f426df88dd) and [`EnumValuesConstraint.GetEnumValuesDictionary`](../../wiki/4b242047-5017-498c-2161-28f426df88dd) method.
 - Fixed a bug preventing serialization of [`ParameterDataType`](../../wiki/6575758d-3df2-4465-adfd-8fed94d84b74).
-- Completed XMl comments in code.
+- Completed XML comments in code.
 - Added example projects.
 
 #####2016-01-11 / v1.0.1 / DAK
