@@ -137,6 +137,8 @@ namespace <#= ResourceNamespace #>
 	/// <summary>
 	/// Helper class to access localized string resources.
 	/// </summary>
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("<#= Path.GetFileName(Host.TemplateFile) #>", "1.0.0.0")]
+	[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	internal static class <#= TemplateName #>
 	{
 		#region String resource properties<#

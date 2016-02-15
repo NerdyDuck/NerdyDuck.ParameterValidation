@@ -19,7 +19,7 @@
  * <assembly name="NerdyDuck.ParameterValidation">
  * Validation and serialization of parameter values for .NET
  * </assembly>
- * <file name="Resources.cs" date="2016-02-12">
+ * <file name="Resources.cs" date="2016-02-15">
  * Helper class to access localized string resources.
  * </file>
  ******************************************************************************/
@@ -32,6 +32,8 @@ namespace NerdyDuck.ParameterValidation.Properties
 	/// <summary>
 	/// Helper class to access localized string resources.
 	/// </summary>
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Resources.tt", "1.0.0.0")]
+	[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	internal static class Resources
 	{
 		#region String resource properties
