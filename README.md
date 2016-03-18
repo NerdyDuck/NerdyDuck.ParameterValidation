@@ -21,7 +21,16 @@ The neutral resource language for all texts is English (en-US). Currently, the o
 #### More information
 For examples and a complete class reference, please see the [Wiki](../../wiki/). :exclamation: **Work in progress**.
 
+#### Licence
+The project is licensed under the [Apache License, Version 2.0](LICENSE).
+
 #### History
+#####TBD / vNext / DAK
+- Added deployment project to compile all projects and create/push the NuGet package in one go. Removed separate NuGet project. Removes also dependency on NuGet Packager Template.
+- Extracted file signing into its own reusable MSBuild target file.
+- Extracted resource generation for desktop project into its own reusable MSBuild target file.
+- Created a MSBuild target for automatic T4 transformations on build. Removes dependency on Visual Studio Modeling SDK.
+
 #####2016-01-27 / v1.1.0 / DAK
 - Changed argument type of [`ParameterConvert.ToDataType`](../../wiki/4b242047-5017-498c-2161-28f426df88dd), [`ParameterConvert.TryGetTypeConstraint`](../../wiki/8ab10564-458a-340d-bd21-07b27b4009b3), [`ParameterConvert.HasEncryptedConstraint`](../../wiki/cbc2ac67-5f06-636c-aab9-0c9ed58599d8) and [`ConstraintParser.ConcatConstraints`](../../wiki/58929f4c-736f-a231-e4eb-edf924756d8b) from `IList<Constraint> constraints` to `IReadOnlyList<Constraint> constraints`.
 - Added [`ReadOnlyConstraint`](../../wiki/4b242047-5017-498c-2161-28f426df88dd) and [`DisplayHintConstraint`](../../wiki/4b242047-5017-498c-2161-28f426df88dd)
