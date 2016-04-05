@@ -33,6 +33,7 @@
 		<authors>Daniel Kopp</authors>
 		<description>This library provides a set of constraint classes that can be used to validate arbitrary values, like application settings. The constraints can be expressed in strings, so they can be stored along with the validated values. It also contains classes to consistently serialize and deserialize various data types into strings that can then be stored in formats like XML or databases.</description>
 		<releaseNotes>
+			v1.1.1: Updated library references.
 			v1.1.0: Changed argument type of some ParameterConvert and ConstraintParser methods from IList&lt;Constraint&gt; to IReadOnlyList&lt;Constraint&gt;.
 			Completed XML comments in code.
 		</releaseNotes>
@@ -48,8 +49,9 @@
 			<frameworkAssembly assemblyName="System.Xml" targetFramework="net46" />
 		</frameworkAssemblies>
 		<dependencies>
-			<dependency id="NerdyDuck.CodedExceptions" version="1.1.2"/>
+			<dependency id="NerdyDuck.CodedExceptions" version="1.2.0"/>
 		</dependencies>
 		<references></references>
 		<tags>constraint validation serialization uwp desktop</tags>
 	</metadata>
+</package>

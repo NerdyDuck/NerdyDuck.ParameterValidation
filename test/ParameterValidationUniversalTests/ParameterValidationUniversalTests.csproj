@@ -135,7 +135,6 @@
     <Compile Include="Tests\Constraints\TypeConstraintTest.cs" />
     <Compile Include="Tests\Constraints\UppercaseConstraintTest.cs" />
     <Compile Include="Tests\ConstraintTest.cs" />
-    <Compile Include="Tests\ErrorsTest.cs" />
     <Compile Include="Tests\EventArgsTest.cs" />
     <Compile Include="Tests\InvalidDataTypeExceptionTest.cs" />
     <Compile Include="Tests\ParameterConversionExceptionTest.cs" />

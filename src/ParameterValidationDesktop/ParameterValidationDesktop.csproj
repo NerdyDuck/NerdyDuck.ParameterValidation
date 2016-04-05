@@ -152,9 +152,6 @@
     <Compile Include="..\ParameterValidationUniversal\Constraints\UppercaseConstraint.cs">
       <Link>Constraints\UppercaseConstraint.cs</Link>
     </Compile>
-    <Compile Include="..\ParameterValidationUniversal\Errors.cs">
-      <Link>Errors.cs</Link>
-    </Compile>
     <Compile Include="..\ParameterValidationUniversal\InvalidDataTypeException.cs">
       <Link>InvalidDataTypeException.cs</Link>
     </Compile>
@@ -187,6 +184,9 @@
     </Compile>
     <Compile Include="..\ParameterValidationUniversal\Properties\Resources.cs">
       <Link>Properties\Resources.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
     <Compile Include="..\ParameterValidationUniversal\TypeExtensions.cs">
       <Link>TypeExtensions.cs</Link>
@@ -209,6 +209,16 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ParameterValidationUniversal\Properties\Resources.tt">
+      <Link>Properties\Resources.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Resources.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <PropertyGroup>
     <TransformT4OnBuild>true</TransformT4OnBuild>
   </PropertyGroup>
@@ -216,7 +226,7 @@
     <SignAssemblies>true</SignAssemblies>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\tools\TransformT4OnBuild.targets"/>
-  <Import Project="..\..\tools\TransformResW2X.targets"/>
-  <Import Project="..\..\tools\SignAssembly.targets"/>
+  <Import Project="..\..\tools\TransformT4OnBuild.targets" />
+  <Import Project="..\..\tools\TransformResW2X.targets" />
+  <Import Project="..\..\tools\SignAssembly.targets" />
 </Project>

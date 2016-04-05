@@ -163,7 +163,6 @@
     <Compile Include="Constraints\StepConstraint.cs" />
     <Compile Include="Constraints\TypeConstraint.cs" />
     <Compile Include="Constraints\UppercaseConstraint.cs" />
-    <Compile Include="Errors.cs" />
     <Compile Include="InvalidDataTypeException.cs" />
     <Compile Include="ParameterConversionException.cs" />
     <Compile Include="ParameterConvert.cs" />
@@ -192,6 +191,6 @@
     <SignAssemblies>true</SignAssemblies>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <Import Project="..\..\tools\TransformT4OnBuild.targets"/>
-  <Import Project="..\..\tools\SignAssembly.targets"/>
+  <Import Project="..\..\tools\TransformT4OnBuild.targets" />
+  <Import Project="..\..\tools\SignAssembly.targets" />
 </Project>

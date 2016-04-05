@@ -5,23 +5,28 @@
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
   </Topic>
-  <Topic id="0e28eb7d-9c5b-4686-85ea-dc7dfdad924b" visible="True" isExpanded="true" apiParentMode="InsertAfter" title="Version History">
+  <Topic id="0e28eb7d-9c5b-4686-85ea-dc7dfdad924b" visible="True" isExpanded="true" isSelected="true" apiParentMode="InsertAfter" title="Version History">
     <HelpKeywords>
       <HelpKeyword index="K" term="version, history" />
     </HelpKeywords>
-    <Topic id="963188a5-5c69-4510-acfe-129da7ee6ef9" visible="True" title="Version 1.0.0">
+    <Topic id="19d4aae3-9065-4a79-b604-baea7550c30b" visible="True" title="Version 1.1.1">
       <HelpKeywords>
-        <HelpKeyword index="K" term="version, 1.0.0" />
-      </HelpKeywords>
-    </Topic>
-    <Topic id="b2fe74bf-6a0a-4b7a-8e3d-3f4118d84159" visible="True" isSelected="true" title="Version 1.0.1">
-      <HelpKeywords>
-        <HelpKeyword index="K" term="version, 1.0.1" />
+        <HelpKeyword index="K" term="version, 1.1.1" />
       </HelpKeywords>
     </Topic>
     <Topic id="63b60f6d-de88-48ea-b1bc-391200a7ef43" visible="True" title="Version 1.1.0">
       <HelpKeywords>
         <HelpKeyword index="K" term="version, 1.1.0" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="b2fe74bf-6a0a-4b7a-8e3d-3f4118d84159" visible="True" title="Version 1.0.1">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="version, 1.0.1" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="963188a5-5c69-4510-acfe-129da7ee6ef9" visible="True" title="Version 1.0.0">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="version, 1.0.0" />
       </HelpKeywords>
     </Topic>
   </Topic>

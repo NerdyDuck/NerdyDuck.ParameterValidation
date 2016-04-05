@@ -1,12 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationDesktop", "src\ParameterValidationDesktop\ParameterValidationDesktop.csproj", "{5BC20E49-5B5C-4293-9ABC-CEF1884773FD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3136C9AF-11FA-461D-9943-13D259DE3FC9} = {3136C9AF-11FA-461D-9943-13D259DE3FC9}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterValidationDesktopTests", "test\ParameterValidationDesktopTests\ParameterValidationDesktopTests.csproj", "{C9AE0929-EA3F-4652-9550-7F3F5F697F24}"
 EndProject

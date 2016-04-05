@@ -171,9 +171,6 @@
     <Compile Include="..\ParameterValidationUniversalTests\Tests\ConstraintTest.cs">
       <Link>Tests\ConstraintTest.cs</Link>
     </Compile>
-    <Compile Include="..\ParameterValidationUniversalTests\Tests\ErrorsTest.cs">
-      <Link>Tests\ErrorsTest.cs</Link>
-    </Compile>
     <Compile Include="..\ParameterValidationUniversalTests\Tests\EventArgsTest.cs">
       <Link>Tests\EventArgsTest.cs</Link>
     </Compile>

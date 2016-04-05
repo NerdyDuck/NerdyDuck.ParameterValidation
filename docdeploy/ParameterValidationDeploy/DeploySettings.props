@@ -55,9 +55,9 @@
 		<ContentFilesPath></ContentFilesPath>
 	</PropertyGroup>
 	<PropertyGroup>
-		<NuGetPackageSource>https://www.myget.org/F/nerdyduck-staging/api/v2/package</NuGetPackageSource>
+		<NuGetPackageSource>https://www.myget.org/F/nerdyduck-release/api/v2/package</NuGetPackageSource>
 		<NuGetPackageSourceApiKey></NuGetPackageSourceApiKey>
-		<NuGetSymbolSource>https://www.myget.org/F/nerdyduck-staging/api/v2/package</NuGetSymbolSource>
+		<NuGetSymbolSource>https://www.myget.org/F/nerdyduck-release/api/v2/package</NuGetSymbolSource>
 		<NuGetSymbolSourceApiKey></NuGetSymbolSourceApiKey>
 	</PropertyGroup>
 	<!-- Optional Properties
