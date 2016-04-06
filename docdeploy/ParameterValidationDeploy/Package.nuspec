@@ -33,11 +33,9 @@
 		<file src="obj\Release\uap10.0\anyCPU\NerdyDuck.ParameterValidation.XML" target="lib\uap10.0\" />
 
 		<!-- Simple Txm for .Net 4.6 desktop version-->
-		<file src="obj\Release\net46\NerdyDuck.CodedExceptions.dll" target="lib\net46\" />
 		<file src="obj\Release\net46\NerdyDuck.ParameterValidation.dll" target="lib\net46\" />
 		<file src="obj\Release\net46\NerdyDuck.ParameterValidation.pdb" target="lib\net46\" />
 		<file src="obj\Release\net46\NerdyDuck.ParameterValidation.XML" target="lib\net46\" />
-		<file src="obj\Release\net46\de-DE\NerdyDuck.CodedExceptions.resources.dll" target="lib\net46\de-DE\" />
 		<file src="obj\Release\net46\de-DE\NerdyDuck.ParameterValidation.resources.dll" target="lib\net46\de-DE\" />
 
 		<!-- Reference files for UAP design-time -->

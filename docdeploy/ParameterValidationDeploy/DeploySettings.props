@@ -53,6 +53,7 @@
 		<UniversalProject>..\..\src\ParameterValidationUniversal\ParameterValidationUniversal.csproj</UniversalProject>
 		<AssemblyInfoFile>..\..\src\ParameterValidationUniversal\Properties\AssemblyInfo.cs</AssemblyInfoFile>
 		<ContentFilesPath></ContentFilesPath>
+		<ExcludedOutputs>**\NerdyDuck.CodedExceptions*.dll</ExcludedOutputs>
 	</PropertyGroup>
 	<PropertyGroup>
 		<NuGetPackageSource>https://www.myget.org/F/nerdyduck-release/api/v2/package</NuGetPackageSource>

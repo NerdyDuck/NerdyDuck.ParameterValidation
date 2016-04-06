@@ -59,6 +59,15 @@
     <Delete Files="@(FilesToDelete)" />
     <!-- Build the projects -->
     <MSBuild Projects="@(ProjectsToBuild)" Targets="Build" />
+    <!-- Remove excluded files from output, and remove the auto-created TempPE folder -->
+    <CombinePath BasePath="$(MSBuildProjectDirectory)\$(IntermediateOutputPath)" Paths="$(ExcludedOutputs.Split(';'))">
+      <Output ItemName="OutputsToDeleteString" TaskParameter="CombinedPaths"/>
+    </CombinePath>
+    <ItemGroup>
+      <OutputsToDelete Include="%(OutputsToDeleteString.Identity)" />
+    </ItemGroup>
+    <Delete Condition=" '@(OutputsToDelete)'!='' " Files="@(OutputsToDelete)" />
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\$(IntermediateOutputPath)\TempPE" />
     <!-- Get version number for .zip and .nupkg from AssemblyInfo.cs, then create zip files from contents of obj directory structure -->
     <GetAssemblyVersion FilePath="$(AssemblyInfoFile)">
       <Output TaskParameter="VersionString" PropertyName="PackageVersionString" />
@@ -103,11 +112,12 @@
     </ParameterGroup>
     <Task>
       <Reference Include="System" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-					Log.LogMessage(MessageImportance.High, "Downloading nuget.exe ...");
-					new System.Net.WebClient().DownloadFile(Address, FileName);
-					Log.LogMessage(MessageImportance.High, "Done.");
-				]]></Code>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          Log.LogMessage(MessageImportance.High, "Downloading nuget.exe ...");
+          new System.Net.WebClient().DownloadFile(Address, FileName);
+          Log.LogMessage(MessageImportance.High, "Done.");
+      ]]></Code>
     </Task>
   </UsingTask>
   <!-- Gets either the AssemblyInformationalVersionAttribute or the first 3 parts of an AssemblyVersionAttribute from an AssemblyInfo file -->
@@ -119,43 +129,42 @@
     <Task>
       <Reference Include="System" />
       <Reference Include="System.IO" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-
-					VersionString = "0.0.0";
-
-					string[] Content = File.ReadAllLines(FilePath, System.Text.Encoding.UTF8);
-					bool VersionFound = false;
-					foreach (string line in Content)
-					{
-						if (line.Contains("AssemblyInformationalVersion"))
-						{
-							int StartPos = line.IndexOf('"') + 1;
-							int Length = line.IndexOf('"', StartPos + 1) - StartPos;
-							VersionString = line.Substring(StartPos, Length);
-							VersionFound = true;
-							break;
-						}
-					}
-					if (!VersionFound)
-					{
-						foreach (string line in Content)
-						{
-							if (line.Contains("AssemblyVersion"))
-							{
-								int StartPos = line.IndexOf('"') + 1;
-								int Length = line.IndexOf('"', StartPos + 1) - StartPos;
-								Version AssemblyVersion = new Version(line.Substring(StartPos, Length));
-								VersionString = AssemblyVersion.ToString(3);
-								VersionFound = true;
-								break;
-							}
-						}
-					}
-					if (VersionFound)
-						Log.LogMessage(MessageImportance.High, "Package version number: " + VersionString);
-					else
-						Log.LogMessage(MessageImportance.High, "No assembly version found!");
-				]]></Code>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          VersionString = "0.0.0";
+          string[] Content = File.ReadAllLines(FilePath, System.Text.Encoding.UTF8);
+          bool VersionFound = false;
+          foreach (string line in Content)
+          {
+            if (line.Contains("AssemblyInformationalVersion"))
+            {
+              int StartPos = line.IndexOf('"') + 1;
+              int Length = line.IndexOf('"', StartPos + 1) - StartPos;
+              VersionString = line.Substring(StartPos, Length);
+              VersionFound = true;
+              break;
+            }
+          }
+          if (!VersionFound)
+          {
+            foreach (string line in Content)
+            {
+              if (line.Contains("AssemblyVersion"))
+              {
+                int StartPos = line.IndexOf('"') + 1;
+                int Length = line.IndexOf('"', StartPos + 1) - StartPos;
+                Version AssemblyVersion = new Version(line.Substring(StartPos, Length));
+                VersionString = AssemblyVersion.ToString(3);
+                VersionFound = true;
+                break;
+              }
+            }
+          }
+          if (VersionFound)
+            Log.LogMessage(MessageImportance.High, "Package version number: " + VersionString);
+          else
+            Log.LogMessage(MessageImportance.High, "No assembly version found!");
+        ]]></Code>
     </Task>
   </UsingTask>
   <!-- Create a zip from a directory structure, using relative paths in the container -->
@@ -168,9 +177,10 @@
       <Reference Include="System" />
       <Reference Include="System.IO" />
       <Reference Include="System.IO.Compression.FileSystem" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-					System.IO.Compression.ZipFile.CreateFromDirectory(DirectoryName, ArchiveFileName, System.IO.Compression.CompressionLevel.Optimal, false);
-				]]></Code>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          System.IO.Compression.ZipFile.CreateFromDirectory(DirectoryName, ArchiveFileName, System.IO.Compression.CompressionLevel.Optimal, false);
+        ]]></Code>
     </Task>
   </UsingTask>
 </Project>
