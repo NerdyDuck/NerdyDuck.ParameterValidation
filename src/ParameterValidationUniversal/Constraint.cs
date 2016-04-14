@@ -96,7 +96,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (string.IsNullOrWhiteSpace(name))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0x02), nameof(name));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.Constraint_ctor_ArgNull), nameof(name));
 			}
 
 			mName = name;
@@ -114,7 +114,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (info == null)
 			{
-				throw new CodedArgumentNullException(nameof(info));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.Constraint_ctor_InfoNull), nameof(info));
 			}
 
 			mName = info.GetString(nameof(Name));
@@ -156,12 +156,12 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (dataType == ParameterDataType.None)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x03), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.Constraint_Validate_TypeNone), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
 			}
 
 			if (string.IsNullOrWhiteSpace(memberName))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0x94), nameof(memberName));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.Constraint_Validate_NameNullEmpty), nameof(memberName));
 			}
 			if (displayName == null)
 			{
@@ -222,7 +222,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (info == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x9b), nameof(info));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.Constraint_GetObjectData_InfoNull), nameof(info));
 			}
 			info.AddValue(nameof(Name), mName);
 		}
@@ -241,7 +241,7 @@ namespace NerdyDuck.ParameterValidation
 		protected virtual void GetParameters(IList<string> parameters)
 		{
 			if (parameters == null)
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x95), nameof(parameters));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.Constraint_GetParameters_ArgNull), nameof(parameters));
 		}
 		#endregion
 
@@ -257,12 +257,12 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (parameters == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x05), nameof(parameters));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.Constraint_SetParameters_ParametersNull), nameof(parameters));
 			}
 
 			if (dataType == ParameterDataType.None)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x04), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.Constraint_SetParameters_TypeNone), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
 			}
 		}
 		#endregion
@@ -278,7 +278,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (dataType == expectedType)
 				return;
-			throw new InvalidDataTypeException(Errors.CreateHResult(0x06), this, dataType);
+			throw new InvalidDataTypeException(Errors.CreateHResult(ErrorCodes.Constraint_AssertDataType_TypeNotSupported), this, dataType);
 		}
 
 		/// <summary>
@@ -291,14 +291,14 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (expectedTypes == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x9c), nameof(expectedTypes));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.Constraint_AssertDataType_TypesNull), nameof(expectedTypes));
 			}
 			foreach (ParameterDataType expectedType in expectedTypes)
 			{
 				if (dataType == expectedType)
 					return;
 			}
-			throw new InvalidDataTypeException(Errors.CreateHResult(0x06), this, dataType);
+			throw new InvalidDataTypeException(Errors.CreateHResult(ErrorCodes.Constraint_AssertDataType_TypeNotSupported), this, dataType);
 		}
 		#endregion
 
@@ -315,11 +315,11 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (results == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x9f), nameof(results));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.Constraint_OnValidation_ResultsNull), nameof(results));
 			}
 			if (value == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0xa0), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.Constraint_OnValidation_ValueNull), nameof(value));
 			}
 		}
 		#endregion

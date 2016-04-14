@@ -90,7 +90,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			string Temp = value as string;
 			if (Temp.ToUpperInvariant().CompareTo(Temp) != 0)
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x0c), string.Format(Properties.Resources.UppercaseConstraint_Validate_Failed, displayName), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.UpperCaseConstraint_Validate_ValueInvalid), string.Format(Properties.Resources.UppercaseConstraint_Validate_Failed, displayName), memberName, this));
 			}
 		}
 		#endregion

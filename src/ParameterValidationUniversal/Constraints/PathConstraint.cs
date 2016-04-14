@@ -91,11 +91,11 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			string Temp = value as string;
 			if (string.IsNullOrWhiteSpace(Temp))
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x09), string.Format(Properties.Resources.Global_Validate_StringEmpty, displayName), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.PathConstraint_Validate_ValueEmpty), string.Format(Properties.Resources.Global_Validate_StringEmpty, displayName), memberName, this));
 			}
 			else if (Temp.IndexOfAny(Path.GetInvalidPathChars()) > -1)
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x0a), string.Format(Properties.Resources.PathConstraint_Validate_FailedChars, displayName, Temp), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.PathConstraint_Validate_ValueInvalid), string.Format(Properties.Resources.PathConstraint_Validate_FailedChars, displayName, Temp), memberName, this));
 			}
 		}
 		#endregion

@@ -157,9 +157,9 @@ namespace NerdyDuck.ParameterValidation
 						{
 							return ToEnumeration(value, tc1.ResolvedType);
 						}
-						throw new ParameterConversionException(Errors.CreateHResult(0x7d), string.Format(Properties.Resources.ParameterConvert_ToDataType_ResolveFailed, tc1.TypeName), dataType, value);
+						throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDataType_ResolveEnumFailed), string.Format(Properties.Resources.ParameterConvert_ToDataType_ResolveFailed, tc1.TypeName), dataType, value);
 					}
-					throw new ParameterConversionException(Errors.CreateHResult(0x7c), Properties.Resources.ParameterConvert_ToDataType_NoTypeConstraint, dataType, value);
+					throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDataType_EnumNoTypeConstraint), Properties.Resources.ParameterConvert_ToDataType_NoTypeConstraint, dataType, value);
 				case ParameterDataType.Xml:
 					TypeConstraint tc2;
 					if (TryGetTypeConstraint(constraints, out tc2))
@@ -168,11 +168,11 @@ namespace NerdyDuck.ParameterValidation
 						{
 							return FromXml(value, tc2.ResolvedType);
 						}
-						throw new ParameterConversionException(Errors.CreateHResult(0x7f), string.Format(Properties.Resources.ParameterConvert_ToDataType_ResolveFailed, tc2.TypeName), dataType, value);
+						throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDataType_ResolveXmlFailed), string.Format(Properties.Resources.ParameterConvert_ToDataType_ResolveFailed, tc2.TypeName), dataType, value);
 					}
-					throw new ParameterConversionException(Errors.CreateHResult(0x7e), Properties.Resources.ParameterConvert_ToDataType_NoTypeConstraint, dataType, value);
+					throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDataType_XmlNoTypeConstraint), Properties.Resources.ParameterConvert_ToDataType_NoTypeConstraint, dataType, value);
 				default:
-					throw new CodedInvalidOperationException(Errors.CreateHResult(0x80), string.Format(Properties.Resources.ParameterConvert_To_DataTypeNotSupported, dataType));
+					throw new CodedInvalidOperationException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDataType_TypeNotSupported), string.Format(Properties.Resources.ParameterConvert_To_DataTypeNotSupported, dataType));
 			}
 		}
 		#endregion
@@ -197,7 +197,7 @@ namespace NerdyDuck.ParameterValidation
 			{
 				if (value.GetType() != ParameterToNetDataType(dataType))
 				{
-					throw new ParameterConversionException(Errors.CreateHResult(0x7b), string.Format(Properties.Resources.ParameterConvert_ToString_TypeMismatch, value.GetType().FullName, dataType));
+					throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToString_TypeMismatch), string.Format(Properties.Resources.ParameterConvert_ToString_TypeMismatch, value.GetType().FullName, dataType));
 				}
 			}
 
@@ -262,7 +262,7 @@ namespace NerdyDuck.ParameterValidation
 					ReturnValue = ToXml(value);
 					break;
 				default:
-					throw new CodedInvalidOperationException(Errors.CreateHResult(0x7a), string.Format(Properties.Resources.ParameterConvert_To_DataTypeNotSupported, dataType));
+					throw new CodedInvalidOperationException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToString_TypeNotSupported), string.Format(Properties.Resources.ParameterConvert_To_DataTypeNotSupported, dataType));
 			}
 
 			if (HasEncryptedConstraint(constraints))
@@ -560,11 +560,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (NullReferenceException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x56), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToBoolean_ValueNull), nameof(value));
 			}
 			catch (FormatException ex)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x57), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Bool), ParameterDataType.Bool, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToBoolean_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Bool), ParameterDataType.Bool, value, ex);
 			}
 		}
 		#endregion
@@ -586,11 +586,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x58), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToByte_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x59), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Byte), ParameterDataType.Bytes, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToByte_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Byte), ParameterDataType.Bytes, value, ex);
 			}
 		}
 		#endregion
@@ -608,7 +608,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (value == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x5a), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToByteArray_ValueNull), nameof(value));
 			}
 			if (string.IsNullOrEmpty(value))
 			{
@@ -620,7 +620,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (FormatException ex)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x5b), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Bytes), ParameterDataType.Bytes, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToByteArray_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Bytes), ParameterDataType.Bytes, value, ex);
 			}
 		}
 		#endregion
@@ -641,11 +641,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x5c), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDateTimeOffset_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x5d), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.DateTimeOffset), ParameterDataType.DateTimeOffset, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDateTimeOffset_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.DateTimeOffset), ParameterDataType.DateTimeOffset, value, ex);
 			}
 		}
 		#endregion
@@ -667,11 +667,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x5e), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDecimal_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x5f), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Decimal), ParameterDataType.Decimal, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToDecimal_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Decimal), ParameterDataType.Decimal, value, ex);
 			}
 		}
 		#endregion
@@ -690,12 +690,12 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (enumType == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x60), nameof(enumType));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToEnumeration_EnumTypeNull), nameof(enumType));
 			}
 
 			if (!enumType.GetTypeInfo().IsEnum)
 			{
-				throw new CodedArgumentException(Errors.CreateHResult(0x61), string.Format(Properties.Resources.ParameterConvert_ToEnumeration_NotEnum, enumType.Name), nameof(enumType));
+				throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToEnumeration_NotEnum), string.Format(Properties.Resources.ParameterConvert_ToEnumeration_NotEnum, enumType.Name), nameof(enumType));
 			}
 
 			try
@@ -704,11 +704,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x62), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToEnumeration_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is OverflowException || ex is ArgumentException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x63), string.Format(Properties.Resources.ParameterConvert_ToEnumeration_Failed, value, enumType.Name), ParameterDataType.Enum, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToEnumeration_ParseFailed), string.Format(Properties.Resources.ParameterConvert_ToEnumeration_Failed, value, enumType.Name), ParameterDataType.Enum, value, ex);
 			}
 		}
 
@@ -744,11 +744,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x64), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToGuid_ValueNull), nameof(value));
 			}
 			catch (FormatException ex)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x65), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Guid), ParameterDataType.Guid, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToGuid_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Guid), ParameterDataType.Guid, value, ex);
 			}
 		}
 		#endregion
@@ -769,11 +769,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x66), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToInt16_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x67), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Int16), ParameterDataType.Int16, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToInt16_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Int16), ParameterDataType.Int16, value, ex);
 			}
 		}
 		#endregion
@@ -794,11 +794,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x68), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToInt32_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x69), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Int32), ParameterDataType.Int32, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToInt32_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Int32), ParameterDataType.Int32, value, ex);
 			}
 		}
 		#endregion
@@ -819,11 +819,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x6a), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToInt64_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x6b), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Int64), ParameterDataType.Int64, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToInt64_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Int64), ParameterDataType.Int64, value, ex);
 			}
 		}
 		#endregion
@@ -845,11 +845,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x78), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToSByte_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x79), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Int64), ParameterDataType.Int64, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToSByte_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Int64), ParameterDataType.Int64, value, ex);
 			}
 		}
 		#endregion
@@ -866,7 +866,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (value == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x6c), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToTimeSpan_ValueNull), nameof(value));
 			}
 
 			try
@@ -875,7 +875,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x6d), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.TimeSpan), ParameterDataType.TimeSpan, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToTimeSpan_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.TimeSpan), ParameterDataType.TimeSpan, value, ex);
 			}
 		}
 		#endregion
@@ -897,11 +897,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x6e), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToUInt16_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x6f), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.UInt16), ParameterDataType.UInt16, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToUInt16_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.UInt16), ParameterDataType.UInt16, value, ex);
 			}
 		}
 		#endregion
@@ -923,11 +923,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x70), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToUInt32_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x71), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.UInt32), ParameterDataType.UInt32, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToUInt32_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.UInt32), ParameterDataType.UInt32, value, ex);
 			}
 		}
 		#endregion
@@ -949,11 +949,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x72), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToUInt64_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x73), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.UInt64), ParameterDataType.UInt64, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToUInt64_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.UInt64), ParameterDataType.UInt64, value, ex);
 			}
 		}
 		#endregion
@@ -974,11 +974,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x74), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToUri_ValueNull), nameof(value));
 			}
 			catch (FormatException ex)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x75), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Uri), ParameterDataType.Uri, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToUri_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Uri), ParameterDataType.Uri, value, ex);
 			}
 		}
 		#endregion
@@ -1001,11 +1001,11 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (ArgumentNullException)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x76), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToVersion_ValueNull), nameof(value));
 			}
 			catch (Exception ex) when (ex is FormatException || ex is ArgumentException || ex is ArgumentOutOfRangeException || ex is OverflowException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x77), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Version), ParameterDataType.Version, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToVersion_ParseFailed), string.Format(Properties.Resources.ParameterConvert_To_Failed, value, ParameterDataType.Version), ParameterDataType.Version, value, ex);
 			}
 		}
 		#endregion
@@ -1024,12 +1024,12 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (value == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x81), nameof(value));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_FromXml_ValueNull), nameof(value));
 			}
 
 			if (type == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x82), nameof(type));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_FromXml_TypeNull), nameof(type));
 			}
 
 			try
@@ -1042,7 +1042,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (InvalidOperationException ex)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x83), string.Format(Properties.Resources.ParameterConvert_FromXml_Failed, type.FullName), ParameterDataType.Xml, value, ex.InnerException);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_FromXml_ParseFailed), string.Format(Properties.Resources.ParameterConvert_FromXml_Failed, type.FullName), ParameterDataType.Xml, value, ex.InnerException);
 			}
 		}
 
@@ -1084,7 +1084,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (InvalidOperationException ex)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x84), string.Format(Properties.Resources.ParameterConvert_ToXml_Failed, value.GetType().FullName), ParameterDataType.Xml, value, ex);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ToXml_SerializeFailed), string.Format(Properties.Resources.ParameterConvert_ToXml_Failed, value.GetType().FullName), ParameterDataType.Xml, value, ex);
 			}
 		}
 		#endregion
@@ -1123,7 +1123,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (Exception ex) when (ex is CryptographicException || ex is IOException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x54), Properties.Resources.ParameterConvert_Encrypt_Failed, ex.InnerException);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_Encrypt_Failed), Properties.Resources.ParameterConvert_Encrypt_Failed, ex.InnerException);
 			}
 		}
 		#endregion
@@ -1156,7 +1156,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (Exception ex) when (ex is CryptographicException || ex is FormatException || ex is IOException)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x55), Properties.Resources.ParameterConvert_Decrypt_Failed, ex.InnerException);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_Decrypt_Failed), Properties.Resources.ParameterConvert_Decrypt_Failed, ex.InnerException);
 			}
 		}
 		#endregion
@@ -1186,7 +1186,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (Exception ex)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x54), Properties.Resources.ParameterConvert_Encrypt_Failed, ex.InnerException);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_Encrypt_Failed), Properties.Resources.ParameterConvert_Encrypt_Failed, ex.InnerException);
 			}
 		}
 		#endregion
@@ -1214,7 +1214,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (Exception ex)
 			{
-				throw new ParameterConversionException(Errors.CreateHResult(0x55), Properties.Resources.ParameterConvert_Decrypt_Failed, ex.InnerException);
+				throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.ParameterConvert_Decrypt_Failed), Properties.Resources.ParameterConvert_Decrypt_Failed, ex.InnerException);
 			}
 		}
 		#endregion
@@ -1265,7 +1265,7 @@ namespace NerdyDuck.ParameterValidation
 		public static ParameterDataType NetToParameterDataType(Type type)
 		{
 			if (type == null)
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x15), nameof(type));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_NetToParameterDataType_ArgNull), nameof(type));
 			if (type == typeof(bool))
 				return ParameterDataType.Bool;
 			if (type == typeof(byte))
@@ -1306,7 +1306,7 @@ namespace NerdyDuck.ParameterValidation
 			if (info.ImplementedInterfaces.Contains(typeof(IXmlSerializable)))
 				return ParameterDataType.Xml;
 
-			throw new CodedArgumentException(Errors.CreateHResult(0x16), string.Format(Properties.Resources.ParameterConvert_NetToParameterDataType_NoMatch, type.FullName), "type");
+			throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.ParameterConvert_NetToParameterDataType_TypeNotSupported), string.Format(Properties.Resources.ParameterConvert_NetToParameterDataType_NoMatch, type.FullName), "type");
 		}
 #endregion
 
@@ -1358,7 +1358,7 @@ namespace NerdyDuck.ParameterValidation
 				case ParameterDataType.Xml:
 					return typeof(object);
 				default:
-					throw new CodedArgumentException(Errors.CreateHResult(0x17), string.Format(Properties.Resources.ParameterConvert_ParameterToNetDataType_NoMatch, type), nameof(type));
+					throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ParameterToNetDataType_NoMatch), string.Format(Properties.Resources.ParameterConvert_ParameterToNetDataType_NoMatch, type), nameof(type));
 			}
 		}
 		#endregion
@@ -1398,13 +1398,13 @@ namespace NerdyDuck.ParameterValidation
 
 			if (enumType == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0xa7), nameof(enumType));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ExamineEnumeration_TypeNull), nameof(enumType));
 			}
 
 			TypeInfo EnumInfo = enumType.GetTypeInfo();
 			if (!EnumInfo.IsEnum)
 			{
-				throw new CodedArgumentException(Errors.CreateHResult(0xa8), string.Format(Properties.Resources.ParameterConvert_ExamineEnumeration_NotEnum, enumType.FullName), nameof(enumType), null);
+				throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.ParameterConvert_ExamineEnumeration_NotEnum), string.Format(Properties.Resources.ParameterConvert_ExamineEnumeration_NotEnum, enumType.FullName), nameof(enumType), null);
 			}
 
 			underlyingType = GetEnumUnderlyingType(enumType);
@@ -1439,7 +1439,7 @@ namespace NerdyDuck.ParameterValidation
 		}
 #endregion
 
-#region IsIntegerType
+		#region IsIntegerType
 		/// <summary>
 		/// Checks if the specified type represents a an integer type.
 		/// </summary>
@@ -1473,7 +1473,7 @@ namespace NerdyDuck.ParameterValidation
 			return (type == typeof(int) || type == typeof(long) || type == typeof(short) || type == typeof(byte) ||
 				type == typeof(uint) || type == typeof(ulong) || type == typeof(ushort) || type == typeof(sbyte));
 		}
-#endregion
-#endregion
+		#endregion
+		#endregion
 	}
 }

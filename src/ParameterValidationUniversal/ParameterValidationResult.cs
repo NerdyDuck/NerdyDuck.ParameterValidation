@@ -50,7 +50,7 @@ namespace NerdyDuck.ParameterValidation
 		private int mHResult;
 		private static readonly Lazy<ParameterValidationResult> mSuccess = new Lazy<ParameterValidationResult>(() =>
 		{
-			return new ParameterValidationResult(Errors.CreateHResult(0x00), Properties.Resources.ParameterValidationResult_Success, null);
+			return new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.ParameterValidationResult_Success), Properties.Resources.ParameterValidationResult_Success, null);
 		});
 		#endregion
 
@@ -106,7 +106,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (validationResult == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0xa2), nameof(validationResult));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterValidationResult_ctor_ResultNull), nameof(validationResult));
 			}
 			mHResult = validationResult.HResult;
 			mConstraint = validationResult.Constraint;
@@ -169,7 +169,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (info == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x9e), nameof(info));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.ParameterValidationResult_GetObjectData_InfoNull), nameof(info));
 			}
 			info.AddValue(nameof(ErrorMessage), ErrorMessage);
 			info.AddValue(nameof(MemberNames), MemberNames.ToList());

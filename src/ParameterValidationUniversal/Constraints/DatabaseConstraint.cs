@@ -177,7 +177,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			base.SetParameters(parameters, dataType);
 			if (parameters.Count < 1 || parameters.Count > 3)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x14), string.Format(Properties.Resources.Global_SetParameters_InvalidCountVariable, this.Name, 2, 3), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.DatabaseConstraint_SetParameters_ParamCountInvalid), string.Format(Properties.Resources.Global_SetParameters_InvalidCountVariable, this.Name, 2, 3), this);
 			}
 
 			mEntity = parameters[0] ?? string.Empty;

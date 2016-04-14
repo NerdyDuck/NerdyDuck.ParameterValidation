@@ -147,7 +147,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			AssertDataType(dataType, ParameterDataType.Decimal);
 			if (parameters.Count != 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x2a), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.DecimalPlacesConstraint_SetParameters_OnlyOneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
 			}
 
 			try
@@ -156,7 +156,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			}
 			catch (ParameterConversionException ex)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x2b), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.DecimalPlacesConstraint_SetParameters_ParamInvalid), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
 			}
 		}
 		#endregion

@@ -152,23 +152,23 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (parameters == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x05), nameof(parameters));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.Constraint_SetParameters_ParametersNull), nameof(parameters));
 			}
 
 			if (dataType == ParameterDataType.None)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x04), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.Constraint_SetParameters_TypeNone), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
 			}
 
 			AssertDataType(dataType, ParameterDataType.Enum);
 			if (parameters.Count != 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x2a), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_SetParameters_OnlyOneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
 			}
 
 			if (string.IsNullOrWhiteSpace(parameters[0]))
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x42), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_SetParameters_ParamNullEmpty), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this);
 			}
 			TypeName = parameters[0];
 			ResetFields();
@@ -202,7 +202,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 				if (ResolvedType != ValType)
 				{
 					// Value is an enumeration, but not the resolved one
-					results.Add(new ParameterValidationResult(Errors.CreateHResult(0x43), string.Format(Properties.Resources.EnumTypeConstraint_Validate_WrongEnum, displayName, ValType.FullName, ResolvedType.FullName), memberName, this));
+					results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_Validate_WrongEnum), string.Format(Properties.Resources.EnumTypeConstraint_Validate_WrongEnum, displayName, ValType.FullName, ResolvedType.FullName), memberName, this));
 					return;
 				}
 
@@ -211,14 +211,14 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					long value2 = Convert.ToInt64(value);
 					if (((value2 ^ FlagMask) & value2) != 0)
 					{
-						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x4e), string.Format(Properties.Resources.EnumConstraint_Validate_InvalidFlag, displayName), memberName, this));
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_Validate_InvalidFlag), string.Format(Properties.Resources.EnumConstraint_Validate_InvalidFlag, displayName), memberName, this));
 					}
 				}
 				else
 				{
 					if (!mEnumValues.ContainsValue(value))
 					{
-						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x50), string.Format(Properties.Resources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_Validate_NotInEnum), string.Format(Properties.Resources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
 					}
 				}
 			}
@@ -230,20 +230,20 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					long value2 = Convert.ToInt64(value);
 					if (((value2 ^ FlagMask) & value2) != 0)
 					{
-						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x4e), string.Format(Properties.Resources.EnumConstraint_Validate_InvalidFlag, displayName), memberName, this));
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_Validate_InvalidFlag), string.Format(Properties.Resources.EnumConstraint_Validate_InvalidFlag, displayName), memberName, this));
 					}
 				}
 				else
 				{
 					if (!mEnumValues.ContainsValue(Convert.ChangeType(value, ValType)))
 					{
-						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x50), string.Format(Properties.Resources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_Validate_NotInEnum), string.Format(Properties.Resources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
 					}
 				}
 			}
 			else
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x52), string.Format(Properties.Resources.EnumConstraint_Validate_NotSupported, displayName, ValType.Name), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_Validate_TypeNotSupported), string.Format(Properties.Resources.EnumConstraint_Validate_NotSupported, displayName, ValType.Name), memberName, this));
 			}
 		}
 		#endregion

@@ -97,7 +97,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (string.IsNullOrWhiteSpace(regularExpression))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0x3a), nameof(regularExpression));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.RegexConstraint_ctor_StringNullEmpty), nameof(regularExpression));
 			}
 
 			mRegularExpression = regularExpression;
@@ -108,11 +108,11 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x3b), Properties.Resources.RegexConstraint_OptionsInvalid, ex);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.RegexConstraint_ctor_OptionsInvalid), Properties.Resources.RegexConstraint_OptionsInvalid, ex);
 			}
 			catch (ArgumentException ex)
 			{
-				throw new CodedArgumentException(Errors.CreateHResult(0x3c), Properties.Resources.RegexConstraint_PatternInvalid, nameof(regularExpression), ex);
+				throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.RegexConstraint_ctor_RegexInvalid), Properties.Resources.RegexConstraint_PatternInvalid, nameof(regularExpression), ex);
 			}
 		}
 
@@ -191,12 +191,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			AssertDataType(dataType, ParameterDataType.String);
 			if (parameters.Count < 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x3d), string.Format(Properties.Resources.Global_SetParameters_InvalidMinCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.RegexConstraint_SetParameters_OneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidMinCount, this.Name, 1), this);
 			}
 
 			if (string.IsNullOrWhiteSpace(parameters[0]))
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x3e), Properties.Resources.RegexConstraint_PatternInvalid, this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.RegexConstraint_SetParameters_RegexInvalid), Properties.Resources.RegexConstraint_PatternInvalid, this);
 			}
 			mRegularExpression = parameters[0];
 
@@ -208,7 +208,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					RegexOptions opts;
 					if (!Enum.TryParse<RegexOptions>(parameters[i], out opts))
 					{
-						throw new ConstraintConfigurationException(Errors.CreateHResult(0x3f), Properties.Resources.RegexConstraint_OptionsInvalid, this);
+						throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.RegexConstraint_SetParameters_OptionsInvalid), Properties.Resources.RegexConstraint_OptionsInvalid, this);
 					}
 					mOptions |= opts;
 				}
@@ -221,11 +221,11 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x3f), Properties.Resources.RegexConstraint_OptionsInvalid, this, ex);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.RegexConstraint_SetParameters_OptionsInvalid), Properties.Resources.RegexConstraint_OptionsInvalid, this, ex);
 			}
 			catch (ArgumentException ex)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x3e), Properties.Resources.RegexConstraint_PatternInvalid, this, ex);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.RegexConstraint_SetParameters_RegexInvalid), Properties.Resources.RegexConstraint_PatternInvalid, this, ex);
 			}
 		}
 		#endregion
@@ -246,7 +246,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 
 			if (!InternalRegex.IsMatch((string)value))
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x40), string.Format(Properties.Resources.RegexConstraint_Validate_Failed, displayName, mRegularExpression), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.RegexConstraint_Validate_NoMatch), string.Format(Properties.Resources.RegexConstraint_Validate_Failed, displayName, mRegularExpression), memberName, this));
 			}
 		}
 		#endregion

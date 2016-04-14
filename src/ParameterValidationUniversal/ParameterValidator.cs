@@ -112,11 +112,11 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (dataType == ParameterDataType.None)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x99), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.ParameterValidator_GetValidationResult_DataTypeNone), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
 			}
 			if (string.IsNullOrEmpty(memberName))
 			{
-				throw new CodedArgumentNullOrEmptyException(Errors.CreateHResult(0x9a), nameof(memberName));
+				throw new CodedArgumentNullOrEmptyException(Errors.CreateHResult(ErrorCodes.ParameterValidator_GetValidationResult_NameNullEmpty), nameof(memberName));
 			}
 
 			if (constraints == null)
@@ -136,7 +136,7 @@ namespace NerdyDuck.ParameterValidation
 			{
 				if (constraints.FirstOrDefault(c => c.Name == Constraint.NullConstraintName) == null)
 				{
-					ReturnValue.Add(new ParameterValidationResult(Errors.CreateHResult(0x9b), string.Format(Properties.Resources.ParameterValidator_Validate_ValueNull, displayName), memberName, new Constraints.NullConstraint()));
+					ReturnValue.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.ParameterValidator_GetValidationResult_ValueNull), string.Format(Properties.Resources.ParameterValidator_Validate_ValueNull, displayName), memberName, new Constraints.NullConstraint()));
 				}
 			}
 			else
@@ -211,7 +211,7 @@ namespace NerdyDuck.ParameterValidation
 			IEnumerable<ParameterValidationResult> Results = GetValidationResult(value, dataType, constraints, memberName, displayName);
 			if (Results.GetEnumerator().MoveNext())
 			{
-				throw new ParameterValidationException(Errors.CreateHResult(0x96), Results);
+				throw new ParameterValidationException(Errors.CreateHResult(ErrorCodes.ParameterValidator_Validate_ValidationFailed), Results);
 			}
 		}
 		#endregion

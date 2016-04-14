@@ -128,11 +128,11 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (!ParameterConvert.IsIntegerType(type))
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x44), nameof(type), type, Properties.Resources.EnumValuesConstraint_NotInteger);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_ctor_NotInteger), nameof(type), type, Properties.Resources.EnumValuesConstraint_NotInteger);
 			}
 			if (values == null || values.Count == 0)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x45), nameof(values));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_ctor_ValuesNull), nameof(values));
 			}
 			ResetFields();
 			mUnderlyingDataType = type;
@@ -154,7 +154,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					}
 					catch (Exception ex) when (ex is InvalidCastException || ex is FormatException || ex is OverflowException)
 					{
-						throw new CodedArgumentException(Errors.CreateHResult(0x46), string.Format(Properties.Resources.EnumValuesConstraint_InvalidValueType, pair.Value.GetType().Name, mUnderlyingDataType), nameof(values), ex);
+						throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_ctor_ValuesTypeMismatch), string.Format(Properties.Resources.EnumValuesConstraint_InvalidValueType, pair.Value.GetType().Name, mUnderlyingDataType), nameof(values), ex);
 					}
 				}
 			}
@@ -288,12 +288,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			ResetFields();
 			if (parameters.Count < 2)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x14), string.Format(Properties.Resources.Global_SetParameters_InvalidMinCount, this.Name, 2), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_SetParameters_ParamCountInvalid), string.Format(Properties.Resources.Global_SetParameters_InvalidMinCount, this.Name, 2), this);
 			}
 
 			if (!Enum.TryParse<ParameterDataType>(parameters[0], out mUnderlyingDataType))
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x47), Properties.Resources.EnumValuesConstraint_SetParameters_NotDataType, this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_SetParameters_InvalidDataType), Properties.Resources.EnumValuesConstraint_SetParameters_NotDataType, this);
 			}
 			mUnderlyingType = ParameterConvert.ParameterToNetDataType(mUnderlyingDataType);
 
@@ -306,7 +306,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 
 			if (parameters.Count <= EnumStart)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x48), string.Format(Properties.Resources.EnumValuesConstraint_SetParameters_NoValues, this.Name), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_SetParameters_NoValues), string.Format(Properties.Resources.EnumValuesConstraint_SetParameters_NoValues, this.Name), this);
 			}
 
 			string Name, Value;
@@ -316,7 +316,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 				string[] tokens = parameters[i].Trim().Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
 				if (tokens.Length != 2)
 				{
-					throw new ConstraintConfigurationException(Errors.CreateHResult(0x49), string.Format(Properties.Resources.EnumValuesConstraint_SetParameters_InvalidValue, parameters[i]), this);
+					throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_SetParameters_ValuePairInvalid), string.Format(Properties.Resources.EnumValuesConstraint_SetParameters_InvalidValue, parameters[i]), this);
 				}
 				Name = tokens[0].Trim();
 				Value = tokens[1].Trim();
@@ -325,7 +325,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					ulong HexValue;
 					if (!ulong.TryParse(Value.Substring(2), System.Globalization.NumberStyles.AllowHexSpecifier, System.Globalization.CultureInfo.InvariantCulture, out HexValue))
 					{
-						throw new ConstraintConfigurationException(Errors.CreateHResult(0x4a), string.Format(Properties.Resources.EnumValuesConstraint_SetParameters_InvalidHex, Value), this);
+						throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_SetParameters_KeyInvalid), string.Format(Properties.Resources.EnumValuesConstraint_SetParameters_InvalidHex, Value), this);
 					}
 
 					try
@@ -334,7 +334,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					}
 					catch (Exception ex) when (ex is InvalidCastException || ex is FormatException || ex is OverflowException)
 					{
-						throw new ConstraintConfigurationException(Errors.CreateHResult(0x4b), string.Format(Properties.Resources.EnumValuesConstraint_InvalidValueType, Value, mUnderlyingType), this, ex);
+						throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_SetParameters_DataTypeMismatch), string.Format(Properties.Resources.EnumValuesConstraint_InvalidValueType, Value, mUnderlyingType), this, ex);
 					}
 				}
 				else
@@ -345,7 +345,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					}
 					catch (Exception ex) when (ex is InvalidCastException || ex is FormatException || ex is OverflowException)
 					{
-						throw new ConstraintConfigurationException(Errors.CreateHResult(0x4b), string.Format(Properties.Resources.EnumValuesConstraint_InvalidValueType, Value, mUnderlyingType), this, ex);
+						throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_SetParameters_DataTypeMismatch), string.Format(Properties.Resources.EnumValuesConstraint_InvalidValueType, Value, mUnderlyingType), this, ex);
 					}
 				}
 			}
@@ -369,7 +369,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			AssertDataType(dataType, ParameterDataType.Enum);
 			if (UnderlyingType == null)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x4c), Properties.Resources.EnumValuesConstraint_Validate_NotConfigured, this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_Validate_NotSetUp), Properties.Resources.EnumValuesConstraint_Validate_NotConfigured, this);
 			}
 
 			Type ValType = value.GetType();
@@ -387,7 +387,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					long value2 = Convert.ToInt64(value);
 					if (((value2 ^ FlagMask) & value2) != 0)
 					{
-						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x4d), string.Format(Properties.Resources.EnumConstraint_Validate_InvalidFlag, displayName), memberName, this));
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_Validate_InvalidFlag), string.Format(Properties.Resources.EnumConstraint_Validate_InvalidFlag, displayName), memberName, this));
 					}
 				}
 				else
@@ -400,20 +400,20 @@ namespace NerdyDuck.ParameterValidation.Constraints
 						}
 						catch (Exception ex) when (ex is InvalidCastException || ex is FormatException || ex is OverflowException)
 						{
-							throw new CodedArgumentException(Errors.CreateHResult(0x53), string.Format(Properties.Resources.EnumValuesConstraint_InvalidValueType, value, mUnderlyingType), ex);
+							throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.EnumTypeConstraint_Validate_InvalidFlag), string.Format(Properties.Resources.EnumValuesConstraint_InvalidValueType, value, mUnderlyingType), ex);
 						}
 
 					}
 					if (!mEnumValues.ContainsValue(value))
 					{
-						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x4f), string.Format(Properties.Resources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_Validate_NotInEnum), string.Format(Properties.Resources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
 					}
 				}
 			}
 			else
 			{
 				// Cannot happen in C# or most other languages, but some support non-integer enums.
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x51), string.Format(Properties.Resources.EnumConstraint_Validate_NotSupported, displayName, ValType.Name), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EnumValuesConstraint_Validate_TypeNotSupported), string.Format(Properties.Resources.EnumConstraint_Validate_NotSupported, displayName, ValType.Name), memberName, this));
 			}
 		}
 		#endregion

@@ -26,10 +26,8 @@
  ******************************************************************************/
 #endregion
 
-using NerdyDuck.CodedExceptions;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace NerdyDuck.ParameterValidation.Constraints
 {
@@ -92,11 +90,11 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			string Temp = value as string;
 			if (string.IsNullOrWhiteSpace(Temp))
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x85), string.Format(Properties.Resources.Global_Validate_StringEmpty, displayName), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.HostNameConstraint_Validate_ValueEmpty), string.Format(Properties.Resources.Global_Validate_StringEmpty, displayName), memberName, this));
 			}
 			else if (Uri.CheckHostName(Temp) == UriHostNameType.Unknown)
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x86), string.Format(Properties.Resources.HostNameConstraint_Validate_Failed, displayName, Temp), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.HostnameConstraint_Validate_NotHostOrIP), string.Format(Properties.Resources.HostNameConstraint_Validate_Failed, displayName, Temp), memberName, this));
 			}
 		}
 		#endregion

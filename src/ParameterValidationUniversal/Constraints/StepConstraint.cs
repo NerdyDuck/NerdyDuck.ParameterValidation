@@ -102,7 +102,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (stepSize == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x1e), nameof(stepSize));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.StepConstraint_ctor_StepSizeNull), nameof(stepSize));
 			}
 
 			mDataType = dataType;
@@ -174,7 +174,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			base.SetParameters(parameters, dataType);
 			if (parameters.Count != 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x26), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.StepConstraint_SetParameters_OnlyOneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
 			}
 
 			try
@@ -183,7 +183,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			}
 			catch (ParameterConversionException ex)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x27), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.StepConstraint_SetParameters_ParamInvalid), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
 			}
 		}
 		#endregion
@@ -236,7 +236,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					ExpectedTypeCode = TypeCode.UInt64;
 					return (ulong)1;
 				default:
-					throw new CodedArgumentException(Errors.CreateHResult(0x28), string.Format(Properties.Resources.Global_CheckDataType_NotSupported, Name), "dataType");
+					throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.StepConstraint_CheckDataType_TypeNotSupported), string.Format(Properties.Resources.Global_CheckDataType_NotSupported, Name), "dataType");
 			}
 		}
 
@@ -257,7 +257,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 				}
 				catch (Exception ex) when (ex is InvalidCastException || ex is FormatException || ex is OverflowException)
 				{
-					throw new ParameterConversionException(Errors.CreateHResult(0x29), string.Format(Properties.Resources.Global_CheckValueType_NotConvertible, type.Name, ExpectedNetType.Name), mDataType, value, ex);
+					throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.StepConstraint_CheckValueType_TypeMismatch), string.Format(Properties.Resources.Global_CheckValueType_NotConvertible, type.Name, ExpectedNetType.Name), mDataType, value, ex);
 				}
 			}
 

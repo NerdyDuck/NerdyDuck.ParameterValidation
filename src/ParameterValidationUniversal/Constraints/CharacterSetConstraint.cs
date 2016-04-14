@@ -186,12 +186,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			AssertDataType(dataType, ParameterDataType.String);
 			if (parameters.Count != 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x12), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.CharacterSetConstraint_SetParameters_OnlyOneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
 			}
 
 			if (!Enum.TryParse<CharSet>(parameters[0], out mCharacterSet))
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x13), string.Format(Properties.Resources.CharacterSetConstraint_SetParameters_InvalidValue, parameters[0]), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.CharacterSetConstraint_SetParameters_CharSetInvalid), string.Format(Properties.Resources.CharacterSetConstraint_SetParameters_InvalidValue, parameters[0]), this);
 			}
 		}
 		#endregion
@@ -212,7 +212,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 
 			if (!CheckString((string)value))
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x13), string.Format(Properties.Resources.CharacterSetConstraint_Validate_Failed, displayName, GetCharSetName()), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.CharacterSetConstraint_Validate_CharNotDefined), string.Format(Properties.Resources.CharacterSetConstraint_Validate_Failed, displayName, GetCharSetName()), memberName, this));
 			}
 
 		}

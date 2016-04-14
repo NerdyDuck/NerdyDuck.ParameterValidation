@@ -108,7 +108,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (string.IsNullOrWhiteSpace(typeName))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0x41), nameof(typeName));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.TypeConstraint_ctor_TypeNullEmpty), nameof(typeName));
 			}
 			mTypeName = typeName;
 			mResolvedType = null;
@@ -179,12 +179,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			AssertDataType(dataType, ParameterDataType.Xml);
 			if (parameters.Count != 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x2a), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.TypeConstraint_SetParameters_OnlyOneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
 			}
 
 			if (string.IsNullOrWhiteSpace(parameters[0]))
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x42), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.TypeConstraint_SetParameters_TypeNullEmpty), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this);
 			}
 			mTypeName = parameters[0];
 			mResolvedType = null;

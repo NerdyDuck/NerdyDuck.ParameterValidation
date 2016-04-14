@@ -93,7 +93,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			string Temp = value as string;
 			if (string.IsNullOrWhiteSpace(Temp))
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x87), string.Format(Properties.Resources.Global_Validate_StringEmpty, displayName), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EndpointConstraint_Validate_ValueEmpty), string.Format(Properties.Resources.Global_Validate_StringEmpty, displayName), memberName, this));
 			}
 			else
 			{
@@ -105,12 +105,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					int Port;
 					if (!int.TryParse(PortString, out Port) || (Port < 0 || Port > 65535))
 					{
-						results.Add(new ParameterValidationResult(Errors.CreateHResult(0x89), string.Format(Properties.Resources.EndpointConstraint_Validate_FailedPort, displayName, Temp), memberName, this));
+						results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EndpointConstraint_Validate_PortInvalid), string.Format(Properties.Resources.EndpointConstraint_Validate_FailedPort, displayName, Temp), memberName, this));
 					}
 				}
 				if (Uri.CheckHostName(Temp) == UriHostNameType.Unknown)
 				{
-					results.Add(new ParameterValidationResult(Errors.CreateHResult(0x88), string.Format(Properties.Resources.EndpointConstraint_Validate_Failed, displayName, Temp), memberName, this));
+					results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.EndpointConstraint_Validate_NotHostOrIP), string.Format(Properties.Resources.EndpointConstraint_Validate_Failed, displayName, Temp), memberName, this));
 				}
 			}
 		}

@@ -83,7 +83,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (string.IsNullOrWhiteSpace(scheme))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0x0d), nameof(scheme));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.AllowedSchemeConstraint_ctor_StringNullEmpty), nameof(scheme));
 			}
 
 			mAllowedSchemes = new List<string>();
@@ -99,7 +99,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (schemes == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x0e), nameof(schemes));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.AllowedSchemeConstraint_ctor_EnumNull), nameof(schemes));
 			}
 
 			List<string> Temp = new List<string>(schemes);
@@ -191,7 +191,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 
 			if (mAllowedSchemes == null)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x12), Properties.Resources.AllowedSchemeConstraint_Validate_NotConfigured, this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.AllowedSchemeConstraint_CheckSchemes_SchemeNullEmpty), Properties.Resources.AllowedSchemeConstraint_Validate_NotConfigured, this);
 			}
 			string Scheme = ((Uri)value).Scheme;
 			bool SchemeFound = false;
@@ -205,7 +205,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			}
 			if (!SchemeFound)
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x11), string.Format(Properties.Resources.AllowedSchemeConstraint_Validate_Failed, displayName, Scheme, ConcatSchemes()), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.AllowedSchemeConstraint_Validate_SchemeNotAllowed), string.Format(Properties.Resources.AllowedSchemeConstraint_Validate_Failed, displayName, Scheme, ConcatSchemes()), memberName, this));
 			}
 		}
 		#endregion
@@ -220,13 +220,13 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (schemes.Count == 0)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x0f), Properties.Resources.AllowedSchemeConstraint_CheckSchemes_NoScheme);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.AllowedSchemeConstraint_CheckSchemes_NoSchemes), Properties.Resources.AllowedSchemeConstraint_CheckSchemes_NoScheme);
 			}
 			foreach (string scheme in schemes)
 			{
 				if (string.IsNullOrWhiteSpace(scheme))
 				{
-					throw new ConstraintConfigurationException(Errors.CreateHResult(0x10), Properties.Resources.AllowedSchemeConstraint_CheckSchemes_InvalidScheme);
+					throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.AllowedSchemeConstraint_CheckSchemes_SchemeNullEmpty), Properties.Resources.AllowedSchemeConstraint_CheckSchemes_InvalidScheme);
 				}
 			}
 		}

@@ -47,7 +47,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (type == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x01), nameof(type));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.TypeExtensions_ToStringAssemblyNameOnly_ArgNull), nameof(type));
 			}
 
 			TypeInfo info = type.GetTypeInfo();

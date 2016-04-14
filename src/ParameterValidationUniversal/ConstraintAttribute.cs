@@ -131,11 +131,11 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (string.IsNullOrWhiteSpace(constraints))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0x97), nameof(constraints));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.ConstraintAttribute_ctor_ConstraintsNullEmpty), nameof(constraints));
 			}
 			if (dataType == ParameterDataType.None)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x98), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.ConstraintAttribute_ctor_DataTypeNone), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
 			}
 			mConstraints = constraints;
 			mDataType = dataType;
@@ -155,11 +155,11 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (string.IsNullOrWhiteSpace(constraints))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0x97), nameof(constraints));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.ConstraintAttribute_ctor_ConstraintsNullEmpty), nameof(constraints));
 			}
 			if (dataType == ParameterDataType.None)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x98), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.ConstraintAttribute_ctor_DataTypeNone), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
 			}
 			mConstraints = constraints;
 			mDataType = dataType;
@@ -179,11 +179,11 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (string.IsNullOrWhiteSpace(constraints))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0x97), nameof(constraints));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.ConstraintAttribute_ctor_ConstraintsNullEmpty), nameof(constraints));
 			}
 			if (dataType == ParameterDataType.None)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x98), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.ConstraintAttribute_ctor_DataTypeNone), nameof(dataType), Properties.Resources.Global_ParameterDataType_None);
 			}
 			mConstraints = constraints;
 			mDataType = dataType;

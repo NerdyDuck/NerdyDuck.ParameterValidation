@@ -90,11 +90,11 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			string Temp = value as string;
 			if (string.IsNullOrWhiteSpace(Temp))
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x07), string.Format(Properties.Resources.Global_Validate_StringEmpty, displayName), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.FileNameConstraint_Validate_ValueNullEmpty), string.Format(Properties.Resources.Global_Validate_StringEmpty, displayName), memberName, this));
 			}
 			else if (Temp.IndexOfAny(Path.GetInvalidFileNameChars()) > -1)
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x08), string.Format(Properties.Resources.FileNameConstraint_Validate_Failed, displayName, Temp), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.FileNameConstraint_Validate_ValueInvalid), string.Format(Properties.Resources.FileNameConstraint_Validate_Failed, displayName, Temp), memberName, this));
 			}
 		}
 		#endregion

@@ -105,7 +105,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (maximumValue == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0x14), nameof(maximumValue));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_ctor_MaxValueNull), nameof(maximumValue));
 			}
 
 			mDataType = dataType;
@@ -178,7 +178,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			AssertDataType(dataType, mDataType);
 			if (parameters.Count != 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x19), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_SetParameters_OnlyOneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
 			}
 
 			try
@@ -187,7 +187,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			}
 			catch (ParameterConversionException ex)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x1a), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_SetParameters_ParamInvalid), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
 			}
 		}
 		#endregion
@@ -243,7 +243,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 							}
 							catch (Exception ex) when (ex is InvalidCastException || ex is FormatException || ex is OverflowException)
 							{
-								throw new CodedArgumentException(Errors.CreateHResult(0x1c), string.Format(Properties.Resources.Global_Validate_TypeNotConvertible, type.Name, ExpectedNetType.Name));
+								throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_Validate_TypeMismatch), string.Format(Properties.Resources.Global_Validate_TypeNotConvertible, type.Name, ExpectedNetType.Name));
 							}
 							CompareResult = ((IComparable)AltMaximumValue).CompareTo(ConvertedValue);
 						}
@@ -256,14 +256,14 @@ namespace NerdyDuck.ParameterValidation.Constraints
 				}
 				else
 				{
-					throw new CodedArgumentException(Errors.CreateHResult(0x1c), string.Format(Properties.Resources.Global_Validate_TypeNotConvertible, type.Name, ExpectedNetType.Name));
+					throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_Validate_TypeMismatch), string.Format(Properties.Resources.Global_Validate_TypeNotConvertible, type.Name, ExpectedNetType.Name));
 				}
 
 			}
 
 			if (CompareResult < 0)
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x18), string.Format(Properties.Resources.MaximumValueConstraint_Validate_Failed, displayName, mMaximumValue, value), memberName, this));
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_Validate_TooLarge), string.Format(Properties.Resources.MaximumValueConstraint_Validate_Failed, displayName, mMaximumValue, value), memberName, this));
 			}
 		}
 		#endregion
@@ -366,7 +366,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					AltTypeCode = TypeCode.Empty;
 					return new Version(int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
 				default:
-					throw new CodedArgumentException(Errors.CreateHResult(0x1b), string.Format(Properties.Resources.Global_CheckDataType_NotSupported, this.Name),  "dataType");
+					throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_CheckDataType_TypeNotSupported), string.Format(Properties.Resources.Global_CheckDataType_NotSupported, this.Name), "dataType");
 			}
 		}
 		#endregion
@@ -391,7 +391,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 				if (ExpectedTypeCode == TypeCode.Empty)
 				{
 					// DateTimeOffset, TimeSpan, Version cannot be converted from another type
-					throw new ParameterConversionException(Errors.CreateHResult(0x1d), string.Format(Properties.Resources.Global_CheckValueType_NotConvertible, type.Name, ExpectedNetType.Name), mDataType, value);
+					throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_CheckValueType_TypeMismatch), string.Format(Properties.Resources.Global_CheckValueType_NotConvertible, type.Name, ExpectedNetType.Name), mDataType, value);
 				}
 				else
 				{
@@ -401,7 +401,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 					}
 					catch (Exception ex) when (ex is InvalidCastException || ex is FormatException || ex is OverflowException)
 					{
-						throw new ParameterConversionException(Errors.CreateHResult(0x1d), string.Format(Properties.Resources.Global_CheckValueType_NotConvertible, type.Name, ExpectedNetType.Name), mDataType, value, ex);
+						throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.MaximumValueConstraint_CheckValueType_TypeMismatch), string.Format(Properties.Resources.Global_CheckValueType_NotConvertible, type.Name, ExpectedNetType.Name), mDataType, value, ex);
 					}
 				}
 			}

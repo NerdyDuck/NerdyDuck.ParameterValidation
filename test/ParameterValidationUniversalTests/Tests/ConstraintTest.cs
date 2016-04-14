@@ -189,6 +189,12 @@ namespace NerdyDuck.Tests.ParameterValidation
 				c.OnValidationTest(new List<ParameterValidationResult>(), null, ParameterDataType.Int32, Constants.MemberName, Constants.MemberName);
 			});
 		}
+
+		[TestMethod]
+		public void CheckErrorCodes()
+		{
+			Assert.AreEqual(0xb4, (int)ErrorCodes.LastErrorCode);
+		}
 		#endregion
 	}
 }

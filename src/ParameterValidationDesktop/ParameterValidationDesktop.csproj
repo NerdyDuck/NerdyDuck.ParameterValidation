@@ -46,9 +46,6 @@
     <None Include="..\..\NerdyDuck.snk">
       <Link>NerdyDuck.snk</Link>
     </None>
-    <None Include="..\ParameterValidationUniversal\ErrorCodes.csv">
-      <Link>ErrorCodes.csv</Link>
-    </None>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +148,9 @@
     </Compile>
     <Compile Include="..\ParameterValidationUniversal\Constraints\UppercaseConstraint.cs">
       <Link>Constraints\UppercaseConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\ParameterValidationUniversal\ErrorCodes.cs">
+      <Link>ErrorCodes.cs</Link>
     </Compile>
     <Compile Include="..\ParameterValidationUniversal\InvalidDataTypeException.cs">
       <Link>InvalidDataTypeException.cs</Link>

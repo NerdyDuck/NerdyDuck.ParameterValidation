@@ -125,7 +125,7 @@ namespace NerdyDuck.ParameterValidation
 		{
 			if (type == ParameterDataType.None)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x8c), Properties.Resources.Global_ParameterDataType_None);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.ConstraintParser_Parse_DataTypeNone), Properties.Resources.Global_ParameterDataType_None);
 			}
 
 			if (string.IsNullOrWhiteSpace(constraints))
@@ -159,7 +159,7 @@ namespace NerdyDuck.ParameterValidation
 
 			if (context.LogicalPosition != ConstraintPosition.OutsideConstraint)
 			{
-				throw new ConstraintParserException(Errors.CreateHResult(0xa1), Properties.Resources.ConstraintParser_Parse_ConstraintIncomplete, context.CurrentConstraintStart);
+				throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_Parse_IncompleteConstraint), Properties.Resources.ConstraintParser_Parse_ConstraintIncomplete, context.CurrentConstraintStart);
 			}
 
 			return context.Constraints;
@@ -258,7 +258,7 @@ namespace NerdyDuck.ParameterValidation
 			}
 			catch (Exception ex) when (ex is ArgumentException || ex is FormatException)
 			{
-				throw new ConstraintParserException(Errors.CreateHResult(0x8b), string.Format(Properties.Resources.ConstraintParser_Parse_ParametersInvalid, ReturnValue.Name), ex);
+				throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_CreateConstraint_ParamInvalid), string.Format(Properties.Resources.ConstraintParser_Parse_ParametersInvalid, ReturnValue.Name), ex);
 			}
 
 			return ReturnValue;
@@ -744,10 +744,10 @@ namespace NerdyDuck.ParameterValidation
 			{
 				if (isConstraintNameUnknown)
 					// Constraint name is unknown
-					throw new ConstraintParserException(Errors.CreateHResult(0x92), string.Format(Properties.Resources.ConstraintParser_HandleUnknownConstraint_UnknownName, name));
+					throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleUnknownConstraint_UnknownConstraint), string.Format(Properties.Resources.ConstraintParser_HandleUnknownConstraint_UnknownName, name));
 				else
 					// Constraint is known, but not for specified data type
-					throw new ConstraintParserException(Errors.CreateHResult(0x93), string.Format(Properties.Resources.ConstraintParser_HandleUnknownConstraint_NotDefined, name, type));
+					throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleUnknownConstraint_NotDefinedForType), string.Format(Properties.Resources.ConstraintParser_HandleUnknownConstraint_NotDefined, name, type));
 			}
 
 			return ReturnValue;
@@ -770,7 +770,7 @@ namespace NerdyDuck.ParameterValidation
 					context.CurrentConstraintStart = context.StringPosition;
 					break;
 				default: // Invalid char outside of constraint
-					throw new ConstraintParserException(Errors.CreateHResult(0x8e), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidContent, context.StringPosition), context.StringPosition);
+					throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleOutsideConstraint_DataOutside), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidContent, context.StringPosition), context.StringPosition);
 			}
 
 		}
@@ -789,13 +789,13 @@ namespace NerdyDuck.ParameterValidation
 				case '\'': // No quote in names
 				case '[': // Invalid constraint start in constraint
 				case ')': // Invalid parameter end in constraint
-					throw new ConstraintParserException(Errors.CreateHResult(0x8d), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidCharInName, context.CurrentCharacter), context.StringPosition);
+					throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleInConstraint_InvalidChar), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidCharInName, context.CurrentCharacter), context.StringPosition);
 				case ']': // Constraint without parameters
 					context.CurrentConstraintStart++;
 					if (context.StringPosition == context.CurrentConstraintStart)
 					{
 						// No constraint name
-						throw new ConstraintParserException(Errors.CreateHResult(0x8a), Properties.Resources.ConstraintParser_Parse_EmptyConstraint, context.StringPosition);
+						throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleInConstraint_EmptyConstraint), Properties.Resources.ConstraintParser_Parse_EmptyConstraint, context.StringPosition);
 					}
 					context.CurrentConstraintName = context.GetSubstring(context.CurrentConstraintStart, context.StringPosition - context.CurrentConstraintStart);
 					context.Constraints.Add(CreateConstraint(context));
@@ -806,7 +806,7 @@ namespace NerdyDuck.ParameterValidation
 					if (context.StringPosition == context.CurrentConstraintStart)
 					{
 						// No constraint name
-						throw new ConstraintParserException(Errors.CreateHResult(0x8a), Properties.Resources.ConstraintParser_Parse_EmptyConstraint, context.StringPosition);
+						throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleInConstraint_EmptyConstraint), Properties.Resources.ConstraintParser_Parse_EmptyConstraint, context.StringPosition);
 					}
 					context.CurrentConstraintName = context.GetSubstring(context.CurrentConstraintStart, context.StringPosition - context.CurrentConstraintStart);
 					context.LogicalPosition = ConstraintPosition.InParameters;
@@ -830,7 +830,7 @@ namespace NerdyDuck.ParameterValidation
 				case '[':
 				case ']':
 				case '(': // Invalid characters within parameters if unmasked
-					throw new ConstraintParserException(Errors.CreateHResult(0x8f), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidCharInParameters, context.CurrentCharacter), context.StringPosition);
+					throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleInParameters_ParamCharInvalid), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidCharInParameters, context.CurrentCharacter), context.StringPosition);
 				case ')': // End of parameters
 					context.LogicalPosition = ConstraintPosition.AfterParameters;
 					break;
@@ -900,7 +900,7 @@ namespace NerdyDuck.ParameterValidation
 					case ']':
 					case '(':
 					case '\'': // Invalid delimiters without masking
-						throw new ConstraintParserException(Errors.CreateHResult(0x90), string.Format(Properties.Resources.ConstraintParser_Parse_UnmaskedChar, context.CurrentCharacter), context.StringPosition);
+						throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleInParameter_ParamUnmaskedChar), string.Format(Properties.Resources.ConstraintParser_Parse_UnmaskedChar, context.CurrentCharacter), context.StringPosition);
 					default: // All other characters allowed in parameter
 						context.AppendParameter();
 						break;
@@ -929,7 +929,7 @@ namespace NerdyDuck.ParameterValidation
 					context.LogicalPosition = ConstraintPosition.AfterParameters;
 					break;
 				default: // Invalid character
-					throw new ConstraintParserException(Errors.CreateHResult(0x91), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidCharAfterParam, context.CurrentCharacter), context.StringPosition);
+					throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleAfterParameter_CharAfterParam), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidCharAfterParam, context.CurrentCharacter), context.StringPosition);
 			}
 
 		}
@@ -949,7 +949,7 @@ namespace NerdyDuck.ParameterValidation
 					context.ResetConstraintData();
 					break;
 				default: // Invalid char after parameters
-					throw new ConstraintParserException(Errors.CreateHResult(0x9d), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidCharAfterParams, context.CurrentCharacter), context.StringPosition);
+					throw new ConstraintParserException(Errors.CreateHResult(ErrorCodes.ConstraintParser_HandleAfterParameters_CharAfterParams), string.Format(Properties.Resources.ConstraintParser_Parse_InvalidCharAfterParams, context.CurrentCharacter), context.StringPosition);
 			}
 
 		}

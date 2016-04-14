@@ -83,7 +83,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (maximumLength < 0)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x29), nameof(maximumLength), maximumLength, Properties.Resources.MaximumLengthConstraint_LengthNegative);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.MaximumLengthConstraint_ctor_LengthNegative), nameof(maximumLength), maximumLength, Properties.Resources.MaximumLengthConstraint_LengthNegative);
 			}
 
 			mMaximumLength = maximumLength;
@@ -151,7 +151,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			AssertDataType(dataType, ParameterDataType.Bytes, ParameterDataType.String, ParameterDataType.Uri);
 			if (parameters.Count != 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x2c), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.MaximumLengthConstraint_SetParameters_OnlyOneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
 			}
 
 			try
@@ -159,12 +159,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 				mMaximumLength = ParameterConvert.ToInt32(parameters[0]);
 				if (mMaximumLength < 0)
 				{
-					throw new ParameterConversionException(Errors.CreateHResult(0x2f), Properties.Resources.MaximumLengthConstraint_LengthNegative, ParameterDataType.Int32, mMaximumLength);
+					throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.MaximumLengthConstraint_SetParameters_LengthNegative), Properties.Resources.MaximumLengthConstraint_LengthNegative, ParameterDataType.Int32, mMaximumLength);
 				}
 			}
 			catch (ParameterConversionException ex)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x32), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.MaximumLengthConstraint_SetParameters_ParamInvalid), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
 			}
 		}
 		#endregion
@@ -202,12 +202,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			}
 			else
 			{
-				throw new CodedArgumentException(Errors.CreateHResult(0x35), string.Format(Properties.Resources.Global_Validate_TypeMismatch, type.Name, this.Name));
+				throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.MaximumLengthConstraint_Validate_TypeNotSupported), string.Format(Properties.Resources.Global_Validate_TypeMismatch, type.Name, this.Name));
 			}
 
 			if (CurrentLength > mMaximumLength)
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x38), string.Format(
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.MaximumLengthConstraint_Validate_TooLong), string.Format(
 					IsString ? Properties.Resources.MaximumLengthConstraint_Validate_FailedString
 					: Properties.Resources.MaximumLengthConstraint_Validate_FailedBytes,
 					displayName, mMaximumLength, CurrentLength), memberName, this));

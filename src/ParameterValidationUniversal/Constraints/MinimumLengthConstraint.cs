@@ -84,7 +84,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (minimumLength < 0)
 			{
-				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(0x2a), nameof(minimumLength), minimumLength, Properties.Resources.MinimumLengthConstraint_LengthNegative);
+				throw new CodedArgumentOutOfRangeException(Errors.CreateHResult(ErrorCodes.MinimumLengthConstraint_ctor_LengthNegative), nameof(minimumLength), minimumLength, Properties.Resources.MinimumLengthConstraint_LengthNegative);
 			}
 
 			mMinimumLength = minimumLength;
@@ -152,7 +152,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			AssertDataType(dataType, ParameterDataType.Bytes, ParameterDataType.String, ParameterDataType.Uri);
 			if (parameters.Count != 1)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x2d), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.MinimumLengthConstraint_SetParameters_OnlyOneParam), string.Format(Properties.Resources.Global_SetParameters_InvalidCount, this.Name, 1), this);
 			}
 
 			try
@@ -160,12 +160,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 				mMinimumLength = ParameterConvert.ToInt32(parameters[0]);
 				if (mMinimumLength < 0)
 				{
-					throw new ParameterConversionException(Errors.CreateHResult(0x30), Properties.Resources.MinimumLengthConstraint_LengthNegative, ParameterDataType.Int32, mMinimumLength);
+					throw new ParameterConversionException(Errors.CreateHResult(ErrorCodes.MinimumLengthConstraint_SetParameters_LengthNegative), Properties.Resources.MinimumLengthConstraint_LengthNegative, ParameterDataType.Int32, mMinimumLength);
 				}
 			}
 			catch (ParameterConversionException ex)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0x33), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.MinimumLengthConstraint_SetParameters_ParamInvalid), string.Format(Properties.Resources.Global_SetParameters_Invalid, this.Name), this, ex);
 			}
 		}
 		#endregion
@@ -203,12 +203,12 @@ namespace NerdyDuck.ParameterValidation.Constraints
 			}
 			else
 			{
-				throw new CodedArgumentException(Errors.CreateHResult(0x36), string.Format(Properties.Resources.Global_Validate_TypeMismatch, type.Name, this.Name));
+				throw new CodedArgumentException(Errors.CreateHResult(ErrorCodes.MinimumLengthConstraint_Validate_TypeNotSupported), string.Format(Properties.Resources.Global_Validate_TypeMismatch, type.Name, this.Name));
 			}
 
 			if (CurrentLength < mMinimumLength)
 			{
-				results.Add(new ParameterValidationResult(Errors.CreateHResult(0x39), string.Format(
+				results.Add(new ParameterValidationResult(Errors.CreateHResult(ErrorCodes.MinimumLengthConstraint_Validate_TooShort), string.Format(
 					IsString ? Properties.Resources.MinimumLengthConstraint_Validate_FailedString
 					: Properties.Resources.MinimumLengthConstraint_Validate_FailedBytes,
 					displayName, mMinimumLength, CurrentLength), memberName, this));

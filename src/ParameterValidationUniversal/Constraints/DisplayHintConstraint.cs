@@ -83,7 +83,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (string.IsNullOrWhiteSpace(hint))
 			{
-				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(0xa3), nameof(hint));
+				throw new CodedArgumentNullOrWhiteSpaceException(Errors.CreateHResult(ErrorCodes.DisplayHintConstraint_ctor_ArgNullEmpty), nameof(hint));
 			}
 
 			mHints = new List<string>();
@@ -99,7 +99,7 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (hints == null)
 			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(0xa4), nameof(hints));
+				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.DisplayHintConstraint_ctor_ArgNull), nameof(hints));
 			}
 
 			List<string> Temp = new List<string>(hints);
@@ -184,13 +184,13 @@ namespace NerdyDuck.ParameterValidation.Constraints
 		{
 			if (parameters.Count == 0)
 			{
-				throw new ConstraintConfigurationException(Errors.CreateHResult(0xa5), Properties.Resources.DisplayHintConstraint_CheckParameters_NoParameter);
+				throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.DisplayHintConstraint_CheckParameters_NoParams), Properties.Resources.DisplayHintConstraint_CheckParameters_NoParameter);
 			}
 			foreach (string parameter in parameters)
 			{
 				if (string.IsNullOrWhiteSpace(parameter))
 				{
-					throw new ConstraintConfigurationException(Errors.CreateHResult(0xa6), Properties.Resources.DisplayHintConstraint_CheckParameters_InvalidParameter);
+					throw new ConstraintConfigurationException(Errors.CreateHResult(ErrorCodes.DisplayHintConstraint_CheckParameters_ParamNullEmpty), Properties.Resources.DisplayHintConstraint_CheckParameters_InvalidParameter);
 				}
 			}
 		}

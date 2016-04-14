@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ebdb6e98-8bde-4bd0-bc27-38ef47078fd7" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>
+				Version 1.1.2 was released on 2016-04-14.
+			</para>
+		</introduction>
+
+		<section>
+			<title>Changes in This Release</title>
+			<content>
+
+				<list class="bullet">
+					<listItem>
+						<para>
+							Updated reference for NerdyDuck.CodedExceptions to v1.2.1.
+						</para>
+					</listItem>
+					<listItem>
+						<para>
+							Switched exception error codes from literals to `ErrorCodes` enumeration, including comment text from ErrorCodes.csv.
+						</para>
+					</listItem>
+					<listItem>
+						<para>
+							Universal project compiled against Microsoft.NETCore.UniversalWindowsPlatform 5.1.0.
+						</para>
+					</listItem>
+				</list>
+			</content>
+		</section>
+
+		<relatedTopics>
+			<link xlink:href="0e28eb7d-9c5b-4686-85ea-dc7dfdad924b" />
+		</relatedTopics>
+
+	</developerConceptualDocument>
+</topic>
