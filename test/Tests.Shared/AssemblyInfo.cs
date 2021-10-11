@@ -29,45 +29,31 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.CodedExceptions;
-using NerdyDuck.ParameterValidation;
-using NerdyDuck.ParameterValidation.Constraints;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Resources;
+using System.Runtime.InteropServices;
 
-namespace NerdyDuck.Tests.ParameterValidation
-{
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.TypeExtensions class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+// General information
+[assembly: AssemblyTitle("NerdyDuck.Tests.ParameterValidation")]
+[assembly: AssemblyDescription("Unit tests for NerdyDuck.ParameterValidation assembly.")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("NerdyDuck")]
+[assembly: AssemblyProduct("NerdyDuck Core Libraries")]
+[assembly: AssemblyCopyright("Copyright © Daniel Kopp 2015-2016")]
+[assembly: AssemblyTrademark("Covered by Apache License 2.0")]
+[assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en-US")]
+[assembly: ComVisible(false)]
+[assembly: CLSCompliant(true)]
+#if WINDOWS_UWP
+[assembly: AssemblyMetadata("TargetPlatform", "UAP")]
 #endif
-	[TestClass]
-	public class TypeExtensionsTest
-	{
-		[TestMethod]
-		public void ToStringAssemblyNameOnly_Success()
-		{
-			string str = TypeExtensions.ToStringAssemblyNameOnly(typeof(Constraint));
-			Assert.AreEqual("NerdyDuck.ParameterValidation.Constraint, NerdyDuck.ParameterValidation", str);
-		}
+#if WINDOWS_DESKTOP
+[assembly: AssemblyMetadata("TargetPlatform", "AnyCPU")]
+#endif
 
-		[TestMethod]
-		public void ToStringAssemblyNameOnly_Null_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
-			{
-				TypeExtensions.ToStringAssemblyNameOnly(null);
-			});
-		}
-	}
-}
+// Version information
+[assembly: AssemblyVersion("1.1.2.0")]
+[assembly: AssemblyFileVersion("1.1.2.0")]
