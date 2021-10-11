@@ -29,31 +29,11 @@
  ******************************************************************************/
 #endregion
 
-using NerdyDuck.CodedExceptions;
 using System;
 using System.Reflection;
-using System.Resources;
 using System.Runtime.InteropServices;
 
 // General information
-[assembly: AssemblyTitle("NerdyDuck.Tests.ParameterValidation")]
-[assembly: AssemblyDescription("Unit tests for NerdyDuck.ParameterValidation assembly.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("NerdyDuck")]
-[assembly: AssemblyProduct("NerdyDuck Core Libraries")]
-[assembly: AssemblyCopyright("Copyright © Daniel Kopp 2015-2016")]
-[assembly: AssemblyTrademark("Covered by Apache License 2.0")]
-[assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("en-US")]
-[assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
-#if WINDOWS_UWP
-[assembly: AssemblyMetadata("TargetPlatform", "UAP")]
-#endif
-#if WINDOWS_DESKTOP
-[assembly: AssemblyMetadata("TargetPlatform", "AnyCPU")]
-#endif
-
-// Version information
-[assembly: AssemblyVersion("1.1.2.0")]
-[assembly: AssemblyFileVersion("1.1.2.0")]
+[assembly: ComVisible(true)]
+[assembly: AssemblyTrademark("Covered by MIT License")]
