@@ -29,175 +29,169 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
 using NerdyDuck.ParameterValidation.Constraints;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation
 {
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.Constraint class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class ConstraintTest
 	{
-		#region Constructors
-		[TestMethod]
-		public void Ctor_NameNull_Error()
+		/// <summary>
+		/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.Constraint class.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class ConstraintTest
 		{
-			CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+			[TestMethod]
+			public void Ctor_NameNull_Error()
 			{
-				DummyConstraint c = new DummyConstraint(null);
+				CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+				{
+					DummyConstraint c = new DummyConstraint(null);
 
-			});
-		}
+				});
+			}
 
-#if WINDOWS_DESKTOP
-		[TestMethod]
-		public void Ctor_InfoNull_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+			[TestMethod]
+			public void Ctor_InfoNull_Error()
 			{
-				DummyConstraint c = new DummyConstraint(null, new System.Runtime.Serialization.StreamingContext());
-			});
-		}
-#endif
-		#endregion
+				CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+				{
+					DummyConstraint c = new DummyConstraint(null, new System.Runtime.Serialization.StreamingContext());
+				});
+			}
 
-		#region Public methods
-#if WINDOWS_DESKTOP
-		[TestMethod]
-		public void GetObjectData_InfoNull_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+			[TestMethod]
+			public void GetObjectData_InfoNull_Error()
 			{
-				LengthConstraint c = new LengthConstraint(5);
-				c.GetObjectData(null, new System.Runtime.Serialization.StreamingContext());
-			});
-		}
-#endif
+				CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+				{
+					LengthConstraint c = new LengthConstraint(5);
+					c.GetObjectData(null, new System.Runtime.Serialization.StreamingContext());
+				});
+			}
 
 
-		[TestMethod]
-		public void AssertDataType_DataType_Error()
-		{
-			CustomAssert.ThrowsException<InvalidDataTypeException>(() =>
+			[TestMethod]
+			public void AssertDataType_DataType_Error()
 			{
-				AllowedSchemeConstraint c = new AllowedSchemeConstraint(Constants.SchemeName);
-				c.Validate(42, ParameterDataType.Int32, Constants.MemberName);
+				CustomAssert.ThrowsException<InvalidDataTypeException>(() =>
+				{
+					AllowedSchemeConstraint c = new AllowedSchemeConstraint(Constants.SchemeName);
+					c.Validate(42, ParameterDataType.Int32, Constants.MemberName);
 
-			});
-		}
+				});
+			}
 
-		[TestMethod]
-		public void AssertDataType_DataTypeArray_Error()
-		{
-			CustomAssert.ThrowsException<InvalidDataTypeException>(() =>
+			[TestMethod]
+			public void AssertDataType_DataTypeArray_Error()
 			{
-				LengthConstraint c = new LengthConstraint(5);
-				c.Validate(42, ParameterDataType.Int32, Constants.MemberName);
-			});
-		}
+				CustomAssert.ThrowsException<InvalidDataTypeException>(() =>
+				{
+					LengthConstraint c = new LengthConstraint(5);
+					c.Validate(42, ParameterDataType.Int32, Constants.MemberName);
+				});
+			}
 
-		[TestMethod]
-		public void AssertDataType_ExpectedTypesNull_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+			[TestMethod]
+			public void AssertDataType_ExpectedTypesNull_Error()
 			{
-				DummyConstraint c = new DummyConstraint();
-				c.AssertDataTypeTest(ParameterDataType.Bool, null);
-			});
-		}
+				CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+				{
+					DummyConstraint c = new DummyConstraint();
+					c.AssertDataTypeTest(ParameterDataType.Bool, null);
+				});
+			}
 
-		[TestMethod]
-		public void GetParameters_ParamsNull_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+			[TestMethod]
+			public void GetParameters_ParamsNull_Error()
 			{
-				DummyConstraint c = new DummyConstraint();
-				c.GetParametersTest(null);
-			});
-		}
+				CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+				{
+					DummyConstraint c = new DummyConstraint();
+					c.GetParametersTest(null);
+				});
+			}
 
-		[TestMethod]
-		public void SetParameters_ParamsNullOrNoDataType_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+			[TestMethod]
+			public void SetParameters_ParamsNullOrNoDataType_Error()
+			{
+				CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+				{
+					Constraint c = new PasswordConstraint();
+					c.SetParametersInternal(new string[0], ParameterDataType.None);
+				});
+				CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+				{
+					Constraint c = new PasswordConstraint();
+					c.SetParametersInternal(null, ParameterDataType.String);
+				});
+			}
+
+			[TestMethod]
+			public void Validate_DataTypeNone_Error()
+			{
+				CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+				{
+					Constraint c = new PasswordConstraint();
+					c.Validate(42, ParameterDataType.None, Constants.MemberName);
+				});
+			}
+
+			[TestMethod]
+			public void Validate_MemberNull_Error()
+			{
+				CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+				{
+					Constraint c = new PasswordConstraint();
+					c.Validate(42, ParameterDataType.Int32, null, null);
+				});
+			}
+			[TestMethod]
+			public void Validate_DisplayNull_Success()
 			{
 				Constraint c = new PasswordConstraint();
-				c.SetParametersInternal(new string[0], ParameterDataType.None);
-			});
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
-			{
-				Constraint c = new PasswordConstraint();
-				c.SetParametersInternal(null, ParameterDataType.String);
-			});
-		}
+				c.Validate(42, ParameterDataType.Int32, Constants.MemberName, null);
+			}
 
-		[TestMethod]
-		public void Validate_DataTypeNone_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+			[TestMethod]
+			public void Validate_ResultsNull_Error()
 			{
-				Constraint c = new PasswordConstraint();
-				c.Validate(42, ParameterDataType.None, Constants.MemberName);
-			});
-		}
+				CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+				{
+					DummyConstraint c = new DummyConstraint();
+					c.OnValidationTest(null, 1, ParameterDataType.Int32, Constants.MemberName, Constants.MemberName);
+				});
+			}
 
-		[TestMethod]
-		public void Validate_MemberNull_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+			[TestMethod]
+			public void Validate_ValueNull_Error()
 			{
-				Constraint c = new PasswordConstraint();
-				c.Validate(42, ParameterDataType.Int32, null, null);
-			});
-		}
-		[TestMethod]
-		public void Validate_DisplayNull_Success()
-		{
-			Constraint c = new PasswordConstraint();
-			c.Validate(42, ParameterDataType.Int32, Constants.MemberName, null);
-		}
+				CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+				{
+					DummyConstraint c = new DummyConstraint();
+					c.OnValidationTest(new List<ParameterValidationResult>(), null, ParameterDataType.Int32, Constants.MemberName, Constants.MemberName);
+				});
+			}
 
-		[TestMethod]
-		public void Validate_ResultsNull_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+			[TestMethod]
+			public void CheckErrorCodes()
 			{
-				DummyConstraint c = new DummyConstraint();
-				c.OnValidationTest(null, 1, ParameterDataType.Int32, Constants.MemberName, Constants.MemberName);
-			});
+				Assert.AreEqual(0xb4, (int)ErrorCodes.LastErrorCode);
+			}
 		}
-
-		[TestMethod]
-		public void Validate_ValueNull_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
-			{
-				DummyConstraint c = new DummyConstraint();
-				c.OnValidationTest(new List<ParameterValidationResult>(), null, ParameterDataType.Int32, Constants.MemberName, Constants.MemberName);
-			});
-		}
-
-		[TestMethod]
-		public void CheckErrorCodes()
-		{
-			Assert.AreEqual(0xb4, (int)ErrorCodes.LastErrorCode);
-		}
-		#endregion
 	}
 }

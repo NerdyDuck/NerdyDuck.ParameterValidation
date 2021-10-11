@@ -29,114 +29,112 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
 using NerdyDuck.ParameterValidation.Constraints;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation
 {
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.ConstraintAttribute class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class ConstraintAttributeTest
 	{
-		#region Constructors
-		[TestMethod]
-		public void Ctor_StringDataType_Success()
+		/// <summary>
+		/// Contains test methods to test the NerdyDuck.ParameterValidation.ConstraintAttribute class.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class ConstraintAttributeTest
 		{
-			ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.Int32);
-			Assert.AreEqual(ParameterDataType.Int32, ca.DataType);
-			Assert.AreEqual(Constants.SimpleConstraintString, ca.Constraints);
-			Assert.IsTrue(ca.RequiresValidationContext);
-			Assert.IsNotNull(ca.ParsedConstraints);
-			Assert.AreEqual(1, ca.ParsedConstraints.Count);
-		}
-
-		[TestMethod]
-		public void Ctor_ConstraintsNull_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+			[TestMethod]
+			public void Ctor_StringDataType_Success()
 			{
-				ConstraintAttribute ca = new ConstraintAttribute(null, ParameterDataType.Int32);
-			});
-			CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
-			{
-				ConstraintAttribute ca = new ConstraintAttribute(null, ParameterDataType.Int32, Constants.ErrorMessage);
-			});
-			CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
-			{
-				ConstraintAttribute ca = new ConstraintAttribute(null, ParameterDataType.Int32, new Func<string>(() => { return Constants.ErrorMessage; }));
-			});
-		}
+				ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.Int32);
+				Assert.AreEqual(ParameterDataType.Int32, ca.DataType);
+				Assert.AreEqual(Constants.SimpleConstraintString, ca.Constraints);
+				Assert.IsTrue(ca.RequiresValidationContext);
+				Assert.IsNotNull(ca.ParsedConstraints);
+				Assert.AreEqual(1, ca.ParsedConstraints.Count);
+			}
 
-		[TestMethod]
-		public void Ctor_TypeInv_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+			[TestMethod]
+			public void Ctor_ConstraintsNull_Error()
 			{
-				ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.None);
-			});
-			CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+				CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+				{
+					ConstraintAttribute ca = new ConstraintAttribute(null, ParameterDataType.Int32);
+				});
+				CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+				{
+					ConstraintAttribute ca = new ConstraintAttribute(null, ParameterDataType.Int32, Constants.ErrorMessage);
+				});
+				CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+				{
+					ConstraintAttribute ca = new ConstraintAttribute(null, ParameterDataType.Int32, new Func<string>(() => { return Constants.ErrorMessage; }));
+				});
+			}
+
+			[TestMethod]
+			public void Ctor_TypeInv_Error()
 			{
-				ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.None, Constants.ErrorMessage);
-			});
-			CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+				CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+				{
+					ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.None);
+				});
+				CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+				{
+					ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.None, Constants.ErrorMessage);
+				});
+				CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+				{
+					ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.None, new Func<string>(() => { return Constants.ErrorMessage; }));
+				});
+			}
+
+			[TestMethod]
+			public void Ctor_StringDataTypeString_Success()
 			{
-				ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.None, new Func<string>(() => { return Constants.ErrorMessage; }));
-			});
-		}
+				ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.Int32, Constants.ErrorMessage);
+				Assert.AreEqual(ParameterDataType.Int32, ca.DataType);
+				Assert.AreEqual(Constants.SimpleConstraintString, ca.Constraints);
+				Assert.IsNotNull(ca.ParsedConstraints);
+				Assert.AreEqual(1, ca.ParsedConstraints.Count);
+				Assert.AreEqual(Constants.ErrorMessage, ca.FormatErrorMessage(null));
+			}
 
-		[TestMethod]
-		public void Ctor_StringDataTypeString_Success()
-		{
-			ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.Int32, Constants.ErrorMessage);
-			Assert.AreEqual(ParameterDataType.Int32, ca.DataType);
-			Assert.AreEqual(Constants.SimpleConstraintString, ca.Constraints);
-			Assert.IsNotNull(ca.ParsedConstraints);
-			Assert.AreEqual(1, ca.ParsedConstraints.Count);
-			Assert.AreEqual(Constants.ErrorMessage, ca.FormatErrorMessage(null));
-		}
+			[TestMethod]
+			public void Ctor_StringDataTypeFunc_Success()
+			{
+				ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.Int32, new Func<string>(() => { return Constants.ErrorMessage; }));
+				Assert.AreEqual(ParameterDataType.Int32, ca.DataType);
+				Assert.AreEqual(Constants.SimpleConstraintString, ca.Constraints);
+				Assert.IsNotNull(ca.ParsedConstraints);
+				Assert.AreEqual(1, ca.ParsedConstraints.Count);
+				Assert.AreEqual(Constants.ErrorMessage, ca.FormatErrorMessage(null));
+			}
 
-		[TestMethod]
-		public void Ctor_StringDataTypeFunc_Success()
-		{
-			ConstraintAttribute ca = new ConstraintAttribute(Constants.SimpleConstraintString, ParameterDataType.Int32, new Func<string>(() => { return Constants.ErrorMessage; }));
-			Assert.AreEqual(ParameterDataType.Int32, ca.DataType);
-			Assert.AreEqual(Constants.SimpleConstraintString, ca.Constraints);
-			Assert.IsNotNull(ca.ParsedConstraints);
-			Assert.AreEqual(1, ca.ParsedConstraints.Count);
-			Assert.AreEqual(Constants.ErrorMessage, ca.FormatErrorMessage(null));
-		}
-		#endregion
+			[TestMethod]
+			public void IsValid_NoResults_Success()
+			{
+				ConstraintAttribute ca = new ConstraintAttribute(Constants.MinValueConstraintString, ParameterDataType.Int32);
+				Assert.IsTrue(ca.IsValid(42));
+			}
 
-		#region Public methods
-		[TestMethod]
-		public void IsValid_NoResults_Success()
-		{
-			ConstraintAttribute ca = new ConstraintAttribute(Constants.MinValueConstraintString, ParameterDataType.Int32);
-			Assert.IsTrue(ca.IsValid(42));
+			[TestMethod]
+			public void IsValid_Results_Success()
+			{
+				ConstraintAttribute ca = new ConstraintAttribute(Constants.MinValueConstraintString, ParameterDataType.Int32);
+				Assert.IsFalse(ca.IsValid(13));
+			}
 		}
-
-		[TestMethod]
-		public void IsValid_Results_Success()
-		{
-			ConstraintAttribute ca = new ConstraintAttribute(Constants.MinValueConstraintString, ParameterDataType.Int32);
-			Assert.IsFalse(ca.IsValid(13));
-		}
-		#endregion
 	}
 }

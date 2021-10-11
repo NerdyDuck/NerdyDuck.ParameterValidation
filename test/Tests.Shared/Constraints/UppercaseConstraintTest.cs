@@ -29,77 +29,74 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
 using NerdyDuck.ParameterValidation.Constraints;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation.Constraints
 {
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.NullConstraint class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class UppercaseConstraintTest
 	{
-		#region Constructors
-		[TestMethod]
-		public void Ctor_Void_Success()
+		/// <summary>
+		/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.NullConstraint class.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class UppercaseConstraintTest
 		{
-			UppercaseConstraint c = new UppercaseConstraint();
-			Assert.AreEqual(Constraint.UppercaseConstraintName, c.Name);
-		}
+			[TestMethod]
+			public void Ctor_Void_Success()
+			{
+				UppercaseConstraint c = new UppercaseConstraint();
+				Assert.AreEqual(Constraint.UppercaseConstraintName, c.Name);
+			}
 
-#if WINDOWS_DESKTOP
-		[TestMethod]
-		public void Ctor_SerializationInfo_Success()
-		{
-			UppercaseConstraint c = new UppercaseConstraint();
-			System.IO.MemoryStream Buffer = SerializationHelper.Serialize(c);
-			UppercaseConstraint c2 = SerializationHelper.Deserialize<UppercaseConstraint>(Buffer);
+			[TestMethod]
+			public void Ctor_SerializationInfo_Success()
+			{
+				UppercaseConstraint c = new UppercaseConstraint();
+				System.IO.MemoryStream Buffer = SerializationHelper.Serialize(c);
+				UppercaseConstraint c2 = SerializationHelper.Deserialize<UppercaseConstraint>(Buffer);
 
-			Assert.AreEqual(Constraint.UppercaseConstraintName, c2.Name);
-		}
-#endif
-		#endregion
+				Assert.AreEqual(Constraint.UppercaseConstraintName, c2.Name);
+			}
 
-		#region Public methods
-		[TestMethod]
-		public void ToString_Success()
-		{
-			UppercaseConstraint c = new UppercaseConstraint();
-			Assert.AreEqual("[Uppercase]", c.ToString());
-		}
+			[TestMethod]
+			public void ToString_Success()
+			{
+				UppercaseConstraint c = new UppercaseConstraint();
+				Assert.AreEqual("[Uppercase]", c.ToString());
+			}
 
-		[TestMethod]
-		public void Validate_Success()
-		{
-			UppercaseConstraint c = new UppercaseConstraint();
-			IEnumerable<ParameterValidationResult> res = c.Validate("SOME UPPERCASE AND 3 NUMBERS AND PUNCTUATION ...!", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsFalse(res.GetEnumerator().MoveNext());
-		}
+			[TestMethod]
+			public void Validate_Success()
+			{
+				UppercaseConstraint c = new UppercaseConstraint();
+				IEnumerable<ParameterValidationResult> res = c.Validate("SOME UPPERCASE AND 3 NUMBERS AND PUNCTUATION ...!", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsFalse(res.GetEnumerator().MoveNext());
+			}
 
-		[TestMethod]
-		public void Validate_Lowercase_Success()
-		{
-			UppercaseConstraint c = new UppercaseConstraint();
-			IEnumerable<ParameterValidationResult> res = c.Validate("THIS IS lowercase!", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsTrue(res.GetEnumerator().MoveNext());
+			[TestMethod]
+			public void Validate_Lowercase_Success()
+			{
+				UppercaseConstraint c = new UppercaseConstraint();
+				IEnumerable<ParameterValidationResult> res = c.Validate("THIS IS lowercase!", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsTrue(res.GetEnumerator().MoveNext());
+			}
 		}
-		#endregion
 	}
 }

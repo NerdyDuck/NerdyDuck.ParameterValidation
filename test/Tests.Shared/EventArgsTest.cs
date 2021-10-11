@@ -29,66 +29,68 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
 using NerdyDuck.ParameterValidation.Constraints;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation
 {
-	/// <summary>
-	/// Contains test methods to test various event argument classes in NerdyDuck.ParameterValidation.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class EventArgsTest
 	{
-		[TestMethod]
-		public void UnknownConstraintEventArgs_ctor_Success()
+		/// <summary>
+		/// Contains test methods to test various event argument classes in NerdyDuck.ParameterValidation.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class EventArgsTest
 		{
-			UnknownConstraintEventArgs args = new UnknownConstraintEventArgs(Constants.MemberName, ParameterDataType.Guid);
-			Assert.AreEqual(Constants.MemberName, args.ConstraintName);
-			Assert.AreEqual(ParameterDataType.Guid, args.DataType);
-			Assert.IsNull(args.Constraint);
-			args.Constraint = new DummyConstraint();
-			Assert.IsNotNull(args.Constraint);
-		}
+			[TestMethod]
+			public void UnknownConstraintEventArgs_ctor_Success()
+			{
+				UnknownConstraintEventArgs args = new UnknownConstraintEventArgs(Constants.MemberName, ParameterDataType.Guid);
+				Assert.AreEqual(Constants.MemberName, args.ConstraintName);
+				Assert.AreEqual(ParameterDataType.Guid, args.DataType);
+				Assert.IsNull(args.Constraint);
+				args.Constraint = new DummyConstraint();
+				Assert.IsNotNull(args.Constraint);
+			}
 
-		[TestMethod]
-		public void ParameterValidationEventArgs_ctor_Success()
-		{
-			ParameterValidationEventArgs args = new ParameterValidationEventArgs(42, ParameterDataType.Int32, new Constraint[] { new DummyConstraint() }, Constants.MemberName, Constants.DisplayName);
-			Assert.AreEqual(Constants.MemberName, args.MemberName);
-			Assert.AreEqual(Constants.DisplayName, args.DisplayName);
-			Assert.AreEqual(ParameterDataType.Int32, args.DataType);
-			Assert.AreEqual(42, args.Value);
-			Assert.IsNotNull(args.Constraints);
-			Assert.AreEqual(1, args.Constraints.Count);
-		}
+			[TestMethod]
+			public void ParameterValidationEventArgs_ctor_Success()
+			{
+				ParameterValidationEventArgs args = new ParameterValidationEventArgs(42, ParameterDataType.Int32, new Constraint[] { new DummyConstraint() }, Constants.MemberName, Constants.DisplayName);
+				Assert.AreEqual(Constants.MemberName, args.MemberName);
+				Assert.AreEqual(Constants.DisplayName, args.DisplayName);
+				Assert.AreEqual(ParameterDataType.Int32, args.DataType);
+				Assert.AreEqual(42, args.Value);
+				Assert.IsNotNull(args.Constraints);
+				Assert.AreEqual(1, args.Constraints.Count);
+			}
 
-		[TestMethod]
-		public void ParameterValidationErrorEventArgs_ctor_Success()
-		{
-			ParameterValidationErrorEventArgs args = new ParameterValidationErrorEventArgs(42, ParameterDataType.Int32, new Constraint[] { new DummyConstraint() }, Constants.MemberName, Constants.DisplayName, new ParameterValidationResult[] { ParameterValidationResult.Success });
-			Assert.AreEqual(Constants.MemberName, args.MemberName);
-			Assert.AreEqual(Constants.DisplayName, args.DisplayName);
-			Assert.AreEqual(ParameterDataType.Int32, args.DataType);
-			Assert.AreEqual(42, args.Value);
-			Assert.IsNotNull(args.Constraints);
-			Assert.AreEqual(1, args.Constraints.Count);
-			Assert.IsNotNull(args.ValidationResults);
-			Assert.AreEqual(1, args.ValidationResults.Count);
+			[TestMethod]
+			public void ParameterValidationErrorEventArgs_ctor_Success()
+			{
+				ParameterValidationErrorEventArgs args = new ParameterValidationErrorEventArgs(42, ParameterDataType.Int32, new Constraint[] { new DummyConstraint() }, Constants.MemberName, Constants.DisplayName, new ParameterValidationResult[] { ParameterValidationResult.Success });
+				Assert.AreEqual(Constants.MemberName, args.MemberName);
+				Assert.AreEqual(Constants.DisplayName, args.DisplayName);
+				Assert.AreEqual(ParameterDataType.Int32, args.DataType);
+				Assert.AreEqual(42, args.Value);
+				Assert.IsNotNull(args.Constraints);
+				Assert.AreEqual(1, args.Constraints.Count);
+				Assert.IsNotNull(args.ValidationResults);
+				Assert.AreEqual(1, args.ValidationResults.Count);
+			}
 		}
 	}
 }

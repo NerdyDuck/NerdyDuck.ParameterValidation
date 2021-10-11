@@ -29,20 +29,12 @@
  ******************************************************************************/
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace NerdyDuck.Tests.ParameterValidation
 {
 	/// <summary>
 	/// Constant values for recurring test scenarios.
 	/// </summary>
-#if WINDOWS_DESKTOP
 	[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-#endif
 	public static class Constants
 	{
 		public const int COR_E_FORMAT = unchecked((int)0x80131537);

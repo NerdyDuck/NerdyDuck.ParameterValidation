@@ -29,259 +29,258 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
+using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
-using System;
 using NerdyDuck.ParameterValidation.Constraints;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation
 {
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.ConstraintParserException class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class ConstraintParserExceptionTest
 	{
-		#region Constructors
-		[TestMethod]
-		public void Ctor_Void_Success()
+		/// <summary>
+		/// Contains test methods to test the NerdyDuck.ParameterValidation.ConstraintParserException class.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class ConstraintParserExceptionTest
 		{
-			try
-			{
-				throw new ConstraintParserException();
-			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
-				Assert.AreEqual(-1, ex.Position);
-				Assert.IsNull(ex.InnerException);
-			}
-		}
-
-		[TestMethod]
-		public void Ctor_String_Success()
-		{
-			try
-			{
-				throw new ConstraintParserException(Constants.TestMessage);
-			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
-				Assert.AreEqual(-1, ex.Position);
-				Assert.IsNull(ex.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex.Message);
-			}
-		}
-
-		[TestMethod]
-		public void Ctor_StringInt_Success()
-		{
-			try
-			{
-				throw new ConstraintParserException(Constants.TestMessage, 42);
-			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
-				Assert.AreEqual(42, ex.Position);
-				Assert.IsNull(ex.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex.Message);
-			}
-		}
-
-		[TestMethod]
-		public void Ctor_StringException_Success()
-		{
-			try
+			[TestMethod]
+			public void Ctor_Void_Success()
 			{
 				try
 				{
-					throw new FormatException();
+					throw new ConstraintParserException();
 				}
-				catch (Exception ex)
+				catch (ConstraintParserException ex)
 				{
-					throw new ConstraintParserException(Constants.TestMessage, ex);
+					Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
+					Assert.AreEqual(-1, ex.Position);
+					Assert.IsNull(ex.InnerException);
 				}
 			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
-				Assert.AreEqual(-1, ex.Position);
-				Assert.IsNotNull(ex.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex.Message);
-			}
-		}
 
-		[TestMethod]
-		public void Ctor_StringIntException_Success()
-		{
-			try
+			[TestMethod]
+			public void Ctor_String_Success()
 			{
 				try
 				{
-					throw new FormatException();
+					throw new ConstraintParserException(Constants.TestMessage);
 				}
-				catch (Exception ex)
+				catch (ConstraintParserException ex)
 				{
-					throw new ConstraintParserException(Constants.TestMessage, 42, ex);
+					Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
+					Assert.AreEqual(-1, ex.Position);
+					Assert.IsNull(ex.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex.Message);
 				}
 			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
-				Assert.AreEqual(42, ex.Position);
-				Assert.IsNotNull(ex.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex.Message);
-			}
-		}
 
-		[TestMethod]
-		public void Ctor_Int32_Success()
-		{
-			try
-			{
-				throw new ConstraintParserException(Constants.CustomHResult);
-			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.CustomHResult, ex.HResult);
-				Assert.AreEqual(-1, ex.Position);
-				Assert.IsNull(ex.InnerException);
-			}
-		}
-
-		[TestMethod]
-		public void Ctor_IntString_Success()
-		{
-			try
-			{
-				throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage);
-			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.CustomHResult, ex.HResult);
-				Assert.AreEqual(-1, ex.Position);
-				Assert.IsNull(ex.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex.Message);
-			}
-		}
-
-		[TestMethod]
-		public void Ctor_IntStringInt_Success()
-		{
-			try
-			{
-				throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage, 42);
-			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.CustomHResult, ex.HResult);
-				Assert.AreEqual(42, ex.Position);
-				Assert.IsNull(ex.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex.Message);
-			}
-		}
-
-		[TestMethod]
-		public void Ctor_IntStringException_Success()
-		{
-			try
+			[TestMethod]
+			public void Ctor_StringInt_Success()
 			{
 				try
 				{
-					throw new FormatException();
+					throw new ConstraintParserException(Constants.TestMessage, 42);
 				}
-				catch (Exception ex)
+				catch (ConstraintParserException ex)
 				{
-					throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage, ex);
+					Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
+					Assert.AreEqual(42, ex.Position);
+					Assert.IsNull(ex.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex.Message);
 				}
 			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.CustomHResult, ex.HResult);
-				Assert.AreEqual(-1, ex.Position);
-				Assert.IsNotNull(ex.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex.Message);
-			}
-		}
 
-		[TestMethod]
-		public void Ctor_IntStringIntException_Success()
-		{
-			try
+			[TestMethod]
+			public void Ctor_StringException_Success()
 			{
 				try
 				{
-					throw new FormatException();
+					try
+					{
+						throw new FormatException();
+					}
+					catch (Exception ex)
+					{
+						throw new ConstraintParserException(Constants.TestMessage, ex);
+					}
 				}
-				catch (Exception ex)
+				catch (ConstraintParserException ex)
 				{
-					throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage, 42, ex);
+					Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
+					Assert.AreEqual(-1, ex.Position);
+					Assert.IsNotNull(ex.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex.Message);
 				}
 			}
-			catch (ConstraintParserException ex)
-			{
-				Assert.AreEqual(Constants.CustomHResult, ex.HResult);
-				Assert.AreEqual(42, ex.Position);
-				Assert.IsNotNull(ex.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex.Message);
-			}
-		}
 
-#if WINDOWS_DESKTOP
-		[TestMethod]
-		public void Ctor_SerializationInfo_Success()
-		{
-			try
+			[TestMethod]
+			public void Ctor_StringIntException_Success()
 			{
 				try
 				{
-					throw new FormatException();
+					try
+					{
+						throw new FormatException();
+					}
+					catch (Exception ex)
+					{
+						throw new ConstraintParserException(Constants.TestMessage, 42, ex);
+					}
+				}
+				catch (ConstraintParserException ex)
+				{
+					Assert.AreEqual(Constants.COR_E_FORMAT, ex.HResult);
+					Assert.AreEqual(42, ex.Position);
+					Assert.IsNotNull(ex.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex.Message);
+				}
+			}
+
+			[TestMethod]
+			public void Ctor_Int32_Success()
+			{
+				try
+				{
+					throw new ConstraintParserException(Constants.CustomHResult);
+				}
+				catch (ConstraintParserException ex)
+				{
+					Assert.AreEqual(Constants.CustomHResult, ex.HResult);
+					Assert.AreEqual(-1, ex.Position);
+					Assert.IsNull(ex.InnerException);
+				}
+			}
+
+			[TestMethod]
+			public void Ctor_IntString_Success()
+			{
+				try
+				{
+					throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage);
+				}
+				catch (ConstraintParserException ex)
+				{
+					Assert.AreEqual(Constants.CustomHResult, ex.HResult);
+					Assert.AreEqual(-1, ex.Position);
+					Assert.IsNull(ex.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex.Message);
+				}
+			}
+
+			[TestMethod]
+			public void Ctor_IntStringInt_Success()
+			{
+				try
+				{
+					throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage, 42);
+				}
+				catch (ConstraintParserException ex)
+				{
+					Assert.AreEqual(Constants.CustomHResult, ex.HResult);
+					Assert.AreEqual(42, ex.Position);
+					Assert.IsNull(ex.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex.Message);
+				}
+			}
+
+			[TestMethod]
+			public void Ctor_IntStringException_Success()
+			{
+				try
+				{
+					try
+					{
+						throw new FormatException();
+					}
+					catch (Exception ex)
+					{
+						throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage, ex);
+					}
+				}
+				catch (ConstraintParserException ex)
+				{
+					Assert.AreEqual(Constants.CustomHResult, ex.HResult);
+					Assert.AreEqual(-1, ex.Position);
+					Assert.IsNotNull(ex.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex.Message);
+				}
+			}
+
+			[TestMethod]
+			public void Ctor_IntStringIntException_Success()
+			{
+				try
+				{
+					try
+					{
+						throw new FormatException();
+					}
+					catch (Exception ex)
+					{
+						throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage, 42, ex);
+					}
+				}
+				catch (ConstraintParserException ex)
+				{
+					Assert.AreEqual(Constants.CustomHResult, ex.HResult);
+					Assert.AreEqual(42, ex.Position);
+					Assert.IsNotNull(ex.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex.Message);
+				}
+			}
+
+			[TestMethod]
+			public void Ctor_SerializationInfo_Success()
+			{
+				try
+				{
+					try
+					{
+						throw new FormatException();
+					}
+					catch (Exception ex)
+					{
+						throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage, 42, ex);
+					}
+				}
+				catch (ConstraintParserException ex)
+				{
+					System.IO.MemoryStream Buffer = SerializationHelper.Serialize(ex);
+					ConstraintParserException ex2 = SerializationHelper.Deserialize<ConstraintParserException>(Buffer);
+
+					Assert.AreEqual(Constants.CustomHResult, ex2.HResult);
+					Assert.AreEqual(42, ex.Position);
+					Assert.IsNotNull(ex2.InnerException);
+					Assert.AreEqual(Constants.TestMessage, ex2.Message);
+				}
+			}
+
+			[TestMethod]
+			public void ToString_Success()
+			{
+				try
+				{
+					throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage);
 				}
 				catch (Exception ex)
 				{
-					throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage, 42, ex);
+					string str = ex.ToString();
+					StringAssert.StartsWith(str, string.Format("{0}: ({1}) {2}", typeof(ConstraintParserException).FullName, Constants.CustomHResultString, Constants.TestMessage));
+					StringAssert.Contains(str, "ToString_Success");
 				}
 			}
-			catch (ConstraintParserException ex)
-			{
-				System.IO.MemoryStream Buffer = SerializationHelper.Serialize(ex);
-				ConstraintParserException ex2 = SerializationHelper.Deserialize<ConstraintParserException>(Buffer);
-
-				Assert.AreEqual(Constants.CustomHResult, ex2.HResult);
-				Assert.AreEqual(42, ex.Position);
-				Assert.IsNotNull(ex2.InnerException);
-				Assert.AreEqual(Constants.TestMessage, ex2.Message);
-			}
 		}
-#endif
-		#endregion
-
-		#region ToString
-		[TestMethod]
-		public void ToString_Success()
-		{
-			try
-			{
-				throw new ConstraintParserException(Constants.CustomHResult, Constants.TestMessage);
-			}
-			catch (Exception ex)
-			{
-				string str = ex.ToString();
-				StringAssert.StartsWith(str, string.Format("{0}: ({1}) {2}", typeof(ConstraintParserException).FullName, Constants.CustomHResultString, Constants.TestMessage));
-				StringAssert.Contains(str, "ToString_Success");
-			}
-		}
-		#endregion
 	}
 }

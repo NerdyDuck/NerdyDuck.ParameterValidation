@@ -44,9 +44,7 @@ namespace NerdyDuck.Tests.ParameterValidation
 	/// <summary>
 	/// Verifies conditions in unit tests using true/false propositions.
 	/// </summary>
-#if WINDOWS_DESKTOP
 	[ExcludeFromCodeCoverage]
-#endif
 	public static class CustomAssert
 	{
 #if WINDOWS_UWP

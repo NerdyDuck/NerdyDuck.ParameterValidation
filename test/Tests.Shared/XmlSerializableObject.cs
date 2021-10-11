@@ -30,6 +30,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -39,9 +40,7 @@ namespace NerdyDuck.Tests.ParameterValidation
 	/// <summary>
 	/// Class to test xml serialization.
 	/// </summary>
-#if WINDOWS_DESKTOP
-	[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-#endif
+	[ExcludeFromCodeCoverage]
 	public class XmlSerializableObject : IXmlSerializable
 	{
 		private bool ThrowException;

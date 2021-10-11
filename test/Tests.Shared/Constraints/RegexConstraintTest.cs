@@ -29,174 +29,169 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
 using NerdyDuck.ParameterValidation.Constraints;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation.Constraints
 {
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.NullConstraint class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class RegexConstraintTest
 	{
-		#region Constructors
-		[TestMethod]
-		public void Ctor_Void_Success()
+		/// <summary>
+		/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.NullConstraint class.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class RegexConstraintTest
 		{
-			RegexConstraint c = new RegexConstraint();
-			Assert.AreEqual(Constraint.RegexConstraintName, c.Name);
-			Assert.AreEqual(".*", c.RegularExpression);
-			Assert.AreEqual(RegexOptions.None, c.Options);
-		}
-
-		[TestMethod]
-		public void Ctor_String_Success()
-		{
-			RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.IgnoreCase);
-			Assert.AreEqual(Constraint.RegexConstraintName, c.Name);
-			Assert.AreEqual(Constants.RegexString, c.RegularExpression);
-			Assert.AreEqual(RegexOptions.IgnoreCase, c.Options);
-		}
-
-		[TestMethod]
-		public void Ctor_StringEmpty_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
-			{
-				RegexConstraint c = new RegexConstraint(string.Empty, RegexOptions.None);
-			});
-		}
-
-		[TestMethod]
-		public void Ctor_InvRegex_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentException>(() =>
-			{
-				RegexConstraint c = new RegexConstraint("[", RegexOptions.None);
-			});
-		}
-
-		[TestMethod]
-		public void Ctor_InvOptions_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
-			{
-				RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.ECMAScript | RegexOptions.Singleline);
-			});
-		}
-
-#if WINDOWS_DESKTOP
-		[TestMethod]
-		public void Ctor_SerializationInfo_Success()
-		{
-			RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.IgnoreCase);
-			System.IO.MemoryStream Buffer = SerializationHelper.Serialize(c);
-			RegexConstraint c2 = SerializationHelper.Deserialize<RegexConstraint>(Buffer);
-
-			Assert.AreEqual(Constraint.RegexConstraintName, c2.Name);
-			Assert.AreEqual(Constants.RegexString, c2.RegularExpression);
-			Assert.AreEqual(RegexOptions.IgnoreCase, c2.Options);
-		}
-#endif
-		#endregion
-
-		#region Public methods
-
-		[TestMethod]
-		public void ToString_Success()
-		{
-			RegexConstraint c = new RegexConstraint("[a-z]*", RegexOptions.IgnoreCase);
-			Assert.AreEqual("[Regex('[a-z]*',IgnoreCase)]", c.ToString());
-		}
-
-		[TestMethod]
-		public void SetParameters_Success()
-		{
-			RegexConstraint c = new RegexConstraint();
-			c.SetParametersInternal(new string[] { Constants.RegexString, "IgnoreCase" }, ParameterDataType.String);
-			Assert.AreEqual(Constants.RegexString, c.RegularExpression);
-			Assert.AreEqual(RegexOptions.IgnoreCase, c.Options);
-
-		}
-
-		[TestMethod]
-		public void SetParameters_NoParamsOrNull_Error()
-		{
-			CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+			[TestMethod]
+			public void Ctor_Void_Success()
 			{
 				RegexConstraint c = new RegexConstraint();
-				c.SetParametersInternal(new string[0], ParameterDataType.String);
-			});
-			CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+				Assert.AreEqual(Constraint.RegexConstraintName, c.Name);
+				Assert.AreEqual(".*", c.RegularExpression);
+				Assert.AreEqual(RegexOptions.None, c.Options);
+			}
+
+			[TestMethod]
+			public void Ctor_String_Success()
+			{
+				RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.IgnoreCase);
+				Assert.AreEqual(Constraint.RegexConstraintName, c.Name);
+				Assert.AreEqual(Constants.RegexString, c.RegularExpression);
+				Assert.AreEqual(RegexOptions.IgnoreCase, c.Options);
+			}
+
+			[TestMethod]
+			public void Ctor_StringEmpty_Error()
+			{
+				CustomAssert.ThrowsException<CodedArgumentNullOrWhiteSpaceException>(() =>
+				{
+					RegexConstraint c = new RegexConstraint(string.Empty, RegexOptions.None);
+				});
+			}
+
+			[TestMethod]
+			public void Ctor_InvRegex_Error()
+			{
+				CustomAssert.ThrowsException<CodedArgumentException>(() =>
+				{
+					RegexConstraint c = new RegexConstraint("[", RegexOptions.None);
+				});
+			}
+
+			[TestMethod]
+			public void Ctor_InvOptions_Error()
+			{
+				CustomAssert.ThrowsException<CodedArgumentOutOfRangeException>(() =>
+				{
+					RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.ECMAScript | RegexOptions.Singleline);
+				});
+			}
+
+			[TestMethod]
+			public void Ctor_SerializationInfo_Success()
+			{
+				RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.IgnoreCase);
+				System.IO.MemoryStream Buffer = SerializationHelper.Serialize(c);
+				RegexConstraint c2 = SerializationHelper.Deserialize<RegexConstraint>(Buffer);
+
+				Assert.AreEqual(Constraint.RegexConstraintName, c2.Name);
+				Assert.AreEqual(Constants.RegexString, c2.RegularExpression);
+				Assert.AreEqual(RegexOptions.IgnoreCase, c2.Options);
+			}
+
+			[TestMethod]
+			public void ToString_Success()
+			{
+				RegexConstraint c = new RegexConstraint("[a-z]*", RegexOptions.IgnoreCase);
+				Assert.AreEqual("[Regex('[a-z]*',IgnoreCase)]", c.ToString());
+			}
+
+			[TestMethod]
+			public void SetParameters_Success()
 			{
 				RegexConstraint c = new RegexConstraint();
-				c.SetParametersInternal(new string[] { null, "IgnoreCase" }, ParameterDataType.String);
-			});
-		}
+				c.SetParametersInternal(new string[] { Constants.RegexString, "IgnoreCase" }, ParameterDataType.String);
+				Assert.AreEqual(Constants.RegexString, c.RegularExpression);
+				Assert.AreEqual(RegexOptions.IgnoreCase, c.Options);
 
-		[TestMethod]
-		public void SetParameters_InvOptionString_Error()
-		{
-			CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+			}
+
+			[TestMethod]
+			public void SetParameters_NoParamsOrNull_Error()
 			{
-				RegexConstraint c = new RegexConstraint();
-				c.SetParametersInternal(new string[] { Constants.RegexString, "Ignxxxxx" }, ParameterDataType.String);
-			});
-		}
+				CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+				{
+					RegexConstraint c = new RegexConstraint();
+					c.SetParametersInternal(new string[0], ParameterDataType.String);
+				});
+				CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+				{
+					RegexConstraint c = new RegexConstraint();
+					c.SetParametersInternal(new string[] { null, "IgnoreCase" }, ParameterDataType.String);
+				});
+			}
 
-		[TestMethod]
-		public void SetParameters_InvRegex_Error()
-		{
-			CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+			[TestMethod]
+			public void SetParameters_InvOptionString_Error()
 			{
-				RegexConstraint c = new RegexConstraint();
-				c.SetParametersInternal(new string[] { "[", "IgnoreCase" }, ParameterDataType.String);
-			});
-		}
+				CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+				{
+					RegexConstraint c = new RegexConstraint();
+					c.SetParametersInternal(new string[] { Constants.RegexString, "Ignxxxxx" }, ParameterDataType.String);
+				});
+			}
 
-		[TestMethod]
-		public void SetParameters_InvOptions_Error()
-		{
-			CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+			[TestMethod]
+			public void SetParameters_InvRegex_Error()
 			{
-				RegexConstraint c = new RegexConstraint();
-				c.SetParametersInternal(new string[] { Constants.RegexString, "ECMAScript", "Singleline" }, ParameterDataType.String);
-			});
-		}
+				CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+				{
+					RegexConstraint c = new RegexConstraint();
+					c.SetParametersInternal(new string[] { "[", "IgnoreCase" }, ParameterDataType.String);
+				});
+			}
 
-		[TestMethod]
-		public void Validate_Success()
-		{
-			RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.IgnoreCase);
-			IEnumerable<ParameterValidationResult> res = c.Validate("Heretherebedragons", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsFalse(res.GetEnumerator().MoveNext());
-		}
+			[TestMethod]
+			public void SetParameters_InvOptions_Error()
+			{
+				CustomAssert.ThrowsException<ConstraintConfigurationException>(() =>
+				{
+					RegexConstraint c = new RegexConstraint();
+					c.SetParametersInternal(new string[] { Constants.RegexString, "ECMAScript", "Singleline" }, ParameterDataType.String);
+				});
+			}
 
-		[TestMethod]
-		public void Validate_NoMatch_Success()
-		{
-			RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.IgnoreCase);
-			IEnumerable<ParameterValidationResult> res = c.Validate("Here there be dragons!", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsTrue(res.GetEnumerator().MoveNext());
+			[TestMethod]
+			public void Validate_Success()
+			{
+				RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.IgnoreCase);
+				IEnumerable<ParameterValidationResult> res = c.Validate("Heretherebedragons", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsFalse(res.GetEnumerator().MoveNext());
+			}
+
+			[TestMethod]
+			public void Validate_NoMatch_Success()
+			{
+				RegexConstraint c = new RegexConstraint(Constants.RegexString, RegexOptions.IgnoreCase);
+				IEnumerable<ParameterValidationResult> res = c.Validate("Here there be dragons!", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsTrue(res.GetEnumerator().MoveNext());
+			}
 		}
-		#endregion
 	}
 }

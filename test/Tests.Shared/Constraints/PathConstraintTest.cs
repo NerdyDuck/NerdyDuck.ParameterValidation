@@ -29,103 +29,99 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
 using NerdyDuck.ParameterValidation.Constraints;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation.Constraints
 {
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.PathConstraint class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class PathConstraintTest
 	{
-		#region Constructors
-		[TestMethod]
-		public void Ctor_Void_Success()
+		/// <summary>
+		/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.PathConstraint class.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class PathConstraintTest
 		{
-			PathConstraint c = new PathConstraint();
-			Assert.AreEqual(Constraint.PathConstraintName, c.Name);
+			[TestMethod]
+			public void Ctor_Void_Success()
+			{
+				PathConstraint c = new PathConstraint();
+				Assert.AreEqual(Constraint.PathConstraintName, c.Name);
+			}
+
+			[TestMethod]
+			public void Ctor_SerializationInfo_Success()
+			{
+				PathConstraint c = new PathConstraint();
+				System.IO.MemoryStream Buffer = SerializationHelper.Serialize(c);
+				PathConstraint c2 = SerializationHelper.Deserialize<PathConstraint>(Buffer);
+
+				Assert.AreEqual(Constraint.PathConstraintName, c2.Name);
+			}
+
+			[TestMethod]
+			public void ToString_Success()
+			{
+				PathConstraint c = new PathConstraint();
+				Assert.AreEqual("[Path]", c.ToString());
+			}
+
+			[TestMethod]
+			public void Validate_Relative1_Success()
+			{
+				PathConstraint c = new PathConstraint();
+				IEnumerable<ParameterValidationResult> res = c.Validate("MyPath", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsFalse(res.GetEnumerator().MoveNext());
+			}
+
+			public void Validate_Relative2_Success()
+			{
+				PathConstraint c = new PathConstraint();
+				IEnumerable<ParameterValidationResult> res = c.Validate("Documents\\MyPath.txt", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsFalse(res.GetEnumerator().MoveNext());
+			}
+
+			public void Validate_Absolute_Success()
+			{
+				PathConstraint c = new PathConstraint();
+				IEnumerable<ParameterValidationResult> res = c.Validate("C:\\Documents\\MyPath.txt", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsFalse(res.GetEnumerator().MoveNext());
+			}
+
+			[TestMethod]
+			public void Validate_InvalidChar_Success()
+			{
+				PathConstraint c = new PathConstraint();
+				IEnumerable<ParameterValidationResult> res = c.Validate("C:\\Documents\\My|Path.txt", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsTrue(res.GetEnumerator().MoveNext());
+			}
+
+			[TestMethod]
+			public void Validate_Whitespace_Success()
+			{
+				PathConstraint c = new PathConstraint();
+				IEnumerable<ParameterValidationResult> res = c.Validate("   ", ParameterDataType.String, Constants.MemberName);
+				Assert.IsNotNull(res);
+				Assert.IsTrue(res.GetEnumerator().MoveNext());
+			}
 		}
-
-#if WINDOWS_DESKTOP
-		[TestMethod]
-		public void Ctor_SerializationInfo_Success()
-		{
-			PathConstraint c = new PathConstraint();
-			System.IO.MemoryStream Buffer = SerializationHelper.Serialize(c);
-			PathConstraint c2 = SerializationHelper.Deserialize<PathConstraint>(Buffer);
-
-			Assert.AreEqual(Constraint.PathConstraintName, c2.Name);
-		}
-#endif
-		#endregion
-
-		#region Public methods
-
-		[TestMethod]
-		public void ToString_Success()
-		{
-			PathConstraint c = new PathConstraint();
-			Assert.AreEqual("[Path]", c.ToString());
-		}
-
-		[TestMethod]
-		public void Validate_Relative1_Success()
-		{
-			PathConstraint c = new PathConstraint();
-			IEnumerable<ParameterValidationResult> res = c.Validate("MyPath", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsFalse(res.GetEnumerator().MoveNext());
-		}
-
-		public void Validate_Relative2_Success()
-		{
-			PathConstraint c = new PathConstraint();
-			IEnumerable<ParameterValidationResult> res = c.Validate("Documents\\MyPath.txt", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsFalse(res.GetEnumerator().MoveNext());
-		}
-
-		public void Validate_Absolute_Success()
-		{
-			PathConstraint c = new PathConstraint();
-			IEnumerable<ParameterValidationResult> res = c.Validate("C:\\Documents\\MyPath.txt", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsFalse(res.GetEnumerator().MoveNext());
-		}
-
-		[TestMethod]
-		public void Validate_InvalidChar_Success()
-		{
-			PathConstraint c = new PathConstraint();
-			IEnumerable<ParameterValidationResult> res = c.Validate("C:\\Documents\\My|Path.txt", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsTrue(res.GetEnumerator().MoveNext());
-		}
-
-		[TestMethod]
-		public void Validate_Whitespace_Success()
-		{
-			PathConstraint c = new PathConstraint();
-			IEnumerable<ParameterValidationResult> res = c.Validate("   ", ParameterDataType.String, Constants.MemberName);
-			Assert.IsNotNull(res);
-			Assert.IsTrue(res.GetEnumerator().MoveNext());
-		}
-		#endregion
 	}
 }

@@ -29,61 +29,59 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
+using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
 using NerdyDuck.ParameterValidation.Constraints;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation.Constraints
 {
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.ReadOnlyConstraint class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class ReadOnlyConstraintTest
 	{
-		#region Constructors
-		[TestMethod]
-		public void Ctor_Void_Success()
+		/// <summary>
+		/// Contains test methods to test the NerdyDuck.ParameterValidation.Constraints.ReadOnlyConstraint class.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class ReadOnlyConstraintTest
 		{
-			ReadOnlyConstraint c = new ReadOnlyConstraint();
-			Assert.AreEqual(Constraint.ReadOnlyConstraintName, c.Name);
-		}
+			[TestMethod]
+			public void Ctor_Void_Success()
+			{
+				ReadOnlyConstraint c = new ReadOnlyConstraint();
+				Assert.AreEqual(Constraint.ReadOnlyConstraintName, c.Name);
+			}
 
-#if WINDOWS_DESKTOP
-		[TestMethod]
-		public void Ctor_SerializationInfo_Success()
-		{
-			ReadOnlyConstraint c = new ReadOnlyConstraint();
-			System.IO.MemoryStream Buffer = SerializationHelper.Serialize(c);
-			ReadOnlyConstraint c2 = SerializationHelper.Deserialize<ReadOnlyConstraint>(Buffer);
+			[TestMethod]
+			public void Ctor_SerializationInfo_Success()
+			{
+				ReadOnlyConstraint c = new ReadOnlyConstraint();
+				System.IO.MemoryStream Buffer = SerializationHelper.Serialize(c);
+				ReadOnlyConstraint c2 = SerializationHelper.Deserialize<ReadOnlyConstraint>(Buffer);
 
-			Assert.AreEqual(Constraint.ReadOnlyConstraintName, c2.Name);
-		}
-#endif
-		#endregion
+				Assert.AreEqual(Constraint.ReadOnlyConstraintName, c2.Name);
+			}
 
-		#region Public methods
-		[TestMethod]
-		public void Validate_Success()
-		{
-			ReadOnlyConstraint c = new ReadOnlyConstraint();
-			IEnumerable<ParameterValidationResult> result = c.Validate(42, ParameterDataType.Int32, Constants.MemberName);
-			Assert.IsNotNull(result);
-			List<ParameterValidationResult> Temp = new List<ParameterValidationResult>(result);
-			Assert.AreEqual(0, Temp.Count);
+			[TestMethod]
+			public void Validate_Success()
+			{
+				ReadOnlyConstraint c = new ReadOnlyConstraint();
+				IEnumerable<ParameterValidationResult> result = c.Validate(42, ParameterDataType.Int32, Constants.MemberName);
+				Assert.IsNotNull(result);
+				List<ParameterValidationResult> Temp = new List<ParameterValidationResult>(result);
+				Assert.AreEqual(0, Temp.Count);
+			}
 		}
-		#endregion
 	}
 }

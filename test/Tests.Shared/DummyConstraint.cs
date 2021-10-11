@@ -29,26 +29,21 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_DESKTOP
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.ParameterValidation;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation
 {
 	/// <summary>
 	/// Derivate of the Constraint class to test internal behavior.
 	/// </summary>
-#if WINDOWS_DESKTOP
 	[ExcludeFromCodeCoverage]
-#endif
 	public class DummyConstraint : Constraint
 	{
 		public IReadOnlyList<string> Parameters;
 
-		#region Constructors
 		public DummyConstraint()
 			: base("Dummy")
 		{
@@ -59,15 +54,11 @@ namespace NerdyDuck.Tests.ParameterValidation
 		{
 		}
 
-#if WINDOWS_DESKTOP
 		public DummyConstraint(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
 			: base(info, context)
 		{
 		}
-#endif
-		#endregion
 
-		#region Public methods
 		public void AssertDataTypeTest(ParameterDataType dataType, ParameterDataType[] expectedTypes)
 		{
 			base.AssertDataType(dataType, expectedTypes);
@@ -102,6 +93,5 @@ namespace NerdyDuck.Tests.ParameterValidation
 				}
 			}
 		}
-		#endregion
 	}
 }

@@ -29,45 +29,47 @@
  ******************************************************************************/
 #endregion
 
-#if WINDOWS_UWP
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#endif
-#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
-#endif
 using NerdyDuck.CodedExceptions;
 using NerdyDuck.ParameterValidation;
 using NerdyDuck.ParameterValidation.Constraints;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NerdyDuck.Tests.ParameterValidation
 {
-	/// <summary>
-	/// Contains test methods to test the NerdyDuck.ParameterValidation.TypeExtensions class.
-	/// </summary>
-#if WINDOWS_DESKTOP
-	[ExcludeFromCodeCoverage]
+#if NET60
+	namespace Net60
+#elif NET50
+	namespace Net50
+#elif NETCORE31
+	namespace NetCore31
+#elif NET48
+	namespace Net48
 #endif
-	[TestClass]
-	public class TypeExtensionsTest
 	{
-		[TestMethod]
-		public void ToStringAssemblyNameOnly_Success()
+		/// <summary>
+		/// Contains test methods to test the NerdyDuck.ParameterValidation.TypeExtensions class.
+		/// </summary>
+		[ExcludeFromCodeCoverage]
+		[TestClass]
+		public class TypeExtensionsTest
 		{
-			string str = TypeExtensions.ToStringAssemblyNameOnly(typeof(Constraint));
-			Assert.AreEqual("NerdyDuck.ParameterValidation.Constraint, NerdyDuck.ParameterValidation", str);
-		}
-
-		[TestMethod]
-		public void ToStringAssemblyNameOnly_Null_Error()
-		{
-			CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+			[TestMethod]
+			public void ToStringAssemblyNameOnly_Success()
 			{
-				TypeExtensions.ToStringAssemblyNameOnly(null);
-			});
+				string str = TypeExtensions.ToStringAssemblyNameOnly(typeof(Constraint));
+				Assert.AreEqual("NerdyDuck.ParameterValidation.Constraint, NerdyDuck.ParameterValidation", str);
+			}
+
+			[TestMethod]
+			public void ToStringAssemblyNameOnly_Null_Error()
+			{
+				CustomAssert.ThrowsException<CodedArgumentNullException>(() =>
+				{
+					TypeExtensions.ToStringAssemblyNameOnly(null);
+				});
+			}
 		}
 	}
 }
