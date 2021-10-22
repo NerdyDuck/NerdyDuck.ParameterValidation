@@ -17,8 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Versions.props = Versions.props
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{CA475D9F-225C-45A7-B600-ECC7908A7881}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "media", "media", "{4C8B57DE-0017-4DA4-8F8E-EAE03C3FA5AD}"
 	ProjectSection(SolutionItems) = preProject
 		media\NerdyDuck.ParameterValidation-64x64.png = media\NerdyDuck.ParameterValidation-64x64.png
@@ -42,8 +40,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{47976FAC-8
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParameterValidation", "src\ParameterValidation.csproj", "{5BC20E49-5B5C-4293-9ABC-CEF1884773FD}"
-EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "ParameterValidation.Documentation", "doc\ParameterValidation.Documentation.shfbproj", "{DBBC3D06-3173-42B6-AD52-95E4E34CD8CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.ParameterValidation.Net48", "test\Tests.Net48\Tests.ParameterValidation.Net48.csproj", "{CE080755-8C50-4B3B-A91B-306169E89BAD}"
 EndProject
@@ -94,7 +90,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5BC20E49-5B5C-4293-9ABC-CEF1884773FD} = {70061BA5-5173-48A6-8D0C-098142608982}
-		{DBBC3D06-3173-42B6-AD52-95E4E34CD8CC} = {CA475D9F-225C-45A7-B600-ECC7908A7881}
 		{CE080755-8C50-4B3B-A91B-306169E89BAD} = {47976FAC-8B20-46BD-8A00-0818AF80F9C3}
 		{18F2275A-FC26-4895-86CC-B7F1F7A17AF0} = {47976FAC-8B20-46BD-8A00-0818AF80F9C3}
 		{8031D1B1-CF38-4F4F-A762-801A0B1D9AD5} = {47976FAC-8B20-46BD-8A00-0818AF80F9C3}
