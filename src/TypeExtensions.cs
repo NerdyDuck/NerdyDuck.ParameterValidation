@@ -28,35 +28,32 @@
  ******************************************************************************/
 #endregion
 
-using NerdyDuck.CodedExceptions;
-using System;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace NerdyDuck.ParameterValidation
+namespace NerdyDuck.ParameterValidation;
+
+/// <summary>
+/// Provides extension methods for the <see cref="Type"/> class.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+public static class TypeExtensions
 {
 	/// <summary>
-	/// Provides extension methods for the <see cref="Type"/> class.
+	/// Returns the partially qualified name of the specified type, only containing the full type name, and the assembly name.
 	/// </summary>
-	[EditorBrowsable(EditorBrowsableState.Never)]
-	public static class TypeExtensions
+	/// <param name="type">The type to get the name of.</param>
+	/// <returns>A string containing the full type name and the assembly name. Assembly version, culture and public key are omitted.</returns>
+	public static string ToStringAssemblyNameOnly(this Type type)
 	{
-		/// <summary>
-		/// Returns the partially qualified name of the specified type, only containing the full type name, and the assembly name.
-		/// </summary>
-		/// <param name="type">The type to get the name of.</param>
-		/// <returns>A string containing the full type name and the assembly name. Assembly version, culture and public key are omitted.</returns>
-		public static string ToStringAssemblyNameOnly(this Type type)
+		if (type == null)
 		{
-			if (type == null)
-			{
-				throw new CodedArgumentNullException(Errors.CreateHResult(ErrorCodes.TypeExtensions_ToStringAssemblyNameOnly_ArgNull), nameof(type));
-			}
-
-			TypeInfo info = type.GetTypeInfo();
-			AssemblyName an = info.Assembly.GetName();
-
-			return info.FullName + ", " + an.Name;
+			throw new CodedArgumentNullException(HResult.Create(ErrorCodes.TypeExtensions_ToStringAssemblyNameOnly_ArgNull), nameof(type));
 		}
+
+		TypeInfo info = type.GetTypeInfo();
+		AssemblyName an = info.Assembly.GetName();
+
+		return info.FullName + ", " + an.Name;
 	}
 }

@@ -28,49 +28,41 @@
  ******************************************************************************/
 #endregion
 
-using System.Collections.Generic;
+namespace NerdyDuck.ParameterValidation.Constraints;
 
-namespace NerdyDuck.ParameterValidation.Constraints
+/// <summary>
+/// A constraint specifying that a parameter value needs to be encrypted before its value is stored.
+/// </summary>
+/// <remarks>
+/// <para>
+/// <list type="bullet">
+/// <item>The textual representation of the constraint is <c>[Encrypted]</c>.</item>
+/// <item>The constraint is applicable to all data types in <see cref="ParameterDataType"/>.</item>
+/// <item>The constraint is not used during validation, but is considered during serialization of values.</item>
+/// </list>
+/// </para>
+/// </remarks>
+[Serializable]
+public class EncryptedConstraint : Constraint
 {
 	/// <summary>
-	/// A constraint specifying that a parameter value needs to be encrypted before its value is stored.
+	/// Initializes a new instance of the <see cref="EncryptedConstraint"/> class.
 	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// <list type="bullet">
-	/// <item>The textual representation of the constraint is <c>[Encrypted]</c>.</item>
-	/// <item>The constraint is applicable to all data types in <see cref="ParameterDataType"/>.</item>
-	/// <item>The constraint is not used during validation, but is considered during serialization of values.</item>
-	/// </list>
-	/// </para>
-	/// </remarks>
-#if WINDOWS_DESKTOP
-	[System.Serializable]
-#endif
-	public class EncryptedConstraint : Constraint
+	public EncryptedConstraint()
+		: base(EncryptedConstraintName)
 	{
-		#region Constructors
-		/// <summary>
-		/// Initializes a new instance of the <see cref="EncryptedConstraint"/> class.
-		/// </summary>
-		public EncryptedConstraint()
-			: base(EncryptedConstraintName)
-		{
-		}
+	}
 
-#if WINDOWS_DESKTOP
-		/// <summary>
-		/// Initializes a new instance of the <see cref="EncryptedConstraint"/> class with serialized data.
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		/// <exception cref="System.ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
-		/// <exception cref="System.Runtime.Serialization.SerializationException">The constraint could not be deserialized correctly.</exception>
-		protected EncryptedConstraint(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-			: base(info, context)
-		{
-		}
-#endif
-		#endregion
+	/// <summary>
+	/// Initializes a new instance of the <see cref="EncryptedConstraint"/> class with serialized data.
+	/// </summary>
+	/// <param name="info">The object that holds the serialized object data.</param>
+	/// <param name="context">The contextual information about the source or destination.</param>
+	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
+	/// <exception cref="SerializationException">The constraint could not be deserialized correctly.</exception>
+	protected EncryptedConstraint(SerializationInfo info, StreamingContext context)
+		: base(info, context)
+	{
 	}
 }
+

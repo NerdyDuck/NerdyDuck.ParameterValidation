@@ -28,49 +28,40 @@
  ******************************************************************************/
 #endregion
 
-using System.Collections.Generic;
+namespace NerdyDuck.ParameterValidation.Constraints;
 
-namespace NerdyDuck.ParameterValidation.Constraints
+/// <summary>
+/// A constraint specifying that a parameter value should by displayed in password style.
+/// </summary>
+/// <remarks>
+/// <para>
+/// <list type="bullet">
+/// <item>The textual representation of the constraint is <c>[Password]</c>.</item>
+/// <item>The constraint is applicable to all data types in <see cref="ParameterDataType"/> although its usability in conjunction with other data types than <see cref="ParameterDataType.String"/> or one of the integer data types may be limited.</item>
+/// <item>The constraint is not used during validation or serialization, but is solely thought as a hint for display purposes.</item>
+/// </list>
+/// </para>
+/// </remarks>
+[Serializable]
+public class PasswordConstraint : Constraint
 {
 	/// <summary>
-	/// A constraint specifying that a parameter value should by displayed in password style.
+	/// Initializes a new instance of the <see cref="PasswordConstraint"/> class.
 	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// <list type="bullet">
-	/// <item>The textual representation of the constraint is <c>[Password]</c>.</item>
-	/// <item>The constraint is applicable to all data types in <see cref="ParameterDataType"/> although its usability in conjunction with other data types than <see cref="ParameterDataType.String"/> or one of the integer data types may be limited.</item>
-	/// <item>The constraint is not used during validation or serialization, but is solely thought as a hint for display purposes.</item>
-	/// </list>
-	/// </para>
-	/// </remarks>
-#if WINDOWS_DESKTOP
-	[System.Serializable]
-#endif
-	public class PasswordConstraint : Constraint
+	public PasswordConstraint()
+		: base(PasswordConstraintName)
 	{
-		#region Constructors
-		/// <summary>
-		/// Initializes a new instance of the <see cref="PasswordConstraint"/> class.
-		/// </summary>
-		public PasswordConstraint()
-			: base(PasswordConstraintName)
-		{
-		}
+	}
 
-#if WINDOWS_DESKTOP
-		/// <summary>
-		/// Initializes a new instance of the <see cref="PasswordConstraint"/> class with serialized data.
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		/// <exception cref="System.ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
-		/// <exception cref="System.Runtime.Serialization.SerializationException">The constraint could not be deserialized correctly.</exception>
-		protected PasswordConstraint(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-			: base(info, context)
-		{
-		}
-#endif
-		#endregion
+	/// <summary>
+	/// Initializes a new instance of the <see cref="PasswordConstraint"/> class with serialized data.
+	/// </summary>
+	/// <param name="info">The object that holds the serialized object data.</param>
+	/// <param name="context">The contextual information about the source or destination.</param>
+	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
+	/// <exception cref="SerializationException">The constraint could not be deserialized correctly.</exception>
+	protected PasswordConstraint(SerializationInfo info, StreamingContext context)
+		: base(info, context)
+	{
 	}
 }

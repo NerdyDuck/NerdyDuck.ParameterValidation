@@ -28,8 +28,12 @@
  ******************************************************************************/
 #endregion
 
-using NerdyDuck.CodedExceptions;
-using System;
+global using NerdyDuck.CodedExceptions;
+global using System;
+global using System.Collections.Generic;
+global using System.Globalization;
+global using System.Runtime.Serialization;
+
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

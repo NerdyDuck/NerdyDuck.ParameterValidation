@@ -28,64 +28,41 @@
  ******************************************************************************/
 #endregion
 
-using System;
+namespace NerdyDuck.ParameterValidation;
 
-namespace NerdyDuck.ParameterValidation
+/// <summary>
+/// Provides data for the <see cref="ConstraintParser.UnknownConstraint"/> event.
+/// </summary>
+public class UnknownConstraintEventArgs : EventArgs
 {
 	/// <summary>
-	/// Provides data for the <see cref="ConstraintParser.UnknownConstraint"/> event.
+	/// Gets the name of the constraint that is not known or not by default defined for the specified <see cref="DataType"/>.
 	/// </summary>
-	public class UnknownConstraintEventArgs : EventArgs
+	/// <value>The name of the constraint in its textual representation.</value>
+	public string ConstraintName { get; private set; }
+
+	/// <summary>
+	/// Gets the data type of the parameter the unknown constraint is intended for.
+	/// </summary>
+	/// <value>One of the <see cref="ParameterDataType"/> values.</value>
+	public ParameterDataType DataType { get; private set; }
+
+	/// <summary>
+	/// Gets or sets the constraint that was resolved by the <see cref="ConstraintParser.UnknownConstraint"/> event.
+	/// </summary>
+	/// <value>An object derived from <see cref="Constraint"/>.</value>
+	/// <remarks>When handling the <see cref="ConstraintParser.UnknownConstraint"/> event, set this property if the event handler was able to resolve the constraint.</remarks>
+	public Constraint? Constraint { get; set; }
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="UnknownConstraintEventArgs"/> with the specified constraint name and data type.
+	/// </summary>
+	/// <param name="constraintName">The name of the constraint that is not known or not by default defined for the specified <paramref name="dataType"/>.</param>
+	/// <param name="dataType">The data type of the parameter the unknown constraint is intended for.</param>
+	public UnknownConstraintEventArgs(string constraintName, ParameterDataType dataType)
 	{
-		#region Private fields
-		private string mConstraintName;
-		private ParameterDataType mDataType;
-		private Constraint mConstraint;
-		#endregion
-
-		#region Properties
-		/// <summary>
-		/// Gets the name of the constraint that is not known or not by default defined for the specified <see cref="DataType"/>.
-		/// </summary>
-		/// <value>The name of the constraint in its textual representation.</value>
-		public string ConstraintName
-		{
-			get { return mConstraintName; }
-		}
-
-		/// <summary>
-		/// Gets the data type of the parameter the unknown constraint is intended for.
-		/// </summary>
-		/// <value>One of the <see cref="ParameterDataType"/> values.</value>
-		public ParameterDataType DataType
-		{
-			get { return mDataType; }
-		}
-
-		/// <summary>
-		/// Gets or sets the constraint that was resolved by the <see cref="ConstraintParser.UnknownConstraint"/> event.
-		/// </summary>
-		/// <value>An object derived from <see cref="Constraint"/>.</value>
-		/// <remarks>When handling the <see cref="ConstraintParser.UnknownConstraint"/> event, set this property if the event handler was able to resolve the constraint.</remarks>
-		public Constraint Constraint
-		{
-			get { return mConstraint; }
-			set { mConstraint = value; }
-		}
-		#endregion
-
-		#region Constructors
-		/// <summary>
-		/// Initializes a new instance of the <see cref="UnknownConstraintEventArgs"/> with the specified constraint name and data type.
-		/// </summary>
-		/// <param name="constraintName">The name of the constraint that is not known or not by default defined for the specified <paramref name="dataType"/>.</param>
-		/// <param name="dataType">The data type of the parameter the unknown constraint is intended for.</param>
-		public UnknownConstraintEventArgs(string constraintName, ParameterDataType dataType)
-		{
-			mConstraintName = constraintName;
-			mDataType = dataType;
-			mConstraint = null;
-		}
-		#endregion
+		ConstraintName = constraintName;
+		DataType = dataType;
+		Constraint = null;
 	}
 }

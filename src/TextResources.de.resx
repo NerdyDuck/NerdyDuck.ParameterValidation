@@ -381,4 +381,10 @@
   <data name="ParameterConvert_ExamineEnumeration_NotEnum" xml:space="preserve">
     <value>Typ '{0}' ist keine Enumeration.</value>
   </data>
+  <data name="ParameterConvert_AES_NoAssemblyName" xml:space="preserve">
+    <value>Starker Name der Assembly konnte nicht ermittelt werden.</value>
+  </data>
+  <data name="ParameterConvert_FromXml_NoObjectDeserialized" xml:space="preserve">
+    <value>XML-Deserialisierung hat kein Objekt zurückgegeben.</value>
+  </data>
 </root>

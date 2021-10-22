@@ -381,4 +381,10 @@
   <data name="ParameterConvert_ExamineEnumeration_NotEnum" xml:space="preserve">
     <value>Type '{0}' is not an enumeration.</value>
   </data>
+  <data name="ParameterConvert_AES_NoAssemblyName" xml:space="preserve">
+    <value>Cannot get assembly strong name key.</value>
+  </data>
+  <data name="ParameterConvert_FromXml_NoObjectDeserialized" xml:space="preserve">
+    <value>XML deserialization returned no object.</value>
+  </data>
 </root>

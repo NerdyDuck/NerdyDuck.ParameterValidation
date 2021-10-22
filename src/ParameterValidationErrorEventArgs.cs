@@ -28,45 +28,28 @@
  ******************************************************************************/
 #endregion
 
-using System.Collections.Generic;
+namespace NerdyDuck.ParameterValidation;
 
-namespace NerdyDuck.ParameterValidation
+/// <summary>
+/// Provides data for events occurring when a parameter validation fails.
+/// </summary>
+public class ParameterValidationErrorEventArgs : ParameterValidationEventArgs
 {
 	/// <summary>
-	/// Provides data for events occurring when a parameter validation fails.
+	/// Gets a list of <see cref="ParameterValidationResult"/>s.
 	/// </summary>
-	public class ParameterValidationErrorEventArgs : ParameterValidationEventArgs
-	{
-		#region Private fields
-		private IList<ParameterValidationResult> mValidationResults;
-		#endregion
+	/// <value>One or more <see cref="ParameterValidationResult"/>s.</value>
+	public IList<ParameterValidationResult> ValidationResults { get; private set; }
 
-		#region Properties
-		/// <summary>
-		/// Gets a list of <see cref="ParameterValidationResult"/>s.
-		/// </summary>
-		/// <value>One or more <see cref="ParameterValidationResult"/>s.</value>
-		public IList<ParameterValidationResult> ValidationResults
-		{
-			get { return mValidationResults; }
-		}
-		#endregion
-
-		#region Constructor
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ParameterValidationErrorEventArgs"/> class with the specified parameters.
-		/// </summary>
-		/// <param name="value">The value that is currently validated.</param>
-		/// <param name="dataType">The data type of <paramref name="value"/>.</param>
-		/// <param name="constraints">A list of <see cref="Constraint"/>s that are used to validate <paramref name="value"/>.</param>
-		/// <param name="memberName">The name of the property or control that contains <paramref name="value"/>.</param>
-		/// <param name="displayName">The display name of the control that displays <paramref name="value"/>.</param>
-		/// <param name="validationResults">A list of <see cref="ParameterValidationResult"/>s.</param>
-		public ParameterValidationErrorEventArgs(object value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints, string memberName, string displayName, IList<ParameterValidationResult> validationResults)
-			: base(value, dataType, constraints, memberName, displayName)
-		{
-			mValidationResults = validationResults;
-		}
-		#endregion
-	}
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ParameterValidationErrorEventArgs"/> class with the specified parameters.
+	/// </summary>
+	/// <param name="value">The value that is currently validated.</param>
+	/// <param name="dataType">The data type of <paramref name="value"/>.</param>
+	/// <param name="constraints">A list of <see cref="Constraint"/>s that are used to validate <paramref name="value"/>.</param>
+	/// <param name="memberName">The name of the property or control that contains <paramref name="value"/>.</param>
+	/// <param name="displayName">The display name of the control that displays <paramref name="value"/>.</param>
+	/// <param name="validationResults">A list of <see cref="ParameterValidationResult"/>s.</param>
+	public ParameterValidationErrorEventArgs(object? value, ParameterDataType dataType, IReadOnlyList<Constraint>? constraints, string? memberName, string? displayName, IList<ParameterValidationResult> validationResults)
+		: base(value, dataType, constraints, memberName, displayName) => ValidationResults = validationResults ?? throw new CodedArgumentNullException(HResult.Create(ErrorCodes.ParameterValidationErrorEventArgs_ctor_ResultsNull), nameof(validationResults));
 }
