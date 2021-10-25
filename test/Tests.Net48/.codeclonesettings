@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeCloneSettings>
+  <Exclusions>
+    <Namespace>NerdyDuck.Tests.ParameterValidation</Namespace>
+    <Namespace>NerdyDuck.Tests.ParameterValidation.*</Namespace>
+  </Exclusions>
+</CodeCloneSettings>

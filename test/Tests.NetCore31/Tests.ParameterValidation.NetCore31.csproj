@@ -19,4 +19,7 @@
     <PackageReference Include="NerdyDuck.CodedExceptions" Version="2.0.0-rc.1" />
   </ItemGroup>
   <Import Project="..\Tests.Shared\Tests.ParameterValidation.projitems" Label="Shared" />
+  <ItemGroup>
+    <None Include=".codeclonesettings" />
+  </ItemGroup>
 </Project>

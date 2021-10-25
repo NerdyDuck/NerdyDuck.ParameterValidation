@@ -1,4 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="17.0">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="17.0">
   <PropertyGroup Label="Compilation">
     <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
     <RootNamespace>NerdyDuck.ParameterValidation</RootNamespace>
