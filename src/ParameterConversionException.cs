@@ -119,8 +119,8 @@ public class ParameterConversionException : CodedFormatException
 	protected ParameterConversionException(SerializationInfo info, StreamingContext context)
 		: base(info, context)
 	{
-		DataType = (ParameterDataType)info.GetValue(nameof(DataType), typeof(ParameterDataType));
-		ActualValue = info.GetValue(nameof(ActualValue), (Type)info.GetValue(ActualValueTypeName, typeof(Type)));
+		DataType = (ParameterDataType)(info.GetValue(nameof(DataType), typeof(ParameterDataType)) ?? throw new CodedSerializationException(ParameterValidation.HResult.Create(ErrorCodes.ParameterConversionException_ctor_DataTypeNull), TextResources.ParameterConversionException_ctor_DataTypeNull));
+		ActualValue = info.GetValue(nameof(ActualValue), (Type)(info.GetValue(ActualValueTypeName, typeof(Type)) ?? throw new CodedSerializationException(ParameterValidation.HResult.Create(ErrorCodes.ParameterConversionException_ctor_ActualTypeNull), TextResources.ParameterConversionException_ctor_ActualTypeNull)));
 	}
 
 	/// <summary>

@@ -45,19 +45,19 @@ namespace NerdyDuck.ParameterValidation.Constraints;
 [Serializable]
 public class AllowedSchemeConstraint : Constraint
 {
-	private List<string>? _allowedSchemes;
+	private List<string> _allowedSchemes;
 
 	/// <summary>
 	/// Gets a collection of allowed <see cref="Uri"/> schemes.
 	/// </summary>
 	/// <value>One or more URI scheme strings.</value>
-	public IList<string>? AllowedSchemes => _allowedSchemes;
+	public IList<string> AllowedSchemes => _allowedSchemes;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AllowedSchemeConstraint"/> class.
 	/// </summary>
 	public AllowedSchemeConstraint()
-			: base(AllowedSchemeConstraintName) => _allowedSchemes = null;
+			: base(AllowedSchemeConstraintName) => _allowedSchemes = new List<string>();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AllowedSchemeConstraint"/> class with the specified <see cref="Uri"/> scheme.
@@ -100,14 +100,18 @@ public class AllowedSchemeConstraint : Constraint
 	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The constraint could not be deserialized correctly.</exception>
 	protected AllowedSchemeConstraint(SerializationInfo info, StreamingContext context)
-		: base(info, context) => _allowedSchemes = (List<string>)info.GetValue(nameof(AllowedSchemes), typeof(List<string>));
+		: base(info, context) => _allowedSchemes = (List<string>)(info.GetValue(nameof(AllowedSchemes), typeof(List<string>)) ?? throw new CodedSerializationException(HResult.Create(ErrorCodes.AllowedSchemeConstraint_ctor_AllowedSchemesNull), TextResources.AllowedSchemeConstraint_ctor_AllowedSchemesNull));
 
 	/// <summary>
 	/// Sets the <see cref="SerializationInfo"/> with information about the <see cref="Constraint"/>.
 	/// </summary>
 	/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data of the <see cref="Constraint"/>.</param>
 	/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
+#if NETSTD20
 	public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#else
+	public override void GetObjectData([System.Diagnostics.CodeAnalysis.NotNull] SerializationInfo info, StreamingContext context)
+#endif
 	{
 		base.GetObjectData(info, context);
 		info.AddValue(nameof(AllowedSchemes), _allowedSchemes);
@@ -118,7 +122,11 @@ public class AllowedSchemeConstraint : Constraint
 	/// </summary>
 	/// <param name="parameters">A list of strings to add the parameters to.</param>
 	/// <remarks>Override this method, if the constraint makes use of parameters. Add the parameters in the order that they should be provided to <see cref="SetParameters"/>.</remarks>
+#if NETSTD20
 	protected override void GetParameters(IList<string> parameters)
+#else
+	protected override void GetParameters([System.Diagnostics.CodeAnalysis.NotNull] IList<string> parameters)
+#endif
 	{
 		base.GetParameters(parameters);
 		foreach (string scheme in _allowedSchemes)
@@ -135,7 +143,11 @@ public class AllowedSchemeConstraint : Constraint
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="ConstraintConfigurationException"><paramref name="parameters"/> contains no elements, or an invalid element.</exception>
+#if NETSTD20
 	protected override void SetParameters(IReadOnlyList<string> parameters, ParameterDataType dataType)
+#else
+	protected override void SetParameters([System.Diagnostics.CodeAnalysis.NotNull] IReadOnlyList<string> parameters, ParameterDataType dataType)
+#endif
 	{
 		base.SetParameters(parameters, dataType);
 		AssertDataType(dataType, ParameterDataType.Uri);
@@ -151,7 +163,11 @@ public class AllowedSchemeConstraint : Constraint
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
-	protected override void OnValidation(IList<ParameterValidationResult> results, object? value, ParameterDataType dataType, string memberName, string displayName)
+#if NETSTD20
+	protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected override void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
 		base.OnValidation(results, value, dataType, memberName, displayName);
 		AssertDataType(dataType, ParameterDataType.Uri);
@@ -193,6 +209,7 @@ public class AllowedSchemeConstraint : Constraint
 				throw new ConstraintConfigurationException(HResult.Create(ErrorCodes.AllowedSchemeConstraint_CheckSchemes_SchemeNullEmpty), TextResources.AllowedSchemeConstraint_CheckSchemes_InvalidScheme);
 			}
 		}
+
 	}
 
 	/// <summary>

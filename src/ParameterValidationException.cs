@@ -75,7 +75,7 @@ public class ParameterValidationException : CodedFormatException
 	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The exception could not be deserialized correctly.</exception>
 	protected ParameterValidationException(SerializationInfo info, StreamingContext context)
-		: base(info, context) => Results = (List<ParameterValidationResult>)info.GetValue(nameof(Results), typeof(List<ParameterValidationResult>));
+		: base(info, context) => Results = (List<ParameterValidationResult>?)info.GetValue(nameof(Results), typeof(List<ParameterValidationResult>));
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ParameterValidationException"/> class with a specified HRESULT value.
@@ -154,6 +154,9 @@ public class ParameterValidationException : CodedFormatException
 	public override void GetObjectData(SerializationInfo info, StreamingContext context)
 	{
 		base.GetObjectData(info, context);
-		info.AddValue(nameof(Results), new List<ParameterValidationResult>(Results));
+		if (Results != null)
+		{
+			info.AddValue(nameof(Results), new List<ParameterValidationResult>(Results));
+		}
 	}
 }

@@ -73,39 +73,45 @@ public class EndpointConstraint : Constraint
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
+#if NETSTD20
 	protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected override void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
 		base.OnValidation(results, value, dataType, memberName, displayName);
 		AssertDataType(dataType, ParameterDataType.String);
 
-		string Temp = value as string;
-		if (string.IsNullOrWhiteSpace(Temp))
+		string? temp = value as string;
+		if (string.IsNullOrWhiteSpace(temp))
 		{
 			results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EndpointConstraint_Validate_ValueEmpty), string.Format(CultureInfo.CurrentCulture, TextResources.Global_Validate_StringEmpty, displayName), memberName, this));
 		}
 		else
 		{
 #if NETSTD20
-			int colonPos = Temp.IndexOf(':');
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+			int colonPos = temp.IndexOf(':');
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 			if (colonPos > -1)
 			{
-				string portString = Temp.Substring(colonPos + 1);
-				Temp = Temp.Substring(0, colonPos);
+				string portString = temp.Substring(colonPos + 1);
+				temp = temp.Substring(0, colonPos);
 #else
-			int colonPos = Temp.IndexOf(':', StringComparison.Ordinal);
+			int colonPos = temp.IndexOf(':', StringComparison.Ordinal);
 			if (colonPos > -1)
 			{
-				string portString = Temp[(colonPos + 1)..];
-				Temp = Temp[..colonPos];
+				string portString = temp[(colonPos + 1)..];
+				temp = temp[..colonPos];
 #endif
 				if (!int.TryParse(portString, out int Port) || Port < 0 || Port > 65535)
 				{
-					results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EndpointConstraint_Validate_PortInvalid), string.Format(CultureInfo.CurrentCulture, TextResources.EndpointConstraint_Validate_FailedPort, displayName, Temp), memberName, this));
+					results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EndpointConstraint_Validate_PortInvalid), string.Format(CultureInfo.CurrentCulture, TextResources.EndpointConstraint_Validate_FailedPort, displayName, temp), memberName, this));
 				}
 			}
-			if (Uri.CheckHostName(Temp) == UriHostNameType.Unknown)
+			if (Uri.CheckHostName(temp) == UriHostNameType.Unknown)
 			{
-				results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EndpointConstraint_Validate_NotHostOrIP), string.Format(CultureInfo.CurrentCulture, TextResources.EndpointConstraint_Validate_Failed, displayName, Temp), memberName, this));
+				results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EndpointConstraint_Validate_NotHostOrIP), string.Format(CultureInfo.CurrentCulture, TextResources.EndpointConstraint_Validate_Failed, displayName, temp), memberName, this));
 			}
 		}
 	}

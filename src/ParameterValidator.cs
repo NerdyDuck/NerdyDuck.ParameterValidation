@@ -48,15 +48,15 @@ public class ParameterValidator
 	/// <remarks>The event is raised once after every constraint was evaluated. You can use <see cref="ParameterValidationErrorEventArgs.ValidationResults"/> to evaluate and modify the results, if required.</remarks>
 	public event EventHandler<ParameterValidationErrorEventArgs>? ValidationError;
 
-	private static readonly Lazy<ParameterValidator> _validator = new(() => new ParameterValidator());
+	private static readonly Lazy<ParameterValidator> s_validator = new(() => new ParameterValidator());
 
-	private static readonly List<Constraint> _empty = new();
+	private static readonly List<Constraint> s_empty = new();
 
 	/// <summary>
 	/// Gets a global instance of the <see cref="ParameterValidator"/>.
 	/// </summary>
 	/// <value>A singleton instance of <see cref="ParameterValidator"/>.</value>
-	public static ParameterValidator Validator => _validator.Value;
+	public static ParameterValidator Validator => s_validator.Value;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ParameterValidator"/> class.
@@ -86,7 +86,7 @@ public class ParameterValidator
 	/// <returns>An enumeration of <see cref="ParameterValidationResult"/>s. If the enumeration is empty, no validation error was found.</returns>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="CodedArgumentNullOrEmptyException"><paramref name="memberName"/> is <see langword="null"/> or empty.</exception>
-	public IEnumerable<ParameterValidationResult> GetValidationResult(object? value, ParameterDataType dataType, IReadOnlyList<Constraint>? constraints, string memberName, string displayName)
+	public IEnumerable<ParameterValidationResult> GetValidationResult(object? value, ParameterDataType dataType, IReadOnlyList<Constraint>? constraints, string memberName, string? displayName)
 	{
 		if (dataType == ParameterDataType.None)
 		{
@@ -99,7 +99,7 @@ public class ParameterValidator
 
 		if (constraints == null)
 		{
-			constraints = _empty;
+			constraints = s_empty;
 		}
 		if (displayName == null)
 		{
@@ -152,7 +152,7 @@ public class ParameterValidator
 	/// <param name="memberName">The name of the property or control containing the <paramref name="value"/> to validate.</param>
 	/// <param name="displayName">The display name of the control that contains or displays the <paramref name="value"/> to validate. May be <see langword="null"/>.</param>
 	/// <returns><see langword="true"/>, if <paramref name="value"/> is within the boundaries of the <paramref name="constraints"/>; otherwise, <see langword="false"/>.</returns>
-	public bool IsValid(object? value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints, string memberName, string displayName) => !GetValidationResult(value, dataType, constraints, memberName, displayName).GetEnumerator().MoveNext();
+	public bool IsValid(object? value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints, string memberName, string? displayName) => !GetValidationResult(value, dataType, constraints, memberName, displayName).GetEnumerator().MoveNext();
 
 	/// <summary>
 	/// Validates a value according to the specified constraints, and throws an exception, if a validation error was found.
@@ -171,7 +171,7 @@ public class ParameterValidator
 	/// <param name="constraints">A list of <see cref="Constraint"/>s to validate <paramref name="value"/> against.</param>
 	/// <param name="memberName">The name of the property or control containing the <paramref name="value"/> to validate.</param>
 	/// <param name="displayName">The display name of the control that contains or displays the <paramref name="value"/> to validate. May be <see langword="null"/>.</param>
-	public void Validate(object? value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints, string memberName, string displayName)
+	public void Validate(object? value, ParameterDataType dataType, IReadOnlyList<Constraint> constraints, string memberName, string? displayName)
 	{
 		IEnumerable<ParameterValidationResult> results = GetValidationResult(value, dataType, constraints, memberName, displayName);
 		if (results.GetEnumerator().MoveNext())

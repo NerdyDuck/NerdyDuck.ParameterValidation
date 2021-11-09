@@ -40,7 +40,7 @@ public class ConstraintConfigurationException : CodedFormatException
 	/// <summary>
 	/// Gets the <see cref="Constraint"/> that failed to configure.
 	/// </summary>
-	/// <value>A on object derived from <see cref="Constraint"/>, or <see langword="null"/>.</value>
+	/// <value>An object derived from <see cref="ParameterValidation.Constraint"/>, or <see langword="null"/>.</value>
 	public Constraint? Constraint { get; private set; }
 
 	/// <summary>
@@ -81,7 +81,7 @@ public class ConstraintConfigurationException : CodedFormatException
 	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The exception could not be deserialized correctly.</exception>
 	protected ConstraintConfigurationException(SerializationInfo info, StreamingContext context)
-		: base(info, context) => Constraint = (Constraint)info.GetValue(nameof(Constraint), typeof(Constraint));
+		: base(info, context) => Constraint = (Constraint?)info.GetValue(nameof(Constraint), typeof(Constraint));
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ConstraintConfigurationException"/> class with a specified HRESULT value.

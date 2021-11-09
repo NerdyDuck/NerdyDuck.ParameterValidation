@@ -95,8 +95,8 @@ public class InvalidDataTypeException : CodedFormatException
 	protected InvalidDataTypeException(SerializationInfo info, StreamingContext context)
 		: base(info, context)
 	{
-		Constraint = (Constraint)info.GetValue(nameof(Constraint), typeof(Constraint));
-		DataType = (ParameterDataType)info.GetValue(nameof(DataType), typeof(ParameterDataType));
+		Constraint = (Constraint?)info.GetValue(nameof(Constraint), typeof(Constraint));
+		DataType = (ParameterDataType)(info.GetValue(nameof(DataType), typeof(ParameterDataType)) ?? throw new CodedSerializationException(ParameterValidation.HResult.Create(ErrorCodes.InvalidDataTypeException_ctor_DataTypeNull), TextResources.InvalidDataTypeException_ctor_DataTypeNull));
 	}
 
 	/// <summary>

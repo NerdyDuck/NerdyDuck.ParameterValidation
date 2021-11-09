@@ -62,7 +62,7 @@ public abstract class Constraint : ISerializable
 	internal const string TypeConstraintName = "Type";
 	internal const string UppercaseConstraintName = "Uppercase";
 
-	private static readonly char[] Separators = new char[] { '[', ']', '(', ')', ',', '\'' };
+	private static readonly char[] s_separators = new char[] { '[', ']', '(', ')', ',', '\'' };
 
 	private readonly string _name;
 
@@ -94,14 +94,18 @@ public abstract class Constraint : ISerializable
 	/// <param name="context">The contextual information about the source or destination.</param>
 	/// <exception cref="CodedArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The constraint could not be deserialized correctly.</exception>
+#if NETSTD20
 	protected Constraint(SerializationInfo info, StreamingContext context)
+#else
+	protected Constraint([System.Diagnostics.CodeAnalysis.NotNull] SerializationInfo info, StreamingContext context)
+#endif
 	{
 		if (info == null)
 		{
 			throw new CodedArgumentNullException(HResult.Create(ErrorCodes.Constraint_ctor_InfoNull), nameof(info));
 		}
 
-		_name = info.GetString(nameof(Name));
+		_name = info.GetString(nameof(Name)) ?? throw new CodedSerializationException(HResult.Create(ErrorCodes.Constraint_ctor_NameNull), TextResources.Constraint_ctor_NameNull);
 	}
 
 	/// <summary>
@@ -115,12 +119,12 @@ public abstract class Constraint : ISerializable
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="CodedArgumentNullOrWhiteSpaceException"><paramref name="memberName"/> is <see langword="null"/> or empty or white-space.</exception>
 	/// <exception cref="InvalidDataTypeException"><paramref name="dataType"/> is not supported by the <see cref="Constraint"/>.</exception>
-	public IEnumerable<ParameterValidationResult> Validate(object? value, ParameterDataType dataType, string memberName) => Validate(value, dataType, memberName, memberName);
+	public IEnumerable<ParameterValidationResult> Validate(object value, ParameterDataType dataType, string memberName) => Validate(value, dataType, memberName, memberName);
 
 	/// <summary>
 	/// Checks that the provided value is within the bounds of the constraint.
 	/// </summary>
-	/// <param name="value">The value to check.</param>
+	/// <param name="value">The value to check. May not be <see langword="null" /></param>
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
@@ -129,13 +133,16 @@ public abstract class Constraint : ISerializable
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="CodedArgumentNullOrWhiteSpaceException"><paramref name="memberName"/> is <see langword="null"/> or empty or white-space.</exception>
 	/// <exception cref="InvalidDataTypeException"><paramref name="dataType"/> is not supported by the <see cref="Constraint"/>.</exception>
-	public IEnumerable<ParameterValidationResult> Validate(object? value, ParameterDataType dataType, string memberName, string displayName)
+	public IEnumerable<ParameterValidationResult> Validate(object value, ParameterDataType dataType, string memberName, string? displayName)
 	{
+		if (value == null)
+		{
+			throw new CodedArgumentNullException(HResult.Create(ErrorCodes.Constraint_Validate_ValueNull), nameof(value));
+		}
 		if (dataType == ParameterDataType.None)
 		{
 			throw new CodedArgumentOutOfRangeException(HResult.Create(ErrorCodes.Constraint_Validate_TypeNone), nameof(dataType), TextResources.Global_ParameterDataType_None);
 		}
-
 		if (string.IsNullOrWhiteSpace(memberName))
 		{
 			throw new CodedArgumentNullOrWhiteSpaceException(HResult.Create(ErrorCodes.Constraint_Validate_NameNullEmpty), nameof(memberName));
@@ -145,9 +152,9 @@ public abstract class Constraint : ISerializable
 			displayName = memberName;
 		}
 
-		List<ParameterValidationResult> ReturnValue = new();
-		OnValidation(ReturnValue, value, dataType, memberName, displayName);
-		return ReturnValue;
+		List<ParameterValidationResult> _results = new();
+		OnValidation(_results, value, dataType, memberName, displayName);
+		return _results;
 	}
 
 	/// <summary>
@@ -156,31 +163,31 @@ public abstract class Constraint : ISerializable
 	/// <returns>A string formatted [Constraint] or [Constraint(Parameters...)].</returns>
 	public override string ToString()
 	{
-		List<string> Parameters = new();
-		GetParameters(Parameters);
-		List<string> EscapedParameters = null;
-		if (Parameters.Count > 0)
+		List<string> parameters = new();
+		GetParameters(parameters);
+		List<string>? escapedParameters = null;
+		if (parameters.Count > 0)
 		{
-			EscapedParameters = new List<string>();
-			foreach (string param in Parameters)
+			escapedParameters = new List<string>();
+			foreach (string param in parameters)
 			{
-				if (param.IndexOfAny(Separators) > -1)
+				if (param.IndexOfAny(s_separators) > -1)
 				{
 #if NETSTD20
-					EscapedParameters.Add('\'' + param.Replace("'", "''") + '\'');
+					escapedParameters.Add('\'' + param.Replace("'", "''") + '\'');
 #else
-					EscapedParameters.Add('\'' + param.Replace("'", "''", StringComparison.Ordinal) + '\'');
+					escapedParameters.Add('\'' + param.Replace("'", "''", StringComparison.Ordinal) + '\'');
 #endif
 				}
 				else
 				{
-					EscapedParameters.Add(param);
+					escapedParameters.Add(param);
 				}
 			}
 		}
 
-		return EscapedParameters != null && EscapedParameters.Count > 0
-			? string.Format(CultureInfo.InvariantCulture, "[{0}({1})]", _name, string.Join(",", EscapedParameters))
+		return escapedParameters != null && escapedParameters.Count > 0
+			? string.Format(CultureInfo.InvariantCulture, "[{0}({1})]", _name, string.Join(",", escapedParameters))
 			: string.Format(CultureInfo.InvariantCulture, "[{0}]", _name);
 	}
 
@@ -189,7 +196,11 @@ public abstract class Constraint : ISerializable
 	/// </summary>
 	/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data of the <see cref="Constraint"/>.</param>
 	/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
+#if NETSTD20
 	public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+#else
+	public virtual void GetObjectData([System.Diagnostics.CodeAnalysis.NotNull] SerializationInfo info, StreamingContext context)
+#endif
 	{
 		if (info == null)
 		{
@@ -204,7 +215,11 @@ public abstract class Constraint : ISerializable
 	/// <param name="parameters">A list of strings to add the parameters to.</param>
 	/// <remarks>Override this method, if the constraint makes use of parameters. Add the parameters in the order that they should be provided to <see cref="SetParameters"/>.</remarks>
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
+#if NETSTD20
 	protected virtual void GetParameters(IList<string> parameters)
+#else
+	protected virtual void GetParameters([System.Diagnostics.CodeAnalysis.NotNull] IList<string> parameters)
+#endif
 	{
 		if (parameters == null)
 			throw new CodedArgumentNullException(HResult.Create(ErrorCodes.Constraint_GetParameters_ArgNull), nameof(parameters));
@@ -217,7 +232,11 @@ public abstract class Constraint : ISerializable
 	/// <param name="dataType">The data type that the constraint needs to restrict.</param>
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
+#if NETSTD20
 	protected virtual void SetParameters(IReadOnlyList<string> parameters, ParameterDataType dataType)
+#else
+	protected virtual void SetParameters([System.Diagnostics.CodeAnalysis.NotNull] IReadOnlyList<string> parameters, ParameterDataType dataType)
+#endif
 	{
 		if (parameters == null)
 		{
@@ -271,15 +290,23 @@ public abstract class Constraint : ISerializable
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
-	protected virtual void OnValidation(IList<ParameterValidationResult> results, object? value, ParameterDataType dataType, string memberName, string displayName)
+#if NETSTD20
+	protected virtual void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected virtual void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
+		if (value == null)
+		{
+			throw new CodedArgumentNullException(HResult.Create(ErrorCodes.Constraint_OnValidation_ValueNull), nameof(value));
+		}
 		if (results == null)
 		{
 			throw new CodedArgumentNullException(HResult.Create(ErrorCodes.Constraint_OnValidation_ResultsNull), nameof(results));
 		}
-		if (value == null)
+		if (string.IsNullOrWhiteSpace(memberName))
 		{
-			throw new CodedArgumentNullException(HResult.Create(ErrorCodes.Constraint_OnValidation_ValueNull), nameof(value));
+			throw new CodedArgumentNullOrWhiteSpaceException(HResult.Create(ErrorCodes.Constraint_OnValidate_NameNullEmpty), nameof(memberName));
 		}
 	}
 

@@ -73,13 +73,17 @@ public class LowercaseConstraint : Constraint
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
+#if NETSTD20
 	protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected override void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
 		base.OnValidation(results, value, dataType, memberName, displayName);
 		AssertDataType(dataType, ParameterDataType.String);
 #pragma warning disable CA1308 // We want to check if string is actually lowercase
-		string Temp = value as string;
-		if (Temp.Equals(Temp.ToLowerInvariant(), StringComparison.Ordinal))
+		string? temp = value as string;
+		if (temp!.Equals(temp.ToLowerInvariant(), StringComparison.Ordinal))
 		{
 			results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.LowerCaseConstraint_Validate_ValueInvalid), string.Format(CultureInfo.CurrentCulture, TextResources.LowercaseConstraint_Validate_Failed, displayName), memberName, this));
 		}

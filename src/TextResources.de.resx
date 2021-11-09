@@ -387,4 +387,79 @@
   <data name="ParameterConvert_FromXml_NoObjectDeserialized" xml:space="preserve">
     <value>XML-Deserialisierung hat kein Objekt zurückgegeben.</value>
   </data>
+  <data name="Constraint_ctor_NameNull" xml:space="preserve">
+    <value>Deserialisiertes Constraint enthält keinen Name-Eigenschaft.</value>
+  </data>
+  <data name="InvalidDataTypeException_ctor_DataTypeNull" xml:space="preserve">
+    <value>Deserialisierte InvalidDataTypeException enthält keine ParameterDataType-Eigenschaft.</value>
+  </data>
+  <data name="ParameterConversionException_ctor_ActualTypeNull" xml:space="preserve">
+    <value>Deserialisierte ParameterConversionException enthält keinen ActualValue-Typ.</value>
+  </data>
+  <data name="ParameterConversionException_ctor_DataTypeNull" xml:space="preserve">
+    <value>Deserialisierte ParameterConversionException enthält keine ParameterDataType-Eigenschaft.</value>
+  </data>
+  <data name="AllowedSchemeConstraint_ctor_AllowedSchemesNull" xml:space="preserve">
+    <value>Deserialisiertes AllowedSchemeConstraint hat keine AllowedSchemes-Eigenschaft.</value>
+  </data>
+  <data name="CharacterSetConstraint_ctor_CharacterSetNull" xml:space="preserve">
+    <value>Deserialisiertes CharacterSetConstraint hat keine CharacterSet-Eigenschaft.</value>
+  </data>
+  <data name="Global_Validate_NotString" xml:space="preserve">
+    <value>value ist nicht vom Typ System.String.</value>
+  </data>
+  <data name="Global_UnknownEnumType" xml:space="preserve">
+    <value>Kann den unterliegenden Datentyp der Enumeration '{0}' nicht bestimmen.</value>
+  </data>
+  <data name="ParameterConvert_ExamineEnumeration_NoFieldValue" xml:space="preserve">
+    <value>Kann Werte der Enumeration '{0}' nicht bestimmen.</value>
+  </data>
+  <data name="ParameterConvert_ToDataType_ValueNull" xml:space="preserve">
+    <value>Value ist null, aber hat kein NullConstraint, das dies zulässt.</value>
+  </data>
+  <data name="EnumValuesConstraint_ctor_KeyMissing" xml:space="preserve">
+    <value>Dem deserialisierten EnumValuesConstraint fehlt ein Enumerations-Wert-Schlüssel.</value>
+  </data>
+  <data name="EnumValuesConstraint_ctor_NoUnderlyingDataType" xml:space="preserve">
+    <value>Deserialisierte EnumValuesConstraint enthält keine UnderlyingDataType-Eigenschaft.</value>
+  </data>
+  <data name="EnumValuesConstraint_ctor_ValueMissing" xml:space="preserve">
+    <value>Dem deserialisierten EnumValuesConstraint fehlt ein Enumerations-Wert-Wert.</value>
+  </data>
+  <data name="EnumValuesConstraint_GetParameters_DataType" xml:space="preserve">
+    <value>Kann darunterliegenden Datentyp nicht ermitteln.</value>
+  </data>
+  <data name="EnumValuesConstraint_Validate_ValueType" xml:space="preserve">
+    <value>Kann den underliegenden Datentyp des Enumerations-Wertes nicht ermitteln.</value>
+  </data>
+  <data name="RegexConstraint_ctor_NoOptions" xml:space="preserve">
+    <value>Deserialisiertes RegexConstraint hat keine Options-Eigenschaft.</value>
+  </data>
+  <data name="MaximumValueConstraint_ctor_MaximumValue" xml:space="preserve">
+    <value>Deserialisiertes MaximumValuesConstraint hat keine MaximumValue-Eigenschaft.</value>
+  </data>
+  <data name="MaximumValuesConstraint_ctor_DataType" xml:space="preserve">
+    <value>Deserialisiertes MaximumValuesConstraint hat keine DataType-Eigenschaft.</value>
+  </data>
+  <data name="MinimumValueConstraint_ctor_DataType" xml:space="preserve">
+    <value>Deserialisiertes MinimumValuesConstraint hat keine DataType-Eigenschaft.</value>
+  </data>
+  <data name="MinimumValueConstraint_ctor_MinimumValue" xml:space="preserve">
+    <value>Deserialisiertes MinimumValuesConstraint hat keine MinimumValue-Eigenschaft.</value>
+  </data>
+  <data name="RegexConstraint_ctor_NoRegex" xml:space="preserve">
+    <value>Deserialisiertes RegexConstraint hat keine RegularExpression-Eigenschaft.</value>
+  </data>
+  <data name="RegexConstraint_GetParameters_Options" xml:space="preserve">
+    <value>Kann Regex-Optionen nicht ermitteln.</value>
+  </data>
+  <data name="StepConstraint_ctor_DataType" xml:space="preserve">
+    <value>Deserialisiertes StepConstraint hat keine DataType-Eigenschaft.</value>
+  </data>
+  <data name="StepConstraint_ctor_StepSize" xml:space="preserve">
+    <value>Deserialisiertes StepConstraint hat keine StepSize-Eigenschaft.</value>
+  </data>
+  <data name="TypeConstraint_ctor_TypeName" xml:space="preserve">
+    <value>Deserialisiertes TypeConstraint hat keine TypeName-Eigenschaft.</value>
+  </data>
 </root>

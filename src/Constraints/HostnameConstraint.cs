@@ -73,12 +73,16 @@ public class HostNameConstraint : Constraint
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
+#if NETSTD20
 	protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected override void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
 		base.OnValidation(results, value, dataType, memberName, displayName);
 		AssertDataType(dataType, ParameterDataType.String);
 
-		string Temp = value as string;
+		string? Temp = value as string;
 		if (string.IsNullOrWhiteSpace(Temp))
 		{
 			results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.HostNameConstraint_Validate_ValueEmpty), string.Format(CultureInfo.CurrentCulture, TextResources.Global_Validate_StringEmpty, displayName), memberName, this));

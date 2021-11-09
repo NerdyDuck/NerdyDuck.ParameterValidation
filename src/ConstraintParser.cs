@@ -79,13 +79,13 @@ public class ConstraintParser
 	/// </summary>
 	public event EventHandler<UnknownConstraintEventArgs>? UnknownConstraint;
 
-	private static readonly Lazy<ConstraintParser> _parser = new(() => new ConstraintParser());
+	private static readonly Lazy<ConstraintParser> s_parser = new(() => new ConstraintParser());
 
 	/// <summary>
 	/// Gets a global instance of the <see cref="ConstraintParser"/>.
 	/// </summary>
 	/// <value>A static instance of a <see cref="ConstraintParser"/>.</value>
-	public static ConstraintParser Parser => _parser.Value;
+	public static ConstraintParser Parser => s_parser.Value;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ConstraintParser"/> class.
@@ -217,9 +217,9 @@ public class ConstraintParser
 	/// <param name="context">The current parsing context.</param>
 	/// <returns>A <see cref="Constraint"/>.</returns>
 
-	private Constraint? CreateConstraint(ParserContext context)
+	private Constraint CreateConstraint(ParserContext context)
 	{
-		Constraint? result = FindConstraint(context.CurrentConstraintName, context.DataType);
+		Constraint result = FindConstraint(context.CurrentConstraintName, context.DataType);
 		try
 		{
 			result.SetParametersInternal(context.CurrentParameters, context.DataType);
@@ -239,7 +239,7 @@ public class ConstraintParser
 	/// <param name="type">The type of the parameter that the constraint needs to validate.</param>
 	/// <returns>A <see cref="Constraint"/>.</returns>
 	/// <remarks>Queries <see cref="UnknownConstraint"/>, if the constraint (or constraint/type combination) is not known.</remarks>
-	private Constraint? FindConstraint(string name, ParameterDataType type)
+	private Constraint FindConstraint(string name, ParameterDataType type)
 	{
 		Constraint? result = null;
 		bool isConstraintNameUnknown = false;
@@ -491,7 +491,7 @@ public class ConstraintParser
 	/// <param name="type">The data type to create the constraint for.</param>
 	/// <param name="isConstraintNameUnknown">A value indicating if the constraint name is well-known.</param>
 	/// <returns>A <see cref="Constraint"/>.</returns>
-	private Constraint? HandleUnknownConstraint(string name, ParameterDataType type, bool isConstraintNameUnknown)
+	private Constraint HandleUnknownConstraint(string name, ParameterDataType type, bool isConstraintNameUnknown)
 	{
 		Constraint? result = OnUnknownConstraint(name, type);
 
@@ -760,9 +760,9 @@ public class ConstraintParser
 		/// </summary>
 		/// <param name="constraintString">The constraint string to parse.</param>
 		/// <param name="dataType">The data type of the parameter.</param>
-		internal ParserContext(string constraintString, ParameterDataType dataType)
+		internal ParserContext(string? constraintString, ParameterDataType dataType)
 		{
-			_constraintString = constraintString;
+			_constraintString = constraintString ?? string.Empty;
 			DataType = dataType;
 			Constraints = new List<Constraint>();
 			LogicalPosition = ConstraintPosition.OutsideConstraint;
@@ -773,7 +773,7 @@ public class ConstraintParser
 			IsMasked = false;
 			CurrentParameter = new StringBuilder();
 			CurrentCharacter = char.MinValue;
-			_stringLength = constraintString.Length;
+			_stringLength = _constraintString.Length;
 		}
 
 		/// <summary>

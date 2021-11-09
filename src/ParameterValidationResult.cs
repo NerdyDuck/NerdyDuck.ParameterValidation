@@ -39,13 +39,13 @@ namespace NerdyDuck.ParameterValidation;
 [Serializable]
 public class ParameterValidationResult : ValidationResult, ISerializable
 {
-	private static readonly Lazy<ParameterValidationResult> _success = new(() => new ParameterValidationResult(ParameterValidation.HResult.Create(ErrorCodes.ParameterValidationResult_Success), TextResources.ParameterValidationResult_Success, null));
+	private static readonly Lazy<ParameterValidationResult> s_success = new(() => new ParameterValidationResult(ParameterValidation.HResult.Create(ErrorCodes.None), TextResources.ParameterValidationResult_Success, null));
 
 	/// <summary>
 	/// Gets a <see cref="ParameterValidationResult"/> that specifies a successful validation.
 	/// </summary>
 	/// <value>A <see cref="ParameterValidationResult"/>.</value>
-	public static new ParameterValidationResult Success => _success.Value;
+	public static new ParameterValidationResult Success => s_success.Value;
 
 	/// <summary>
 	/// Gets the <see cref="Constraint"/> that raised the validation error.
@@ -123,9 +123,9 @@ public class ParameterValidationResult : ValidationResult, ISerializable
 	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The exception could not be deserialized correctly.</exception>
 	protected ParameterValidationResult(SerializationInfo info, StreamingContext context)
-		: base(info.GetString(nameof(ErrorMessage)), (List<string>)info.GetValue(nameof(MemberNames), typeof(List<string>)))
+		: base(info?.GetString(nameof(ErrorMessage)) ?? throw new CodedArgumentNullException(ParameterValidation.HResult.Create(ErrorCodes.ParameterValidationResult_ctor_infoNull), nameof(info)), (List<string>?)info.GetValue(nameof(MemberNames), typeof(List<string>)))
 	{
-		Constraint = (Constraint)info.GetValue(nameof(Constraint), typeof(Constraint));
+		Constraint = (Constraint?)info.GetValue(nameof(Constraint), typeof(Constraint));
 		HResult = info.GetInt32(nameof(HResult));
 	}
 

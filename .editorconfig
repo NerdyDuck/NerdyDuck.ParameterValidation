@@ -34,14 +34,14 @@ dotnet_style_qualification_for_method =false:warning
 dotnet_style_qualification_for_event =false:warning
 # Language keywords vs BCL types preferences
 dotnet_style_predefined_type_for_locals_parameters_members =true:suggestion
-dotnet_style_predefined_type_for_member_access = true:silent
+dotnet_style_predefined_type_for_member_access =true:suggestion
 # Parentheses preferences
 dotnet_style_parentheses_in_arithmetic_binary_operators =always_for_clarity:suggestion
 dotnet_style_parentheses_in_relational_binary_operators =always_for_clarity:suggestion
 dotnet_style_parentheses_in_other_binary_operators =always_for_clarity:suggestion
 dotnet_style_parentheses_in_other_operators =never_if_unnecessary:suggestion
 # Modifier preferences
-dotnet_style_require_accessibility_modifiers = for_non_interface_members:silent
+dotnet_style_require_accessibility_modifiers =for_non_interface_members:suggestion
 dotnet_style_readonly_field =true:warning
 # Expression-level preferences
 dotnet_style_object_initializer =true:warning
@@ -192,6 +192,80 @@ dotnet_diagnostic.CA1805.severity=warning
 ################################
 # Settings not available by UI #
 ################################
+# Camel casing for naming rules
+dotnet_naming_style.camel_case_style.capitalization = camel_case
+
+# Pascal casing for naming rules
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+
+# Camel casing with a leading _ for naming rules
+dotnet_naming_style.camel_case_with_under_prefix.capitalization = camel_case
+dotnet_naming_style.camel_case_with_under_prefix.required_prefix = _
+
+# Camel casing with a leading s_ for naming rules
+dotnet_naming_style.camel_case_with_s_under_prefix.capitalization = camel_case
+dotnet_naming_style.camel_case_with_s_under_prefix.required_prefix = s_
+
+# Pascal casing with a leading I for naming rules
+dotnet_naming_style.pascal_case_with_I_prefix.capitalization = pascal_case
+dotnet_naming_style.pascal_case_with_I_prefix.required_prefix = I
+
+# All types (without interfaces) and namespaces for naming rules
+dotnet_naming_symbols.any_type.applicable_kinds = class, struct, enum, delegate
+dotnet_naming_symbols.any_type.applicable_accessibilities = *
+
+# All interfaces for naming rules
+dotnet_naming_symbols.any_interfaces.applicable_kinds = interface
+dotnet_naming_symbols.any_interfaces.applicable_accessibilities = *
+
+# All private fields for naming rules
+dotnet_naming_symbols.any_private_fields.applicable_kinds = field
+dotnet_naming_symbols.any_private_fields.applicable_accessibilities = private, internal
+
+# All private static fields for naming rules
+dotnet_naming_symbols.any_private_static_fields.applicable_kinds = field
+dotnet_naming_symbols.any_private_static_fields.applicable_accessibilities = private, internal
+dotnet_naming_symbols.any_private_static_fields.required_modifiers = static
+
+# All local fields for naming rules
+dotnet_naming_symbols.any_local_fields.applicable_kinds = field
+dotnet_naming_symbols.any_local_fields.applicable_accessibilities = local
+
+# All parameters for naming rules
+dotnet_naming_symbols.any_params.applicable_kinds = parameter
+dotnet_naming_symbols.any_params.applicable_accessibilities = *
+
+# Naming rule: All interfaces must be Pascal case, and prefixed with I
+dotnet_naming_rule.interface_has_prefix.symbols = any_interfaces
+dotnet_naming_rule.interface_has_prefix.style = pascal_case_with_I_prefix
+dotnet_naming_rule.interface_has_prefix.severity = error
+
+# Naming rule: All types and must be Pascal case
+dotnet_naming_rule.any_type_is_pascal_case.symbols = any_type
+dotnet_naming_rule.any_type_is_pascal_case.style = pascal_case_style
+dotnet_naming_rule.any_type_is_pascal_case.severity = error
+
+# Naming rule: All private fields should be Camel case, and prefixed with _
+dotnet_naming_rule.private_fields_have_prefix.symbols = any_private_fields
+dotnet_naming_rule.private_fields_have_prefix.style = camel_case_with_under_prefix
+dotnet_naming_rule.private_fields_have_prefix.severity = warning
+
+# Naming rule: All private static fields should be Camel case, and prefixed with s_
+dotnet_naming_rule.private_fields_have_prefix.symbols = any_private_static_fields
+dotnet_naming_rule.private_fields_have_prefix.style = camel_case_with_s_under_prefix
+dotnet_naming_rule.private_fields_have_prefix.severity = warning
+
+# Naming rule: All parameters must be Camel case
+dotnet_naming_rule.params_are_camel_case.symbols = any_params
+dotnet_naming_rule.params_are_camel_case.style = camel_case_style
+dotnet_naming_rule.params_are_camel_case.severity = error
+
+# Naming rule: All local fields must be Camel case
+dotnet_naming_rule.local_fields_are_camel_case.symbols = any_local_fields
+dotnet_naming_rule.local_fields_are_camel_case.style = camel_case_style
+dotnet_naming_rule.local_fields_are_camel_case.severity = warning
+
+
 # Xml resource files
 [*.{resx,resw}]
 indent_size = 2
@@ -225,42 +299,3 @@ indent_size = 1
 [*.{htm,html,cshtml,css,js}]
 indent_style = tab
 tab_width = 2
-
-# Camel casing for naming rules
-dotnet_naming_style.camel_case_style.capitalization = camel_case
-
-# Camel casing with a leading _ for naming rules
-dotnet_naming_style.camel_case_with_under_prefix.capitalization = camel_case
-dotnet_naming_style.camel_case_with_under_prefix.required_prefix = _
-
-# Camel casing with a leading s_ for naming rules
-dotnet_naming_style.camel_case_with_s_under_prefix.capitalization = camel_case
-dotnet_naming_style.camel_case_with_s_under_prefix.required_prefix = s_
-
-# All private fields for naming rules
-dotnet_naming_symbols.any_private_fields.applicable_kinds = field
-dotnet_naming_symbols.any_private_fields.applicable_accessibilities = private
-
-# All private fields for naming rules
-dotnet_naming_symbols.any_private_static_fields.applicable_kinds = field
-dotnet_naming_symbols.any_private_static_fields.applicable_accessibilities = private
-dotnet_naming_symbols.any_private_static_fields.required_modifiers = static
-
-# All parameters for naming rules
-dotnet_naming_symbols.any_params.applicable_kinds = parameter
-dotnet_naming_symbols.any_params.applicable_accessibilities = *
-
-# Naming rule: All private fields should be Camel case, and prefixed with _
-dotnet_naming_rule.private_fields_have_prefix.symbols = any_private_fields
-dotnet_naming_rule.private_fields_have_prefix.style = camel_case_with_under_prefix
-dotnet_naming_rule.private_fields_have_prefix.severity = warning
-
-# Naming rule: All private static fields should be Camel case, and prefixed with s_
-dotnet_naming_rule.private_fields_have_prefix.symbols = any_private_static_fields
-dotnet_naming_rule.private_fields_have_prefix.style = camel_case_with_s_under_prefix
-dotnet_naming_rule.private_fields_have_prefix.severity = warning
-
-# Naming rule: All parameters must be Camel case
-dotnet_naming_rule.params_are_camel_case.symbols = any_params
-dotnet_naming_rule.params_are_camel_case.style = camel_case_style
-dotnet_naming_rule.params_are_camel_case.severity = error

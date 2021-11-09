@@ -59,7 +59,7 @@ public class EnumTypeConstraint : TypeConstraint
 	/// Gets the underlying type of the type resolved from <see cref="TypeConstraint.TypeName"/>.
 	/// </summary>
 	/// <value>The integer type the enumeration is based on; if no type could be resolved from <see cref="TypeConstraint.TypeName"/>, <see langword="null"/> is returned.</value>
-	public Type UnderlyingType
+	public Type? UnderlyingType
 	{
 		get
 		{
@@ -85,7 +85,7 @@ public class EnumTypeConstraint : TypeConstraint
 	/// Gets a read-only dictionary of enumeration names and values derived from the type resolved from <see cref="TypeConstraint.TypeName"/>.
 	/// </summary>
 	/// <value>A read-only dictionary, or if no type could be resolved from <see cref="TypeConstraint.TypeName"/>, <see langword="null"/> is returned.</value>
-	public IReadOnlyDictionary<string, object> EnumValues
+	public IReadOnlyDictionary<string, object>? EnumValues
 	{
 		get
 		{
@@ -125,7 +125,11 @@ public class EnumTypeConstraint : TypeConstraint
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="ConstraintConfigurationException"><paramref name="parameters"/> contains no elements, or an invalid element.</exception>
+#if NETSTD20
 	protected override void SetParameters(IReadOnlyList<string> parameters, ParameterDataType dataType)
+#else
+	protected override void SetParameters([System.Diagnostics.CodeAnalysis.NotNull] IReadOnlyList<string> parameters, ParameterDataType dataType)
+#endif
 	{
 		if (parameters == null)
 		{
@@ -159,7 +163,11 @@ public class EnumTypeConstraint : TypeConstraint
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
+#if NETSTD20
 	protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected override void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
 		base.OnBaseValidation(results, value, dataType, memberName, displayName);
 		AssertDataType(dataType, ParameterDataType.Enum);
@@ -177,7 +185,7 @@ public class EnumTypeConstraint : TypeConstraint
 			if (ResolvedType != ValType)
 			{
 				// Value is an enumeration, but not the resolved one
-				results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EnumTypeConstraint_Validate_WrongEnum), string.Format(CultureInfo.CurrentCulture, TextResources.EnumTypeConstraint_Validate_WrongEnum, displayName, ValType.FullName, ResolvedType.FullName), memberName, this));
+				results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EnumTypeConstraint_Validate_WrongEnum), string.Format(CultureInfo.CurrentCulture, TextResources.EnumTypeConstraint_Validate_WrongEnum, displayName, ValType.FullName, ResolvedType!.FullName), memberName, this));
 				return;
 			}
 
@@ -191,7 +199,7 @@ public class EnumTypeConstraint : TypeConstraint
 			}
 			else
 			{
-				if (!_enumValues.ContainsValue(value))
+				if (!_enumValues!.ContainsValue(value))
 				{
 					results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EnumTypeConstraint_Validate_NotInEnum), string.Format(CultureInfo.CurrentCulture, TextResources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
 				}
@@ -210,7 +218,7 @@ public class EnumTypeConstraint : TypeConstraint
 			}
 			else
 			{
-				if (!_enumValues.ContainsValue(Convert.ChangeType(value, ValType, CultureInfo.InvariantCulture)))
+				if (!_enumValues!.ContainsValue(Convert.ChangeType(value, ValType, CultureInfo.InvariantCulture)))
 				{
 					results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EnumTypeConstraint_Validate_NotInEnum), string.Format(CultureInfo.CurrentCulture, TextResources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
 				}
@@ -235,13 +243,13 @@ public class EnumTypeConstraint : TypeConstraint
 			}
 			_isTypeResolved = true;
 
-			Type EnumType = ResolvedType;
-			if (EnumType == null)
+			Type? enumType = ResolvedType;
+			if (enumType == null)
 				return;
 
 			try
 			{
-				_enumValues = ParameterConvert.ExamineEnumeration(EnumType, false, out _underlyingType, out _hasFlags);
+				_enumValues = ParameterConvert.ExamineEnumeration(enumType, false, out _underlyingType, out _hasFlags);
 			}
 			catch (CodedArgumentException)
 			{

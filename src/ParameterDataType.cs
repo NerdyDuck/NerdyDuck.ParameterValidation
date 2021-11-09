@@ -37,7 +37,7 @@ namespace NerdyDuck.ParameterValidation;
 [DataContract(Namespace = Constraint.Namespace)]
 public enum ParameterDataType
 {
-#pragma warning disable CA1720
+#pragma warning disable CA1720 // Identifiers should not contain type names: That is the purpose of the enum.
 	/// <summary>
 	/// Unknown parameter type. Do not use.
 	/// </summary>
@@ -45,7 +45,7 @@ public enum ParameterDataType
 	None = 0,
 
 	/// <summary>
-	/// The parameter has a value representing a <see cref="Boolean"/>.
+	/// The parameter has a value representing a <see cref="bool"/>.
 	/// </summary>
 	[EnumMember]
 	Bool = 1,
@@ -105,7 +105,7 @@ public enum ParameterDataType
 	Int64 = 10,
 
 	/// <summary>
-	/// The parameter has a value representing a <see cref="SByte"/>.
+	/// The parameter has a value representing a <see cref="sbyte"/>.
 	/// </summary>
 	[EnumMember]
 	SignedByte = 11,
@@ -156,6 +156,27 @@ public enum ParameterDataType
 	/// The parameter has a value representing an XML fragment or document.
 	/// </summary>
 	[EnumMember]
-	Xml = 19
-#pragma warning restore CA1720
+	Xml = 19,
+
+#if NET50
+	/// <summary>
+	/// The parameter has a value representing a JSON fragment or document.
+	/// </summary>
+	[EnumMember]
+	Json = 20,
+#endif
+#if NET60
+	/// <summary>
+	/// The parameter has a value representing a <see cref="DateOnly" /> struct.
+	/// </summary>
+	[EnumMember]
+	DateOnly = 21,
+
+	/// <summary>
+	/// The parameter has a value representing a <see cref="TimeOnly" /> struct.
+	/// </summary>
+	[EnumMember]
+	TimeOnly = 22
+#endif
+#pragma warning restore CA1720 // Identifiers should not contain type names
 }

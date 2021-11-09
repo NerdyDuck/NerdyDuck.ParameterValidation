@@ -28,6 +28,7 @@
  ******************************************************************************/
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -45,10 +46,10 @@ namespace NerdyDuck.ParameterValidation;
 public static class ParameterConvert
 {
 	// UTF-8 encoding without byte order mark.
-	private static readonly Encoding _utf8NoBOM = new UTF8Encoding(false);
+	private static readonly Encoding s_utf8NoBOM = new UTF8Encoding(false);
 
 	// AES encryption for Encrypt and Decrypt methods, as a Singleton with Lazy initialization
-	private static readonly Lazy<Aes> _aes = new(() =>
+	private static readonly Lazy<Aes> s_aes = new(() =>
 	{
 		Aes aes = Aes.Create();
 		aes.BlockSize = 128;
@@ -71,17 +72,26 @@ public static class ParameterConvert
 	/// <param name="value">A string that can be deserialized into the specified <paramref name="dataType"/>.</param>
 	/// <param name="dataType">The data type to convert the <paramref name="value"/> into.</param>
 	/// <param name="constraints">A list of <see cref="Constraint"/>s, that may be used to aid in the conversion.</param>
-	/// <returns>A value of the type specified in <paramref name="dataType"/>, converted the the specified <paramref name="value"/>.</returns>
+	/// <returns>A value of the type specified in <paramref name="dataType"/>, converted the specified <paramref name="value"/>.</returns>
 	/// <remarks><paramref name="constraints"/> are only required, if <paramref name="dataType"/> is <see cref="ParameterDataType.Enum"/> or <see cref="ParameterDataType.Enum"/>.
 	/// In these cases the list is browsed for <see cref="Constraint"/>s that may give a hint to the actual type to convert to.</remarks>
 	/// <exception cref="ParameterConversionException">The value could not be converted into the specified data type, or no constraint was available to specify the actual type to convert to.</exception>
-	public static object ToDataType(string? value, ParameterDataType dataType, IReadOnlyList<Constraint>? constraints)
+	public static object? ToDataType(string? value, ParameterDataType dataType, IReadOnlyList<Constraint>? constraints)
 	{
+		if (value == null)
+		{
+			return HasNullConstraint(constraints)
+				? null
+				: throw new ParameterConversionException(HResult.Create(ErrorCodes.ParameterConvert_ToDataType_ValueNull), TextResources.ParameterConvert_ToDataType_ValueNull);
+		}
 		if (HasEncryptedConstraint(constraints))
 		{
 			value = Decrypt(value);
 		}
 
+#if NETSTD20
+#pragma warning disable CS8604 // Possible null reference argument.
+#endif
 		switch (dataType)
 		{
 			case ParameterDataType.Bool:
@@ -123,8 +133,8 @@ public static class ParameterConvert
 				if (TryGetTypeConstraint(constraints, out tc1))
 				{
 					return tc1?.ResolvedType != null
-						? ToEnumeration(value, tc1.ResolvedType)
-						: throw new ParameterConversionException(HResult.Create(ErrorCodes.ParameterConvert_ToDataType_ResolveEnumFailed), string.Format(CultureInfo.CurrentCulture, TextResources.ParameterConvert_ToDataType_ResolveFailed, tc1.TypeName), dataType, value);
+						? ToEnumeration(value, tc1!.ResolvedType)
+						: throw new ParameterConversionException(HResult.Create(ErrorCodes.ParameterConvert_ToDataType_ResolveEnumFailed), string.Format(CultureInfo.CurrentCulture, TextResources.ParameterConvert_ToDataType_ResolveFailed, tc1?.TypeName ?? string.Empty), dataType, value);
 				}
 				throw new ParameterConversionException(HResult.Create(ErrorCodes.ParameterConvert_ToDataType_EnumNoTypeConstraint), TextResources.ParameterConvert_ToDataType_NoTypeConstraint, dataType, value);
 			case ParameterDataType.Xml:
@@ -139,10 +149,13 @@ public static class ParameterConvert
 			default:
 				throw new CodedInvalidOperationException(HResult.Create(ErrorCodes.ParameterConvert_ToDataType_TypeNotSupported), string.Format(CultureInfo.CurrentCulture, TextResources.ParameterConvert_To_DataTypeNotSupported, dataType));
 		}
+#if NETSTD20
+#pragma warning restore CS8604 // Possible null reference argument.
+#endif
 	}
 
 	/// <summary>
-	/// Converts an <see cref="Object"/> of the specified data type into a <see cref="String"/>.
+	/// Converts an <see cref="object"/> of the specified data type into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <param name="dataType">The data type of <paramref name="value"/>.</param>
@@ -150,6 +163,9 @@ public static class ParameterConvert
 	/// <returns>A string representation of <paramref name="value"/>. The content may vary.</returns>
 	/// <exception cref="ParameterConversionException">The value could not be converted into a string.</exception>
 	/// <exception cref="CodedInvalidOperationException">The data type is not supported.</exception>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(object? value, ParameterDataType dataType, IReadOnlyList<Constraint>? constraints)
 	{
 		if (value == null)
@@ -195,133 +211,185 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a nullable <see cref="Boolean"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="bool"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <see langword="true"/> or <see langword="false"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(bool? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="Byte"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="byte"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(byte? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a <see cref="Byte"/> array into a <see cref="String"/>.
+	/// Converts a <see cref="byte"/> array into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; <see cref="string.Empty"/>, if the <paramref name="value"/> has a length of 0; otherwise, a base64-encoded string representing <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(byte[]? value) => value == null ? null : value.Length == 0 ? string.Empty : Convert.ToBase64String(value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="DateTimeOffset"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="DateTimeOffset"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(DateTimeOffset? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="Decimal"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="decimal"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(decimal? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts an enumeration value into a <see cref="String"/>.
+	/// Converts an enumeration value into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, <paramref name="value"/> is its underlying data type in string representation (i.e. as an integer).</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(Enum? value)
 	{
 		if (value == null)
 			return null;
-		Type? UnderlyingType = ParameterConvert.GetEnumUnderlyingType(value.GetType());
-
-		return ToString(Convert.ChangeType(value, UnderlyingType, CultureInfo.InvariantCulture), NetToParameterDataType(UnderlyingType), null);
+		Type? underlyingType = ParameterConvert.GetEnumUnderlyingType(value.GetType());
+		return underlyingType == null
+			? throw new ParameterConversionException(HResult.Create(ErrorCodes.ParameterConvert_ToString_UnknownEnumType), string.Format(CultureInfo.CurrentCulture, TextResources.Global_UnknownEnumType, value.GetType()))
+			: ToString(Convert.ChangeType(value, underlyingType, CultureInfo.InvariantCulture), NetToParameterDataType(underlyingType), null);
 	}
 
 	/// <summary>
-	/// Converts a nullable <see cref="Guid"/> to a <see cref="String"/>.
+	/// Converts a nullable <see cref="Guid"/> to a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of a <see cref="Guid"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(Guid? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="Int16"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="short"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(short? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="Int32"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="int"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(int? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="Int64"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="long"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(long? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="SByte"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="sbyte"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
 	[CLSCompliant(false)]
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(sbyte? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="TimeSpan"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="TimeSpan"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(TimeSpan? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="UInt16"/> into a <see cref="String"/>.
+	/// Converts a nullable <see cref="ushort"/> into a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
 	[CLSCompliant(false)]
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(ushort? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="UInt32"/> to a <see cref="String"/>.
+	/// Converts a nullable <see cref="uint"/> to a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
 	[CLSCompliant(false)]
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(uint? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a nullable <see cref="UInt64"/> to a <see cref="String"/>.
+	/// Converts a nullable <see cref="ulong"/> to a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
 	[CLSCompliant(false)]
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(ulong? value) => !value.HasValue ? null : XmlConvert.ToString(value.Value);
 
 	/// <summary>
-	/// Converts a <see cref="Uri"/> to a <see cref="String"/>.
+	/// Converts a <see cref="Uri"/> to a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-compatible string representation of <paramref name="value"/>.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(Uri? value) => value?.ToString();
 
 	/// <summary>
-	/// Converts a <see cref="Version"/> to a <see cref="String"/>.
+	/// Converts a <see cref="Version"/> to a <see cref="string"/>.
 	/// </summary>
 	/// <param name="value">The value to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, a version string.</returns>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToString(Version? value)
 	{
 		if (value is null)
@@ -337,12 +405,12 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Boolean"/> value.
+	/// Converts a <see cref="string"/> into a <see cref="bool"/> value.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>A <see cref="Boolean"/> value, that is, <see langword="true"/> or <see langword="false"/>.</returns>
+	/// <returns>A <see cref="bool"/> value, that is, <see langword="true"/> or <see langword="false"/>.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> does not represent a <see cref="Boolean"/> value.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> does not represent a <see cref="bool"/> value.</exception>
 	public static bool ToBoolean(string value)
 	{
 		if (value is null)
@@ -360,13 +428,13 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Byte"/>.
+	/// Converts a <see cref="string"/> into a <see cref="byte"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>A <see cref="Byte"/> equivalent of the string.</returns>
+	/// <returns>A <see cref="byte"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
 	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format or
-	/// <paramref name="value"/> represents a number less than <see cref="Byte.MinValue"/> or greater than <see cref="Byte.MaxValue"/>.</exception>
+	/// <paramref name="value"/> represents a number less than <see cref="byte.MinValue"/> or greater than <see cref="byte.MaxValue"/>.</exception>
 	public static byte ToByte(string value)
 	{
 		if (value is null)
@@ -384,7 +452,7 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a byte array.
+	/// Converts a <see cref="string"/> into a byte array.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
 	/// <returns>A byte array equivalent to the string. If <paramref name="value"/> is <see cref="string.Empty"/>, an empty byte array is returned.</returns>
@@ -412,7 +480,7 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="DateTimeOffset"/>.
+	/// Converts a <see cref="string"/> into a <see cref="DateTimeOffset"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
 	/// <returns>The <see cref="DateTimeOffset"/> equivalent of the supplied string.</returns>
@@ -435,13 +503,13 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Decimal"/>.
+	/// Converts a <see cref="string"/> into a <see cref="decimal"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>The <see cref="System.Decimal"/> equivalent of the supplied string.</returns>
+	/// <returns>The <see cref="decimal"/> equivalent of the supplied string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
 	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format or
-	/// <paramref name="value"/> represents a number less than <see cref="Decimal.MinValue"/> or greater than <see cref="Decimal.MaxValue"/>.</exception>
+	/// <paramref name="value"/> represents a number less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
 	public static decimal ToDecimal(string value)
 	{
 		if (value is null)
@@ -459,7 +527,7 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into the specified enumeration.
+	/// Converts a <see cref="string"/> into the specified enumeration.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
 	/// <param name="enumType">The type of enumeration to convert to.</param>
@@ -493,7 +561,7 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into the specified enumeration.
+	/// Converts a <see cref="string"/> into the specified enumeration.
 	/// </summary>
 	/// <typeparam name="T">The type of enumeration to convert to.</typeparam>
 	/// <param name="value">The string to convert.</param>
@@ -504,13 +572,12 @@ public static class ParameterConvert
 	public static T ToEnumeration<T>(string value) => (T)ToEnumeration(value, typeof(T));
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Guid"/>.
+	/// Converts a <see cref="string"/> into a <see cref="Guid"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
 	/// <returns>The <see cref="System.Guid"/> equivalent of the supplied string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format or
-	/// <paramref name="value"/> represents a number less than <see cref="Decimal.MinValue"/> or greater than <see cref="Decimal.MaxValue"/>.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format.</exception>
 	public static Guid ToGuid(string value)
 	{
 		if (value is null)
@@ -528,12 +595,12 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Int16"/>.
+	/// Converts a <see cref="string"/> into a <see cref="short"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>An <see cref="Int16"/> equivalent of the string.</returns>
+	/// <returns>An <see cref="short"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="Int16.MinValue"/> or greater than <see cref="Int16.MaxValue"/>.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="short.MinValue"/> or greater than <see cref="short.MaxValue"/>.</exception>
 	public static short ToInt16(string value)
 	{
 		if (value is null)
@@ -551,12 +618,12 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Int32"/>.
+	/// Converts a <see cref="string"/> into a <see cref="int"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>An <see cref="Int32"/> equivalent of the string.</returns>
+	/// <returns>An <see cref="int"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="Int32.MinValue"/> or greater than <see cref="Int32.MaxValue"/>.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="int.MinValue"/> or greater than <see cref="int.MaxValue"/>.</exception>
 	public static int ToInt32(string value)
 	{
 		if (value is null)
@@ -574,12 +641,12 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Int64"/>.
+	/// Converts a <see cref="string"/> into a <see cref="long"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>An <see cref="Int64"/> equivalent of the string.</returns>
+	/// <returns>An <see cref="long"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> is <see langword="null"/>, or is not in the correct format, or represents a number less than <see cref="Int64.MinValue"/> or greater than <see cref="Int64.MaxValue"/>.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> is <see langword="null"/>, or is not in the correct format, or represents a number less than <see cref="long.MinValue"/> or greater than <see cref="long.MaxValue"/>.</exception>
 	public static long ToInt64(string value)
 	{
 		if (value is null)
@@ -597,12 +664,12 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="System.SByte"/>.
+	/// Converts a <see cref="string"/> into a <see cref="sbyte"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>An <see cref="System.SByte"/> equivalent of the string.</returns>
+	/// <returns>An <see cref="sbyte"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> is <see langword="null"/>, or is not in the correct format, or represents a number less than <see cref="Int64.MinValue"/> or greater than <see cref="Int64.MaxValue"/>.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> is <see langword="null"/>, or is not in the correct format, or represents a number less than <see cref="sbyte.MinValue"/> or greater than <see cref="sbyte.MaxValue"/>.</exception>
 	[CLSCompliant(false)]
 	public static sbyte ToSByte(string value)
 	{
@@ -621,7 +688,7 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts the <see cref="String"/> to a <see cref="TimeSpan"/> equivalent.
+	/// Converts the <see cref="string"/> to a <see cref="TimeSpan"/> equivalent.
 	/// </summary>
 	/// <param name="value">The string to convert. The string format must conform to the W3C XML Schema Part 2: Datatypes recommendation for duration.</param>
 	/// <returns>A <see cref="TimeSpan"/> equivalent of the string.</returns>
@@ -645,12 +712,12 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="UInt16"/>.
+	/// Converts a <see cref="string"/> into a <see cref="ushort"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>An <see cref="UInt16"/> equivalent of the string.</returns>
+	/// <returns>An <see cref="ushort"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="UInt16.MinValue"/> or greater than <see cref="UInt16.MaxValue"/>.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="ushort.MinValue"/> or greater than <see cref="ushort.MaxValue"/>.</exception>
 	[CLSCompliant(false)]
 	public static ushort ToUInt16(string value)
 	{
@@ -669,12 +736,12 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="UInt32"/>.
+	/// Converts a <see cref="string"/> into a <see cref="uint"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>An <see cref="UInt32"/> equivalent of the string.</returns>
+	/// <returns>An <see cref="uint"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="UInt32.MinValue"/> or greater than <see cref="UInt32.MaxValue"/>.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="uint.MinValue"/> or greater than <see cref="uint.MaxValue"/>.</exception>
 	[CLSCompliant(false)]
 	public static uint ToUInt32(string value)
 	{
@@ -693,12 +760,12 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="UInt64"/>.
+	/// Converts a <see cref="string"/> into a <see cref="ulong"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
-	/// <returns>An <see cref="UInt64"/> equivalent of the string.</returns>
+	/// <returns>An <see cref="ulong"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="UInt64.MinValue"/> or greater than <see cref="UInt64.MaxValue"/>.</exception>
+	/// <exception cref="ParameterConversionException"><paramref name="value"/> is not in the correct format, or represents a number less than <see cref="ulong.MinValue"/> or greater than <see cref="ulong.MaxValue"/>.</exception>
 	[CLSCompliant(false)]
 	public static ulong ToUInt64(string value)
 	{
@@ -717,7 +784,7 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Uri"/>.
+	/// Converts a <see cref="string"/> into a <see cref="Uri"/>.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
 	/// <returns>An <see cref="Uri"/> equivalent of the string.</returns>
@@ -740,14 +807,14 @@ public static class ParameterConvert
 	}
 
 	/// <summary>
-	/// Converts a <see cref="String"/> into a <see cref="Version"/> object.
+	/// Converts a <see cref="string"/> into a <see cref="Version"/> object.
 	/// </summary>
 	/// <param name="value">The string to convert.</param>
 	/// <returns>An <see cref="Version"/> equivalent of the string.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
 	/// <exception cref="ParameterConversionException"><paramref name="value"/> has fewer than two or more than 4 version components,
 	/// or at least one component is less than zero, or at least one component is not an integer
-	/// or at least one component is greater than <see cref="Int32.MaxValue"/>.</exception>
+	/// or at least one component is greater than <see cref="int.MaxValue"/>.</exception>
 	public static Version ToVersion(string value)
 	{
 		if (value is null)
@@ -804,15 +871,18 @@ public static class ParameterConvert
 	/// <param name="value">An XML string containing the data of the object to create. </param>
 	/// <returns>An object created from the XML data in <paramref name="value"/>.</returns>
 	/// <exception cref="CodedArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-	/// <exception cref="ParameterConversionException">An error occured during deserialization.</exception>
+	/// <exception cref="ParameterConversionException">An error occurred during deserialization.</exception>
 	public static T FromXml<T>(string value) => (T)FromXml(value, typeof(T));
 
 	/// <summary>
-	/// Converts the specified <see cref="Object"/> into its XML representation.
+	/// Converts the specified <see cref="object"/> into its XML representation.
 	/// </summary>
 	/// <param name="value">The object to convert.</param>
 	/// <returns><see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>; otherwise, an XML-formatted string representing <paramref name="value"/>.</returns>
 	/// <exception cref="ParameterConversionException">An error occurred during XML serialization. See inner exception for details.</exception>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? ToXml(object? value)
 	{
 		if (value == null)
@@ -839,6 +909,9 @@ public static class ParameterConvert
 	/// <returns>A base64-encoded string, or <see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>.</returns>
 	/// <remarks>This method is not supported in the portable version.</remarks>
 	/// <exception cref="ParameterConversionException">Cannot encrypt <paramref name="value"/>.</exception>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? Encrypt(string? value)
 	{
 		if (value == null)
@@ -848,10 +921,10 @@ public static class ParameterConvert
 
 		try
 		{
-			using ICryptoTransform transform = _aes.Value.CreateEncryptor();
+			using ICryptoTransform transform = s_aes.Value.CreateEncryptor();
 			using MemoryStream encryptedBuffer = new();
 			using CryptoStream encryptingStream = new(encryptedBuffer, transform, CryptoStreamMode.Write);
-			using StreamWriter writer = new(encryptingStream, _utf8NoBOM);
+			using StreamWriter writer = new(encryptingStream, s_utf8NoBOM);
 			writer.Write(value);
 			writer.Flush();
 			encryptingStream.FlushFinalBlock();
@@ -870,6 +943,9 @@ public static class ParameterConvert
 	/// <returns>A string, or <see langword="null"/>, if <paramref name="value"/> is <see langword="null"/>.</returns>
 	/// <remarks>This method is not supported in the portable version.</remarks>
 	/// <exception cref="ParameterConversionException">Cannot decrypt <paramref name="value"/>.</exception>
+#if !NETSTD20
+	[return: NotNullIfNotNull("value")]
+#endif
 	public static string? Decrypt(string? value)
 	{
 		if (value == null)
@@ -880,10 +956,10 @@ public static class ParameterConvert
 		try
 		{
 			byte[] encbuffer = Convert.FromBase64String(value);
-			using ICryptoTransform transform = _aes.Value.CreateDecryptor();
+			using ICryptoTransform transform = s_aes.Value.CreateDecryptor();
 			using MemoryStream encryptedBuffer = new(encbuffer);
 			using CryptoStream decryptingStream = new(encryptedBuffer, transform, CryptoStreamMode.Read);
-			using StreamReader Reader = new(decryptingStream, _utf8NoBOM);
+			using StreamReader Reader = new(decryptingStream, s_utf8NoBOM);
 			return Reader.ReadToEnd();
 		}
 		catch (Exception ex) when (ex is CryptographicException or FormatException or IOException)
@@ -905,7 +981,7 @@ public static class ParameterConvert
 			constraint = null;
 			return false;
 		}
-		constraint = (TypeConstraint)constraints.FirstOrDefault(c => c.Name == Constraint.TypeConstraintName);
+		constraint = (TypeConstraint?)constraints.FirstOrDefault(c => c.Name == Constraint.TypeConstraintName);
 		return constraint != null;
 	}
 
@@ -914,7 +990,14 @@ public static class ParameterConvert
 	/// </summary>
 	/// <param name="constraints">A list of <see cref="Constraint"/>s to search in. May be <see langword="null"/>.</param>
 	/// <returns><see langword="true"/>, if <paramref name="constraints"/> contains an <see cref="EncryptedConstraint"/>; otherwise, or if <paramref name="constraints"/> is <see langword="null"/>, <see langword="false"/>.</returns>
-	public static bool HasEncryptedConstraint(IReadOnlyList<Constraint>? constraints) => constraints != null && constraints.FirstOrDefault(c => c.Name == Constraint.EncryptedConstraintName) != null;
+	public static bool HasEncryptedConstraint(IReadOnlyList<Constraint>? constraints) => constraints != null && constraints.Any(c => c.Name == Constraint.EncryptedConstraintName);
+
+	/// <summary>
+	/// Checks if the specified list contains a <see cref="EncryptedConstraint"/>.
+	/// </summary>
+	/// <param name="constraints">A list of <see cref="Constraint"/>s to search in. May be <see langword="null"/>.</param>
+	/// <returns><see langword="true"/>, if <paramref name="constraints"/> contains an <see cref="EncryptedConstraint"/>; otherwise, or if <paramref name="constraints"/> is <see langword="null"/>, <see langword="false"/>.</returns>
+	public static bool HasNullConstraint(IReadOnlyList<Constraint>? constraints) => constraints != null && constraints.Any(c => c.Name == Constraint.NullConstraintName);
 
 	/// <summary>
 	/// Converts a .Net type to a <see cref="ParameterDataType"/>.
@@ -1019,7 +1102,6 @@ public static class ParameterConvert
 	/// <returns></returns>
 	internal static Dictionary<string, object> ExamineEnumeration(Type enumType, bool convertValues, out Type underlyingType, out bool hasFlags)
 	{
-		underlyingType = null;
 		hasFlags = false;
 
 		if (enumType == null)
@@ -1033,7 +1115,7 @@ public static class ParameterConvert
 			throw new CodedArgumentException(HResult.Create(ErrorCodes.ParameterConvert_ExamineEnumeration_NotEnum), string.Format(CultureInfo.CurrentCulture, TextResources.ParameterConvert_ExamineEnumeration_NotEnum, enumType.FullName), nameof(enumType), null);
 		}
 
-		underlyingType = GetEnumUnderlyingType(enumType);
+		underlyingType = GetEnumUnderlyingType(enumType) ?? throw new CodedInvalidOperationException(HResult.Create(ErrorCodes.ParameterConvert_ExamineEnumeration_UnknownType), string.Format(CultureInfo.CurrentCulture, TextResources.Global_UnknownEnumType, enumType.GetType()));
 
 		if (EnumInfo.GetCustomAttribute(typeof(FlagsAttribute)) != null)
 		{
@@ -1047,11 +1129,13 @@ public static class ParameterConvert
 			{
 				if (convertValues)
 				{
-					result.Add(field.Name, field.GetRawConstantValue());
+					result.Add(field.Name, field.GetRawConstantValue()
+						?? throw new CodedInvalidOperationException(HResult.Create(ErrorCodes.ParameterConvert_ExamineEnumeration_NoFieldValue), string.Format(CultureInfo.CurrentCulture, TextResources.ParameterConvert_ExamineEnumeration_NoFieldValue, enumType.GetType())));
 				}
 				else
 				{
-					result.Add(field.Name, field.GetValue(null));
+					result.Add(field.Name, field.GetValue(null)
+						?? throw new CodedInvalidOperationException(HResult.Create(ErrorCodes.ParameterConvert_ExamineEnumeration_NoFieldValue), string.Format(CultureInfo.CurrentCulture, TextResources.ParameterConvert_ExamineEnumeration_NoFieldValue, enumType.GetType())));
 				}
 			}
 		}

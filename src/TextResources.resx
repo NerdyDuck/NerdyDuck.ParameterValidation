@@ -387,4 +387,79 @@
   <data name="ParameterConvert_FromXml_NoObjectDeserialized" xml:space="preserve">
     <value>XML deserialization returned no object.</value>
   </data>
+  <data name="Constraint_ctor_NameNull" xml:space="preserve">
+    <value>Deserialized Constraint contains no Name property.</value>
+  </data>
+  <data name="InvalidDataTypeException_ctor_DataTypeNull" xml:space="preserve">
+    <value>Deserialized InvalidDataTypeException contains no ParameterDataType property.</value>
+  </data>
+  <data name="ParameterConversionException_ctor_ActualTypeNull" xml:space="preserve">
+    <value>Deserialized ParameterConversionException contains no ActualValue type.</value>
+  </data>
+  <data name="ParameterConversionException_ctor_DataTypeNull" xml:space="preserve">
+    <value>Deserialized ParameterConversionException contains no ParameterDataType property.</value>
+  </data>
+  <data name="AllowedSchemeConstraint_ctor_AllowedSchemesNull" xml:space="preserve">
+    <value>Deserialized AllowedSchemeConstraint has no AllowedSchemes property.</value>
+  </data>
+  <data name="CharacterSetConstraint_ctor_CharacterSetNull" xml:space="preserve">
+    <value>Deserialized CharacterSetConstraint has no CharacterSet property.</value>
+  </data>
+  <data name="Global_Validate_NotString" xml:space="preserve">
+    <value>value is not of type System.String.</value>
+  </data>
+  <data name="Global_UnknownEnumType" xml:space="preserve">
+    <value>Cannot determine underlying data type of enumeration '{0}'.</value>
+  </data>
+  <data name="ParameterConvert_ExamineEnumeration_NoFieldValue" xml:space="preserve">
+    <value>Cannot retrieve values of enumeration '{0}'.</value>
+  </data>
+  <data name="ParameterConvert_ToDataType_ValueNull" xml:space="preserve">
+    <value>Value is null, but has no NullConstraint that allows it to be null.</value>
+  </data>
+  <data name="EnumValuesConstraint_ctor_KeyMissing" xml:space="preserve">
+    <value>Deserialized EnumValuesConstraint has an enumeration value key missing.</value>
+  </data>
+  <data name="EnumValuesConstraint_ctor_NoUnderlyingDataType" xml:space="preserve">
+    <value>Deserialized EnumValuesConstraint contains no UnderlyingDataType property.</value>
+  </data>
+  <data name="EnumValuesConstraint_ctor_ValueMissing" xml:space="preserve">
+    <value>Deserialized EnumValuesConstraint has an enumeration value value missing.</value>
+  </data>
+  <data name="EnumValuesConstraint_GetParameters_DataType" xml:space="preserve">
+    <value>Cannot determine underlying data type.</value>
+  </data>
+  <data name="EnumValuesConstraint_Validate_ValueType" xml:space="preserve">
+    <value>Cannot determine underlying data type of enumeration value.</value>
+  </data>
+  <data name="RegexConstraint_ctor_NoOptions" xml:space="preserve">
+    <value>Deserialized RegexConstraint has no Options property.</value>
+  </data>
+  <data name="MaximumValueConstraint_ctor_MaximumValue" xml:space="preserve">
+    <value>Deserialized MaximumValuesConstraint has no MaximumValue property.</value>
+  </data>
+  <data name="MaximumValuesConstraint_ctor_DataType" xml:space="preserve">
+    <value>Deserialized MaximumValuesConstraint has no DataType property.</value>
+  </data>
+  <data name="MinimumValueConstraint_ctor_DataType" xml:space="preserve">
+    <value>Deserialized MinimumValuesConstraint has no DataType property.</value>
+  </data>
+  <data name="MinimumValueConstraint_ctor_MinimumValue" xml:space="preserve">
+    <value>Deserialized MinimumValuesConstraint has no MinimumValue property.</value>
+  </data>
+  <data name="RegexConstraint_ctor_NoRegex" xml:space="preserve">
+    <value>Deserialized RegexConstraint has no RegularExpression property.</value>
+  </data>
+  <data name="RegexConstraint_GetParameters_Options" xml:space="preserve">
+    <value>Cannot determine Regex options.</value>
+  </data>
+  <data name="StepConstraint_ctor_DataType" xml:space="preserve">
+    <value>Deserialized StepConstraint has no DataType property.</value>
+  </data>
+  <data name="StepConstraint_ctor_StepSize" xml:space="preserve">
+    <value>Deserialized StepConstraint has no StepSize property.</value>
+  </data>
+  <data name="TypeConstraint_ctor_TypeName" xml:space="preserve">
+    <value>Deserialized TypeConstraint has no TypeName property.</value>
+  </data>
 </root>

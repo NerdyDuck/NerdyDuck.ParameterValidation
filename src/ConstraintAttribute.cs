@@ -39,6 +39,7 @@ namespace NerdyDuck.ParameterValidation;
 /// If you want to show all validation errors, you can use multiple <see cref="ConstraintAttribute"/>s, each containing a single <see cref="Constraint"/> (and a <see cref="Constraints.NullConstraint"/>,
 /// if the data allows <see langword="null"/> values.</remarks>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1813:Avoid unsealed attributes", Justification = "Intentional, to override parser and validator.")]
 public class ConstraintAttribute : ValidationAttribute
 {
 	private IReadOnlyList<Constraint>? _parsedConstraints;
@@ -154,7 +155,9 @@ public class ConstraintAttribute : ValidationAttribute
 	/// <param name="errorMessageAccessor">The function that enables access to validation resources.</param>
 	/// <exception cref="CodedArgumentNullOrWhiteSpaceException"><paramref name="constraints"/> is <see langword="null"/> or empty or white-space.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
+#pragma warning disable CA1019 // Define accessors for attribute arguments: errorMessageAccessor is part of base class
 	public ConstraintAttribute(string constraints, ParameterDataType dataType, Func<string> errorMessageAccessor)
+#pragma warning restore CA1019 // Define accessors for attribute arguments
 		: base(errorMessageAccessor)
 	{
 		if (string.IsNullOrWhiteSpace(constraints))
@@ -177,10 +180,10 @@ public class ConstraintAttribute : ValidationAttribute
 	/// <param name="value">The value to validate.</param>
 	/// <param name="validationContext">The context information about the validation operation.</param>
 	/// <returns>An instance of the ValidationResult class.</returns>
-	protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+	protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
 	{
-		IEnumerable<ParameterValidationResult> Results = Validator.GetValidationResult(value, DataType, ParsedConstraints, validationContext?.MemberName ?? "Value", validationContext?.DisplayName);
-		foreach (ParameterValidationResult result in Results)
+		IEnumerable<ParameterValidationResult> results = Validator.GetValidationResult(value, DataType, ParsedConstraints, validationContext?.MemberName ?? "Value", validationContext?.DisplayName);
+		foreach (ParameterValidationResult result in results)
 		{
 			// Can only return one ...
 			return result;

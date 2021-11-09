@@ -49,7 +49,7 @@ namespace NerdyDuck.ParameterValidation.Constraints;
 public class CharacterSetConstraint : Constraint
 {
 	// Extra characters defined in Windows-1252, but not defined in ISO-8859-1.
-	private static readonly int[] Windows1252Extras = new int[]
+	private static readonly int[] s_windows1252Extras = new int[]
 	{   0x20ac, 0x20a1, 0x0192, 0x20e1, 0x2026, 0x2020, 0x2021, 0x02c6, 0x2030, 0x0160, 0x2039, 0x0152, 0x017d,
 			0x2018, 0x2019, 0x201c, 0x201d, 0x2022, 0x2013, 0x2014, 0x02dc, 0x2122, 0x0161, 0x203a, 0x0153, 0x017e, 0x0178
 	};
@@ -111,14 +111,18 @@ public class CharacterSetConstraint : Constraint
 	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The constraint could not be deserialized correctly.</exception>
 	protected CharacterSetConstraint(SerializationInfo info, StreamingContext context)
-			: base(info, context) => _characterSet = (CharSet)info.GetValue(nameof(CharacterSet), typeof(CharSet));
+			: base(info, context) => _characterSet = (CharSet)(info.GetValue(nameof(CharacterSet), typeof(CharSet)) ?? throw new CodedSerializationException());
 
 	/// <summary>
 	/// Sets the <see cref="SerializationInfo"/> with information about the <see cref="Constraint"/>.
 	/// </summary>
 	/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data of the <see cref="Constraint"/>.</param>
 	/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
+#if NETSTD20
 	public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#else
+	public override void GetObjectData([System.Diagnostics.CodeAnalysis.NotNull] SerializationInfo info, StreamingContext context)
+#endif
 	{
 		base.GetObjectData(info, context);
 		info.AddValue(nameof(CharacterSet), _characterSet);
@@ -129,10 +133,14 @@ public class CharacterSetConstraint : Constraint
 	/// </summary>
 	/// <param name="parameters">A list of strings to add the parameters to.</param>
 	/// <remarks>Override this method, if the constraint makes use of parameters. Add the parameters in the order that they should be provided to <see cref="SetParameters"/>.</remarks>
+#if NETSTD20
 	protected override void GetParameters(IList<string> parameters)
+#else
+	protected override void GetParameters([System.Diagnostics.CodeAnalysis.NotNull] IList<string> parameters)
+#endif
 	{
 		base.GetParameters(parameters);
-		parameters.Add(Enum.GetName(typeof(CharSet), _characterSet));
+		parameters.Add(Enum.GetName(typeof(CharSet), _characterSet) ?? string.Empty);
 	}
 
 	/// <summary>
@@ -143,7 +151,11 @@ public class CharacterSetConstraint : Constraint
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="ConstraintConfigurationException"><paramref name="parameters"/> contains no elements, or an invalid element.</exception>
+#if NETSTD20
 	protected override void SetParameters(IReadOnlyList<string> parameters, ParameterDataType dataType)
+#else
+	protected override void SetParameters([System.Diagnostics.CodeAnalysis.NotNull] IReadOnlyList<string> parameters, ParameterDataType dataType)
+#endif
 	{
 		base.SetParameters(parameters, dataType);
 		AssertDataType(dataType, ParameterDataType.String);
@@ -166,16 +178,19 @@ public class CharacterSetConstraint : Constraint
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
-	protected override void OnValidation(IList<ParameterValidationResult> results, object? value, ParameterDataType dataType, string memberName, string displayName)
+#if NETSTD20
+	protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected override void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
 		base.OnValidation(results, value, dataType, memberName, displayName);
 		AssertDataType(dataType, ParameterDataType.String);
 
-		if (!CheckString((string)value))
+		if (!CheckString(value as string))
 		{
 			results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.CharacterSetConstraint_Validate_CharNotDefined), string.Format(CultureInfo.CurrentCulture, TextResources.CharacterSetConstraint_Validate_Failed, displayName, GetCharSetName()), memberName, this));
 		}
-
 	}
 
 	/// <summary>
@@ -185,6 +200,10 @@ public class CharacterSetConstraint : Constraint
 	/// <returns><see langword="true"/> if all characters of <paramref name="value"/> are part of <see cref="CharacterSet"/>; otherwise, <see langword="false"/>.</returns>
 	private bool CheckString(string? value)
 	{
+		if (value is null)
+		{
+			throw new CodedArgumentException(HResult.Create(ErrorCodes.CharacterSetConstraint_Validate_NotString), TextResources.Global_Validate_NotString, nameof(value));
+		}
 		foreach (int c in value)
 		{
 			if (_characterSet == CharSet.Ascii)
@@ -207,7 +226,7 @@ public class CharacterSetConstraint : Constraint
 				{
 					if (_characterSet == CharSet.Windows1252)
 					{
-						if (!Windows1252Extras.Contains(c))
+						if (!s_windows1252Extras.Contains(c))
 						{
 							return false;
 						}
@@ -247,5 +266,5 @@ public class CharacterSetConstraint : Constraint
 	/// Gets the display name of the current character set.
 	/// </summary>
 	/// <returns>A string.</returns>
-	private string GetCharSetName() => TextResources.ResourceManager.GetString("CharacterSetConstraint_CharSet_" + Enum.GetName(typeof(CharSet), _characterSet), CultureInfo.CurrentCulture);
+	private string GetCharSetName() => TextResources.ResourceManager.GetString("CharacterSetConstraint_CharSet_" + Enum.GetName(typeof(CharSet), _characterSet), CultureInfo.CurrentCulture) ?? string.Empty;
 }

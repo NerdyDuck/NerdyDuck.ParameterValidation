@@ -71,9 +71,7 @@ public class DisplayHintConstraint : Constraint
 			throw new CodedArgumentNullOrWhiteSpaceException(HResult.Create(ErrorCodes.DisplayHintConstraint_ctor_ArgNullEmpty), nameof(hint));
 		}
 
-		Hints = new List<string>
-		{ hint
-		};
+		Hints = new List<string> { hint };
 	}
 
 	/// <summary>
@@ -101,14 +99,18 @@ public class DisplayHintConstraint : Constraint
 	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The constraint could not be deserialized correctly.</exception>
 	protected DisplayHintConstraint(SerializationInfo info, StreamingContext context)
-		: base(info, context) => Hints = (List<string>)info.GetValue(nameof(Hints), typeof(List<string>));
+		: base(info, context) => Hints = (List<string>?)info.GetValue(nameof(Hints), typeof(List<string>));
 
 	/// <summary>
 	/// Sets the <see cref="SerializationInfo"/> with information about the <see cref="Constraint"/>.
 	/// </summary>
 	/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data of the <see cref="Constraint"/>.</param>
 	/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
+#if NETSTD20
 	public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#else
+	public override void GetObjectData([System.Diagnostics.CodeAnalysis.NotNull] SerializationInfo info, StreamingContext context)
+#endif
 	{
 		base.GetObjectData(info, context);
 		info.AddValue(nameof(Hints), Hints);
@@ -119,12 +121,19 @@ public class DisplayHintConstraint : Constraint
 	/// </summary>
 	/// <param name="parameters">A list of strings to add the parameters to.</param>
 	/// <remarks>Override this method, if the constraint makes use of parameters. Add the parameters in the order that they should be provided to <see cref="SetParameters"/>.</remarks>
+#if NETSTD20
 	protected override void GetParameters(IList<string> parameters)
+#else
+	protected override void GetParameters([System.Diagnostics.CodeAnalysis.NotNull] IList<string> parameters)
+#endif
 	{
 		base.GetParameters(parameters);
-		foreach (string parameter in Hints)
+		if (Hints is not null)
 		{
-			parameters.Add(parameter);
+			foreach (string parameter in Hints)
+			{
+				parameters.Add(parameter);
+			}
 		}
 	}
 
@@ -136,7 +145,11 @@ public class DisplayHintConstraint : Constraint
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="ConstraintConfigurationException"><paramref name="parameters"/> contains no elements, or an invalid element.</exception>
+#if NETSTD20
 	protected override void SetParameters(IReadOnlyList<string> parameters, ParameterDataType dataType)
+#else
+	protected override void SetParameters([System.Diagnostics.CodeAnalysis.NotNull] IReadOnlyList<string> parameters, ParameterDataType dataType)
+#endif
 	{
 		base.SetParameters(parameters, dataType);
 		CheckParameters(parameters);

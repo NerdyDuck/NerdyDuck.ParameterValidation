@@ -29,6 +29,8 @@
 #endregion
 
 
+using System.Threading;
+
 namespace NerdyDuck.ParameterValidation.Constraints;
 
 /// <summary>
@@ -48,11 +50,8 @@ namespace NerdyDuck.ParameterValidation.Constraints;
 [Serializable]
 public class MaximumValueConstraint : Constraint
 {
-	private object _altMaximumValue;
-	private Type? _expectedNetType;
-	private Type _altNetType;
+	private Type _expectedNetType;
 	private TypeCode _expectedTypeCode;
-	private TypeCode _altTypeCode;
 
 	/// <summary>
 	/// Gets the maximum value to enforce.
@@ -71,11 +70,14 @@ public class MaximumValueConstraint : Constraint
 	/// </summary>
 	/// <param name="dataType">The data type that the constraint can validate.</param>
 	/// <exception cref="CodedArgumentException"><paramref name="dataType"/> is not supported by the constraint.</exception>
+#pragma warning disable IDE0079
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	public MaximumValueConstraint(ParameterDataType dataType)
+#pragma warning restore CS8618, IDE0079 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		: base(MaximumValueConstraintName)
 	{
 		DataType = dataType;
-		MaximumValue = CheckDataType();
+		MaximumValue = CheckType(dataType);
 	}
 
 	/// <summary>
@@ -84,7 +86,10 @@ public class MaximumValueConstraint : Constraint
 	/// <param name="dataType">The data type that the constraint can validate.</param>
 	/// <param name="maximumValue">The maximum value to enforce.</param>
 	/// <exception cref="CodedArgumentNullException"><paramref name="maximumValue"/> is <see langword="null"/>.</exception>
+#pragma warning disable IDE0079
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	public MaximumValueConstraint(ParameterDataType dataType, object maximumValue)
+#pragma warning restore CS8618, IDE0079 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		: base(MaximumValueConstraintName)
 	{
 		if (maximumValue == null)
@@ -93,8 +98,8 @@ public class MaximumValueConstraint : Constraint
 		}
 
 		DataType = dataType;
-		MaximumValue = CheckDataType();
-		MaximumValue = CheckValueType(maximumValue);
+		MaximumValue = CheckType(dataType);
+		MaximumValue = CheckValue(maximumValue);
 	}
 
 	/// <summary>
@@ -104,12 +109,15 @@ public class MaximumValueConstraint : Constraint
 	/// <param name="context">The contextual information about the source or destination.</param>
 	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The constraint could not be deserialized correctly.</exception>
+#pragma warning disable IDE0079
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	protected MaximumValueConstraint(SerializationInfo info, StreamingContext context)
+#pragma warning restore CS8618, IDE0079 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		: base(info, context)
 	{
-		DataType = (ParameterDataType)info.GetValue(nameof(DataType), typeof(ParameterDataType));
-		MaximumValue = CheckDataType();
-		MaximumValue = CheckValueType(info.GetValue(nameof(MaximumValue), _expectedNetType));
+		DataType = (ParameterDataType)(info.GetValue(nameof(DataType), typeof(ParameterDataType)) ?? throw new CodedSerializationException(HResult.Create(ErrorCodes.MaximumValuesConstraint_ctor_DataType), TextResources.MaximumValuesConstraint_ctor_DataType));
+		MaximumValue = CheckType(DataType);
+		MaximumValue = CheckValue(info.GetValue(nameof(MaximumValue), _expectedNetType) ?? throw new CodedSerializationException(HResult.Create(ErrorCodes.MaximumValueConstraint_ctor_MaximumValue), TextResources.MaximumValueConstraint_ctor_MaximumValue));
 	}
 
 	/// <summary>
@@ -117,7 +125,11 @@ public class MaximumValueConstraint : Constraint
 	/// </summary>
 	/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data of the <see cref="Constraint"/>.</param>
 	/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
+#if NETSTD20
 	public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#else
+	public override void GetObjectData([System.Diagnostics.CodeAnalysis.NotNull] SerializationInfo info, StreamingContext context)
+#endif
 	{
 		base.GetObjectData(info, context);
 		info.AddValue(nameof(DataType), DataType);
@@ -129,10 +141,17 @@ public class MaximumValueConstraint : Constraint
 	/// </summary>
 	/// <param name="parameters">A list of strings to add the parameters to.</param>
 	/// <remarks>Override this method, if the constraint makes use of parameters. Add the parameters in the order that they should be provided to <see cref="SetParameters"/>.</remarks>
+#if NETSTD20
 	protected override void GetParameters(IList<string> parameters)
+#else
+	protected override void GetParameters([System.Diagnostics.CodeAnalysis.NotNull] IList<string> parameters)
+#endif
 	{
 		base.GetParameters(parameters);
+#pragma warning disable IDE0079
+#pragma warning disable CS8604 // Possible null reference argument.
 		parameters.Add(ParameterConvert.ToString(MaximumValue, DataType, null));
+#pragma warning restore CS8604, IDEßß79 // Possible null reference argument.
 	}
 
 	/// <summary>
@@ -143,7 +162,11 @@ public class MaximumValueConstraint : Constraint
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="ConstraintConfigurationException"><paramref name="parameters"/> contains no elements, or an invalid element.</exception>
+#if NETSTD20
 	protected override void SetParameters(IReadOnlyList<string> parameters, ParameterDataType dataType)
+#else
+	protected override void SetParameters([System.Diagnostics.CodeAnalysis.NotNull] IReadOnlyList<string> parameters, ParameterDataType dataType)
+#endif
 	{
 		base.SetParameters(parameters, dataType);
 		AssertDataType(dataType, DataType);
@@ -154,7 +177,7 @@ public class MaximumValueConstraint : Constraint
 
 		try
 		{
-			MaximumValue = CheckValueType(ParameterConvert.ToDataType(parameters[0], dataType, null));
+			MaximumValue = CheckValue(ParameterConvert.ToDataType(parameters[0], dataType, null)!);
 		}
 		catch (ParameterConversionException ex)
 		{
@@ -170,7 +193,11 @@ public class MaximumValueConstraint : Constraint
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
+#if NETSTD20
 	protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected override void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
 		base.OnValidation(results, value, dataType, memberName, displayName);
 		AssertDataType(dataType, DataType);
@@ -182,53 +209,27 @@ public class MaximumValueConstraint : Constraint
 			// Type matches
 			compareResult = ((IComparable)MaximumValue).CompareTo(value);
 		}
-		else
+		else if (_expectedTypeCode != TypeCode.Empty)
 		{
-			if (IsConvertibleType(DataType))
+			object convertedValue;
+			// Try to convert and compare to actual data type
+			try
 			{
-				if (type == _altNetType)
-				{
-					// Type is already equal to alternative data type, no conversion necessary.
-					compareResult = ((IComparable)_altMaximumValue).CompareTo(value);
-				}
-				else
-				{
-					object? convertedValue = null;
-					// Try to convert and compare to actual data type
-					try
-					{
-						convertedValue = Convert.ChangeType(value, _expectedTypeCode, CultureInfo.InvariantCulture);
-					}
-					catch (Exception ex) when (ex is InvalidCastException or FormatException or OverflowException)
-					{
-					}
-
-					if (convertedValue == null)
-					{
-						// Conversion to actual data type failed, try to convert and compare to alternative data type.
-						try
-						{
-							convertedValue = Convert.ChangeType(value, _altTypeCode, CultureInfo.InvariantCulture);
-						}
-						catch (Exception ex) when (ex is InvalidCastException or FormatException or OverflowException)
-						{
-							throw new CodedArgumentException(HResult.Create(ErrorCodes.MaximumValueConstraint_Validate_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_Validate_TypeNotConvertible, type.Name, _expectedNetType.Name));
-						}
-						compareResult = ((IComparable)_altMaximumValue).CompareTo(convertedValue);
-					}
-					else
-					{
-						// Converting to actual data type successful
-						compareResult = ((IComparable)MaximumValue).CompareTo(convertedValue);
-					}
-				}
+				convertedValue = Convert.ChangeType(value, _expectedTypeCode, CultureInfo.InvariantCulture);
 			}
-			else
+			catch (Exception ex) when (ex is InvalidCastException or FormatException or OverflowException)
 			{
 				throw new CodedArgumentException(HResult.Create(ErrorCodes.MaximumValueConstraint_Validate_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_Validate_TypeNotConvertible, type.Name, _expectedNetType.Name));
 			}
 
+			// Converting to actual data type successful
+			compareResult = ((IComparable)MaximumValue).CompareTo(convertedValue);
 		}
+		else
+		{
+			throw new CodedArgumentException(HResult.Create(ErrorCodes.MaximumValueConstraint_Validate_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_Validate_TypeNotConvertible, type.Name, _expectedNetType.Name));
+		}
+
 
 		if (compareResult < 0)
 		{
@@ -237,94 +238,68 @@ public class MaximumValueConstraint : Constraint
 	}
 
 	/// <summary>
-	/// Checks if the data type can be converted into another data type before comparison.
-	/// </summary>
-	/// <param name="dataType">The data type to check.</param>
-	/// <returns><see langword="false"/>, if <paramref name="dataType"/> <see cref="ParameterDataType.DateTimeOffset"/>, <see cref="ParameterDataType.TimeSpan"/> or <see cref="ParameterDataType.Version"/>; otherwise, <see langword="true"/>.</returns>
-	private static bool IsConvertibleType(ParameterDataType dataType) => dataType is not (ParameterDataType.DateTimeOffset or ParameterDataType.TimeSpan or ParameterDataType.Version);
-
-	/// <summary>
 	/// Checks that the specified data type is supported by the <see cref="MaximumValueConstraint"/>, and sets the appropriate expected and alternative data types.
 	/// </summary>
 	/// <returns>The maximum value supported by the data type.</returns>
-	private object CheckDataType()
+#if NET50
+	[System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_expectedNetType))]
+	[System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_expectedTypeCode))]
+	[return: System.Diagnostics.CodeAnalysis.NotNull]
+#endif
+	internal object CheckType(ParameterDataType dataType)
 	{
-		switch (DataType)
+		switch (dataType)
 		{
 			case ParameterDataType.Byte:
 				_expectedNetType = typeof(byte);
-				_altNetType = typeof(ulong);
 				_expectedTypeCode = TypeCode.Byte;
-				_altTypeCode = TypeCode.UInt64;
 				return byte.MaxValue;
 			case ParameterDataType.DateTimeOffset:
 				_expectedNetType = typeof(DateTimeOffset);
-				_altNetType = null;
 				_expectedTypeCode = TypeCode.Empty;
-				_altTypeCode = TypeCode.Empty;
 				return DateTimeOffset.MaxValue;
 			case ParameterDataType.Decimal:
 				_expectedNetType = typeof(decimal);
-				_altNetType = typeof(decimal);
 				_expectedTypeCode = TypeCode.Decimal;
-				_altTypeCode = TypeCode.Decimal;
 				return decimal.MaxValue;
 			case ParameterDataType.Int16:
 				_expectedNetType = typeof(short);
-				_altNetType = typeof(long);
 				_expectedTypeCode = TypeCode.Int16;
-				_altTypeCode = TypeCode.Int64;
 				return short.MaxValue;
 			case ParameterDataType.Int32:
 				_expectedNetType = typeof(int);
-				_altNetType = typeof(long);
 				_expectedTypeCode = TypeCode.Int32;
-				_altTypeCode = TypeCode.Int64;
 				return int.MaxValue;
 			case ParameterDataType.Int64:
 				_expectedNetType = typeof(long);
-				_altNetType = typeof(long);
 				_expectedTypeCode = TypeCode.Int64;
-				_altTypeCode = TypeCode.Int64;
 				return long.MaxValue;
 			case ParameterDataType.SignedByte:
 				_expectedNetType = typeof(sbyte);
-				_altNetType = typeof(long);
 				_expectedTypeCode = TypeCode.SByte;
-				_altTypeCode = TypeCode.Int64;
 				return sbyte.MaxValue;
 			case ParameterDataType.TimeSpan:
 				_expectedNetType = typeof(TimeSpan);
-				_altNetType = null;
 				_expectedTypeCode = TypeCode.Empty;
-				_altTypeCode = TypeCode.Empty;
 				return TimeSpan.MaxValue;
 			case ParameterDataType.UInt16:
 				_expectedNetType = typeof(ushort);
-				_altNetType = typeof(ulong);
 				_expectedTypeCode = TypeCode.UInt16;
-				_altTypeCode = TypeCode.UInt64;
 				return ushort.MaxValue;
 			case ParameterDataType.UInt32:
 				_expectedNetType = typeof(uint);
-				_altNetType = typeof(ulong);
 				_expectedTypeCode = TypeCode.UInt32;
-				_altTypeCode = TypeCode.UInt64;
 				return uint.MaxValue;
 			case ParameterDataType.UInt64:
 				_expectedNetType = typeof(ulong);
-				_altNetType = typeof(ulong);
 				_expectedTypeCode = TypeCode.UInt64;
-				_altTypeCode = TypeCode.UInt64;
 				return ulong.MaxValue;
 			case ParameterDataType.Version:
 				_expectedNetType = typeof(Version);
-				_altNetType = null;
 				_expectedTypeCode = TypeCode.Empty;
-				_altTypeCode = TypeCode.Empty;
 				return new Version(int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
 			default:
-				throw new CodedArgumentException(HResult.Create(ErrorCodes.MaximumValueConstraint_CheckDataType_TypeNotSupported), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckDataType_NotSupported, Name), "dataType");
+				throw new CodedArgumentException(HResult.Create(ErrorCodes.MaximumValueConstraint_CheckDataType_TypeNotSupported), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckDataType_NotSupported, Name), nameof(dataType));
 		}
 	}
 
@@ -333,7 +308,10 @@ public class MaximumValueConstraint : Constraint
 	/// </summary>
 	/// <param name="value">The value to check.</param>
 	/// <returns>The checked value, either in original form, or converted.</returns>
-	private object CheckValueType(object value)
+#if NET50
+	[return: System.Diagnostics.CodeAnalysis.NotNull]
+#endif
+	private object CheckValue(object value)
 	{
 		Type type = value.GetType();
 		object checkedValue;
@@ -341,30 +319,23 @@ public class MaximumValueConstraint : Constraint
 		{
 			checkedValue = value;
 		}
+		else if (_expectedTypeCode != TypeCode.Empty)
+		{
+			try
+			{
+				checkedValue = Convert.ChangeType(value, _expectedTypeCode, CultureInfo.InvariantCulture);
+			}
+			catch (Exception ex) when (ex is InvalidCastException or FormatException or OverflowException)
+			{
+				throw new ParameterConversionException(HResult.Create(ErrorCodes.MaximumValueConstraint_CheckValueType_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckValueType_NotConvertible, type.Name, _expectedNetType.Name), DataType, value, ex);
+			}
+		}
 		else
 		{
-			if (_expectedTypeCode == TypeCode.Empty)
-			{
-				// DateTimeOffset, TimeSpan, Version cannot be converted from another type
-				throw new ParameterConversionException(HResult.Create(ErrorCodes.MaximumValueConstraint_CheckValueType_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckValueType_NotConvertible, type.Name, _expectedNetType.Name), DataType, value);
-			}
-			else
-			{
-				try
-				{
-					checkedValue = Convert.ChangeType(value, _expectedTypeCode, CultureInfo.InvariantCulture);
-				}
-				catch (Exception ex) when (ex is InvalidCastException or FormatException or OverflowException)
-				{
-					throw new ParameterConversionException(HResult.Create(ErrorCodes.MaximumValueConstraint_CheckValueType_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckValueType_NotConvertible, type.Name, _expectedNetType.Name), DataType, value, ex);
-				}
-			}
+			// DateTimeOffset, TimeSpan, Version cannot be converted from another type
+			throw new ParameterConversionException(HResult.Create(ErrorCodes.MaximumValueConstraint_CheckValueType_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckValueType_NotConvertible, type.Name, _expectedNetType.Name), DataType, value);
 		}
 
-		if (_altNetType != null)
-		{
-			_altMaximumValue = type == _altNetType ? value : Convert.ChangeType(value, _altTypeCode, CultureInfo.InvariantCulture);
-		}
 		return checkedValue;
 	}
 }

@@ -55,14 +55,14 @@ public class EnumValuesConstraint : Constraint
 	private const string NamePrefix = "Name_";
 	private const string ValuePrefix = "Value_";
 
-	private Dictionary<string, object> _enumValues;
+	private Dictionary<string, object>? _enumValues;
 	private long _flagMask;
 
 	/// <summary>
 	/// Gets the underlying type of the enumeration.
 	/// </summary>
 	/// <value>The integer type the enumeration is based on.</value>
-	public Type UnderlyingType { get; private set; }
+	public Type? UnderlyingType { get; private set; }
 
 	/// <summary>
 	/// Gets the underlying data type of the enumeration.
@@ -80,7 +80,7 @@ public class EnumValuesConstraint : Constraint
 	/// Gets a read-only dictionary of enumeration names and values.
 	/// </summary>
 	/// <value>A read-only dictionary of string keys and integer values.</value>
-	public IReadOnlyDictionary<string, object> EnumValues => _enumValues;
+	public IReadOnlyDictionary<string, object>? EnumValues => _enumValues;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="EnumValuesConstraint"/> class.
@@ -144,14 +144,17 @@ public class EnumValuesConstraint : Constraint
 		: base(info, context)
 	{
 		ResetFields();
-		UnderlyingDataType = (ParameterDataType)info.GetValue(nameof(UnderlyingDataType), typeof(ParameterDataType));
+		UnderlyingDataType = (ParameterDataType)(info.GetValue(nameof(UnderlyingDataType), typeof(ParameterDataType)) ?? throw new CodedSerializationException(HResult.Create(ErrorCodes.EnumValuesConstraint_ctor_NoUnderlyingDataType), TextResources.EnumValuesConstraint_ctor_NoUnderlyingDataType));
 		UnderlyingType = ParameterConvert.ParameterToNetDataType(UnderlyingDataType);
 		HasFlags = info.GetBoolean(nameof(HasFlags));
 		int ValueCount = info.GetInt32(CountName);
 		_enumValues = new Dictionary<string, object>();
 		for (int i = 0; i < ValueCount; i++)
 		{
-			_enumValues.Add(info.GetString(NamePrefix + i.ToString(CultureInfo.InvariantCulture)), info.GetValue(ValuePrefix + i.ToString(CultureInfo.InvariantCulture), UnderlyingType));
+			_enumValues.Add(info.GetString(NamePrefix + i.ToString(CultureInfo.InvariantCulture))
+				?? throw new CodedSerializationException(HResult.Create(ErrorCodes.EnumValuesConstraint_ctor_KeyMissing), TextResources.EnumValuesConstraint_ctor_KeyMissing),
+				info.GetValue(ValuePrefix + i.ToString(CultureInfo.InvariantCulture), UnderlyingType)
+				?? throw new CodedSerializationException(HResult.Create(ErrorCodes.EnumValuesConstraint_ctor_ValueMissing), TextResources.EnumValuesConstraint_ctor_ValueMissing));
 		}
 		CreateMask();
 	}
@@ -186,18 +189,25 @@ public class EnumValuesConstraint : Constraint
 	/// </summary>
 	/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data of the <see cref="Constraint"/>.</param>
 	/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
+#if NETSTD20
 	public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#else
+	public override void GetObjectData([System.Diagnostics.CodeAnalysis.NotNull] SerializationInfo info, StreamingContext context)
+#endif
 	{
 		base.GetObjectData(info, context);
 		info.AddValue(nameof(UnderlyingDataType), UnderlyingDataType);
 		info.AddValue(nameof(HasFlags), HasFlags);
-		info.AddValue(CountName, _enumValues.Count);
-		int i = 0;
-		foreach (KeyValuePair<string, object> pair in _enumValues)
+		info.AddValue(CountName, _enumValues?.Count ?? 0);
+		if (_enumValues is not null)
 		{
-			info.AddValue(NamePrefix + i.ToString(CultureInfo.InvariantCulture), pair.Key);
-			info.AddValue(ValuePrefix + i.ToString(CultureInfo.InvariantCulture), pair.Value);
-			i++;
+			int i = 0;
+			foreach (KeyValuePair<string, object> pair in _enumValues)
+			{
+				info.AddValue(NamePrefix + i.ToString(CultureInfo.InvariantCulture), pair.Key);
+				info.AddValue(ValuePrefix + i.ToString(CultureInfo.InvariantCulture), pair.Value);
+				i++;
+			}
 		}
 	}
 
@@ -206,15 +216,22 @@ public class EnumValuesConstraint : Constraint
 	/// </summary>
 	/// <param name="parameters">A list of strings to add the parameters to.</param>
 	/// <remarks>Override this method, if the constraint makes use of parameters. Add the parameters in the order that they should be provided to <see cref="SetParameters"/>.</remarks>
+#if NETSTD20
 	protected override void GetParameters(IList<string> parameters)
+#else
+	protected override void GetParameters([System.Diagnostics.CodeAnalysis.NotNull] IList<string> parameters)
+#endif
 	{
 		base.GetParameters(parameters);
-		parameters.Add(Enum.GetName(typeof(ParameterDataType), UnderlyingDataType));
+		parameters.Add(Enum.GetName(typeof(ParameterDataType), UnderlyingDataType) ?? throw new ParameterConversionException(HResult.Create(ErrorCodes.EnumValuesConstraint_GetParameters_DataType), TextResources.EnumValuesConstraint_GetParameters_DataType));
 		if (HasFlags)
 			parameters.Add(FlagsParameter);
-		foreach (KeyValuePair<string, object> pair in _enumValues)
+		if (_enumValues is not null)
 		{
-			parameters.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", pair.Key, ParameterConvert.ToString(pair.Value, UnderlyingDataType, null)));
+			foreach (KeyValuePair<string, object> pair in _enumValues)
+			{
+				parameters.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", pair.Key, ParameterConvert.ToString(pair.Value, UnderlyingDataType, null)));
+			}
 		}
 	}
 
@@ -226,7 +243,11 @@ public class EnumValuesConstraint : Constraint
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="ConstraintConfigurationException"><paramref name="parameters"/> contains no elements, or an invalid element.</exception>
+#if NETSTD20
 	protected override void SetParameters(IReadOnlyList<string> parameters, ParameterDataType dataType)
+#else
+	protected override void SetParameters([System.Diagnostics.CodeAnalysis.NotNull] IReadOnlyList<string> parameters, ParameterDataType dataType)
+#endif
 	{
 		base.SetParameters(parameters, dataType);
 		AssertDataType(dataType, ParameterDataType.Enum);
@@ -309,7 +330,11 @@ public class EnumValuesConstraint : Constraint
 	/// <param name="dataType">The data type of the value.</param>
 	/// <param name="memberName">The name of the property or field that is validated.</param>
 	/// <param name="displayName">The (localized) display name of the property or field that is validated. May be <see langword="null"/>.</param>
+#if NETSTD20
 	protected override void OnValidation(IList<ParameterValidationResult> results, object value, ParameterDataType dataType, string memberName, string displayName)
+#else
+	protected override void OnValidation([System.Diagnostics.CodeAnalysis.NotNull] IList<ParameterValidationResult> results, [System.Diagnostics.CodeAnalysis.NotNull] object value, ParameterDataType dataType, [System.Diagnostics.CodeAnalysis.NotNull] string memberName, string? displayName)
+#endif
 	{
 		base.OnValidation(results, value, dataType, memberName, displayName);
 		AssertDataType(dataType, ParameterDataType.Enum);
@@ -318,15 +343,15 @@ public class EnumValuesConstraint : Constraint
 			throw new ConstraintConfigurationException(HResult.Create(ErrorCodes.EnumValuesConstraint_Validate_NotSetUp), TextResources.EnumValuesConstraint_Validate_NotConfigured, this);
 		}
 
-		Type ValType = value.GetType();
-		TypeInfo ValTypeInfo = ValType.GetTypeInfo();
-		if (ValTypeInfo.IsEnum)
+		Type valType = value.GetType();
+		TypeInfo valTypeInfo = valType.GetTypeInfo();
+		if (valTypeInfo.IsEnum)
 		{
-			ValType = ParameterConvert.GetEnumUnderlyingType(ValType);
-			value = Convert.ChangeType(value, ValType, CultureInfo.InvariantCulture);
+			valType = ParameterConvert.GetEnumUnderlyingType(valType) ?? throw new CodedArgumentException(HResult.Create(ErrorCodes.EnumValuesConstraint_Validate_ValueType), TextResources.EnumValuesConstraint_Validate_ValueType, nameof(value));
+			value = Convert.ChangeType(value, valType, CultureInfo.InvariantCulture);
 		}
 
-		if (ParameterConvert.IsIntegerType(ValType))
+		if (ParameterConvert.IsIntegerType(valType))
 		{
 			if (HasFlags)
 			{
@@ -338,7 +363,7 @@ public class EnumValuesConstraint : Constraint
 			}
 			else
 			{
-				if (ValType != UnderlyingType)
+				if (valType != UnderlyingType)
 				{
 					try
 					{
@@ -350,7 +375,7 @@ public class EnumValuesConstraint : Constraint
 					}
 
 				}
-				if (!_enumValues.ContainsValue(value))
+				if (!_enumValues?.ContainsValue(value) ?? false)
 				{
 					results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EnumValuesConstraint_Validate_NotInEnum), string.Format(CultureInfo.CurrentCulture, TextResources.EnumConstraint_Validate_NotDefined, displayName, value), memberName, this));
 				}
@@ -359,7 +384,7 @@ public class EnumValuesConstraint : Constraint
 		else
 		{
 			// Cannot happen in C# or most other languages, but some support non-integer enums.
-			results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EnumValuesConstraint_Validate_TypeNotSupported), string.Format(CultureInfo.CurrentCulture, TextResources.EnumConstraint_Validate_NotSupported, displayName, ValType.Name), memberName, this));
+			results.Add(new ParameterValidationResult(HResult.Create(ErrorCodes.EnumValuesConstraint_Validate_TypeNotSupported), string.Format(CultureInfo.CurrentCulture, TextResources.EnumConstraint_Validate_NotSupported, displayName, valType.Name), memberName, this));
 		}
 	}
 
@@ -380,7 +405,7 @@ public class EnumValuesConstraint : Constraint
 	/// </summary>
 	private void CreateMask()
 	{
-		if (HasFlags)
+		if (HasFlags && _enumValues is not null)
 		{
 			foreach (object value in _enumValues.Values)
 			{

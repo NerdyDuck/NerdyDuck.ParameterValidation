@@ -79,6 +79,15 @@ namespace NerdyDuck.ParameterValidation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deserialized AllowedSchemeConstraint has no AllowedSchemes property..
+        /// </summary>
+        internal static string AllowedSchemeConstraint_ctor_AllowedSchemesNull {
+            get {
+                return ResourceManager.GetString("AllowedSchemeConstraint_ctor_AllowedSchemesNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}: URI scheme &apos;{1}&apos; is not supported. Allowed schemes: {2}..
         /// </summary>
         internal static string AllowedSchemeConstraint_Validate_Failed {
@@ -133,6 +142,15 @@ namespace NerdyDuck.ParameterValidation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deserialized CharacterSetConstraint has no CharacterSet property..
+        /// </summary>
+        internal static string CharacterSetConstraint_ctor_CharacterSetNull {
+            get {
+                return ResourceManager.GetString("CharacterSetConstraint_ctor_CharacterSetNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameter value &apos;{0}&apos; is not a valid supported character set..
         /// </summary>
         internal static string CharacterSetConstraint_SetParameters_InvalidValue {
@@ -147,6 +165,15 @@ namespace NerdyDuck.ParameterValidation {
         internal static string CharacterSetConstraint_Validate_Failed {
             get {
                 return ResourceManager.GetString("CharacterSetConstraint_Validate_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized Constraint contains no Name property..
+        /// </summary>
+        internal static string Constraint_ctor_NameNull {
+            get {
+                return ResourceManager.GetString("Constraint_ctor_NameNull", resourceCulture);
             }
         }
         
@@ -340,6 +367,42 @@ namespace NerdyDuck.ParameterValidation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deserialized EnumValuesConstraint has an enumeration value key missing..
+        /// </summary>
+        internal static string EnumValuesConstraint_ctor_KeyMissing {
+            get {
+                return ResourceManager.GetString("EnumValuesConstraint_ctor_KeyMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized EnumValuesConstraint contains no UnderlyingDataType property..
+        /// </summary>
+        internal static string EnumValuesConstraint_ctor_NoUnderlyingDataType {
+            get {
+                return ResourceManager.GetString("EnumValuesConstraint_ctor_NoUnderlyingDataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized EnumValuesConstraint has an enumeration value value missing..
+        /// </summary>
+        internal static string EnumValuesConstraint_ctor_ValueMissing {
+            get {
+                return ResourceManager.GetString("EnumValuesConstraint_ctor_ValueMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot determine underlying data type..
+        /// </summary>
+        internal static string EnumValuesConstraint_GetParameters_DataType {
+            get {
+                return ResourceManager.GetString("EnumValuesConstraint_GetParameters_DataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type &apos;{0}&apos; does not match underlying data type {1} of the enumeration and cannot be converted into this type..
         /// </summary>
         internal static string EnumValuesConstraint_InvalidValueType {
@@ -399,6 +462,15 @@ namespace NerdyDuck.ParameterValidation {
         internal static string EnumValuesConstraint_Validate_NotConfigured {
             get {
                 return ResourceManager.GetString("EnumValuesConstraint_Validate_NotConfigured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot determine underlying data type of enumeration value..
+        /// </summary>
+        internal static string EnumValuesConstraint_Validate_ValueType {
+            get {
+                return ResourceManager.GetString("EnumValuesConstraint_Validate_ValueType", resourceCulture);
             }
         }
         
@@ -484,6 +556,24 @@ namespace NerdyDuck.ParameterValidation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot determine underlying data type of enumeration &apos;{0}&apos;..
+        /// </summary>
+        internal static string Global_UnknownEnumType {
+            get {
+                return ResourceManager.GetString("Global_UnknownEnumType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to value is not of type System.String..
+        /// </summary>
+        internal static string Global_Validate_NotString {
+            get {
+                return ResourceManager.GetString("Global_Validate_NotString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} is empty or contains only white-space..
         /// </summary>
         internal static string Global_Validate_StringEmpty {
@@ -516,6 +606,15 @@ namespace NerdyDuck.ParameterValidation {
         internal static string HostNameConstraint_Validate_Failed {
             get {
                 return ResourceManager.GetString("HostNameConstraint_Validate_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized InvalidDataTypeException contains no ParameterDataType property..
+        /// </summary>
+        internal static string InvalidDataTypeException_ctor_DataTypeNull {
+            get {
+                return ResourceManager.GetString("InvalidDataTypeException_ctor_DataTypeNull", resourceCulture);
             }
         }
         
@@ -601,11 +700,29 @@ namespace NerdyDuck.ParameterValidation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deserialized MaximumValuesConstraint has no MaximumValue property..
+        /// </summary>
+        internal static string MaximumValueConstraint_ctor_MaximumValue {
+            get {
+                return ResourceManager.GetString("MaximumValueConstraint_ctor_MaximumValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} may not be greater than &apos;{1}&apos;. Actual value: &apos;{2}&apos;..
         /// </summary>
         internal static string MaximumValueConstraint_Validate_Failed {
             get {
                 return ResourceManager.GetString("MaximumValueConstraint_Validate_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized MaximumValuesConstraint has no DataType property..
+        /// </summary>
+        internal static string MaximumValuesConstraint_ctor_DataType {
+            get {
+                return ResourceManager.GetString("MaximumValuesConstraint_ctor_DataType", resourceCulture);
             }
         }
         
@@ -637,11 +754,47 @@ namespace NerdyDuck.ParameterValidation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deserialized MinimumValuesConstraint has no DataType property..
+        /// </summary>
+        internal static string MinimumValueConstraint_ctor_DataType {
+            get {
+                return ResourceManager.GetString("MinimumValueConstraint_ctor_DataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized MinimumValuesConstraint has no MinimumValue property..
+        /// </summary>
+        internal static string MinimumValueConstraint_ctor_MinimumValue {
+            get {
+                return ResourceManager.GetString("MinimumValueConstraint_ctor_MinimumValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} may not be less than &apos;{1}&apos;. Actual value: &apos;{2}&apos;..
         /// </summary>
         internal static string MinimumValueConstraint_Validate_Failed {
             get {
                 return ResourceManager.GetString("MinimumValueConstraint_Validate_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized ParameterConversionException contains no ActualValue type..
+        /// </summary>
+        internal static string ParameterConversionException_ctor_ActualTypeNull {
+            get {
+                return ResourceManager.GetString("ParameterConversionException_ctor_ActualTypeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized ParameterConversionException contains no ParameterDataType property..
+        /// </summary>
+        internal static string ParameterConversionException_ctor_DataTypeNull {
+            get {
+                return ResourceManager.GetString("ParameterConversionException_ctor_DataTypeNull", resourceCulture);
             }
         }
         
@@ -678,6 +831,15 @@ namespace NerdyDuck.ParameterValidation {
         internal static string ParameterConvert_Encrypt_Failed {
             get {
                 return ResourceManager.GetString("ParameterConvert_Encrypt_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot retrieve values of enumeration &apos;{0}&apos;..
+        /// </summary>
+        internal static string ParameterConvert_ExamineEnumeration_NoFieldValue {
+            get {
+                return ResourceManager.GetString("ParameterConvert_ExamineEnumeration_NoFieldValue", resourceCulture);
             }
         }
         
@@ -763,6 +925,15 @@ namespace NerdyDuck.ParameterValidation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value is null, but has no NullConstraint that allows it to be null..
+        /// </summary>
+        internal static string ParameterConvert_ToDataType_ValueNull {
+            get {
+                return ResourceManager.GetString("ParameterConvert_ToDataType_ValueNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot convert string &apos;{0}&apos; to enumeration of type &apos;{1}&apos;..
         /// </summary>
         internal static string ParameterConvert_ToEnumeration_Failed {
@@ -835,6 +1006,33 @@ namespace NerdyDuck.ParameterValidation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deserialized RegexConstraint has no Options property..
+        /// </summary>
+        internal static string RegexConstraint_ctor_NoOptions {
+            get {
+                return ResourceManager.GetString("RegexConstraint_ctor_NoOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized RegexConstraint has no RegularExpression property..
+        /// </summary>
+        internal static string RegexConstraint_ctor_NoRegex {
+            get {
+                return ResourceManager.GetString("RegexConstraint_ctor_NoRegex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot determine Regex options..
+        /// </summary>
+        internal static string RegexConstraint_GetParameters_Options {
+            get {
+                return ResourceManager.GetString("RegexConstraint_GetParameters_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The options are not valid..
         /// </summary>
         internal static string RegexConstraint_OptionsInvalid {
@@ -858,6 +1056,33 @@ namespace NerdyDuck.ParameterValidation {
         internal static string RegexConstraint_Validate_Failed {
             get {
                 return ResourceManager.GetString("RegexConstraint_Validate_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized StepConstraint has no DataType property..
+        /// </summary>
+        internal static string StepConstraint_ctor_DataType {
+            get {
+                return ResourceManager.GetString("StepConstraint_ctor_DataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized StepConstraint has no StepSize property..
+        /// </summary>
+        internal static string StepConstraint_ctor_StepSize {
+            get {
+                return ResourceManager.GetString("StepConstraint_ctor_StepSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserialized TypeConstraint has no TypeName property..
+        /// </summary>
+        internal static string TypeConstraint_ctor_TypeName {
+            get {
+                return ResourceManager.GetString("TypeConstraint_ctor_TypeName", resourceCulture);
             }
         }
         

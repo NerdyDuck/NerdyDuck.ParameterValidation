@@ -47,7 +47,7 @@ namespace NerdyDuck.ParameterValidation.Constraints;
 [Serializable]
 public class StepConstraint : Constraint
 {
-	private Type? _expectedNetType;
+	private Type _expectedNetType;
 	private TypeCode _expectedTypeCode;
 
 	/// <summary>
@@ -67,11 +67,14 @@ public class StepConstraint : Constraint
 	/// </summary>
 	/// <param name="dataType">The data type that the constraint can validate.</param>
 	/// <exception cref="CodedArgumentException"><paramref name="dataType"/> is not supported by the constraint.</exception>
+#pragma warning disable IDE0079
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	public StepConstraint(ParameterDataType dataType)
+#pragma warning restore CS8618, IDE0079 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		: base(StepConstraintName)
 	{
 		DataType = dataType;
-		StepSize = CheckDataType();
+		StepSize = CheckType(dataType);
 	}
 
 	/// <summary>
@@ -80,7 +83,10 @@ public class StepConstraint : Constraint
 	/// <param name="dataType">The data type that the constraint can validate.</param>
 	/// <param name="stepSize">The increment step.</param>
 	/// <exception cref="CodedArgumentNullException"><paramref name="stepSize"/> is <see langword="null"/>.</exception>
+#pragma warning disable IDE0079
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	public StepConstraint(ParameterDataType dataType, object stepSize)
+#pragma warning restore CS8618, IDE0079 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		: base(StepConstraintName)
 	{
 		if (stepSize == null)
@@ -89,8 +95,8 @@ public class StepConstraint : Constraint
 		}
 
 		DataType = dataType;
-		StepSize = CheckDataType();
-		StepSize = CheckValueType(stepSize);
+		StepSize = CheckType(dataType);
+		StepSize = CheckValue(stepSize);
 	}
 
 	/// <summary>
@@ -100,12 +106,15 @@ public class StepConstraint : Constraint
 	/// <param name="context">The contextual information about the source or destination.</param>
 	/// <exception cref="ArgumentNullException">The <paramref name="info"/> argument is null.</exception>
 	/// <exception cref="SerializationException">The constraint could not be deserialized correctly.</exception>
+#pragma warning disable IDE0079
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	protected StepConstraint(SerializationInfo info, StreamingContext context)
+#pragma warning restore CS8618, IDE0079 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		: base(info, context)
 	{
-		DataType = (ParameterDataType)info.GetValue(nameof(DataType), typeof(ParameterDataType));
-		StepSize = CheckDataType();
-		StepSize = CheckValueType(info.GetValue(nameof(StepSize), _expectedNetType));
+		DataType = (ParameterDataType)(info.GetValue(nameof(DataType), typeof(ParameterDataType)) ?? throw new CodedSerializationException(HResult.Create(ErrorCodes.StepConstraint_ctor_DataType), TextResources.StepConstraint_ctor_DataType));
+		StepSize = CheckType(DataType);
+		StepSize = CheckValue(info.GetValue(nameof(StepSize), _expectedNetType) ?? throw new CodedSerializationException(HResult.Create(ErrorCodes.StepConstraint_ctor_StepSize), TextResources.StepConstraint_ctor_StepSize));
 	}
 
 	/// <summary>
@@ -113,7 +122,11 @@ public class StepConstraint : Constraint
 	/// </summary>
 	/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data of the <see cref="Constraint"/>.</param>
 	/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
+#if NETSTD20
 	public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#else
+	public override void GetObjectData([System.Diagnostics.CodeAnalysis.NotNull] SerializationInfo info, StreamingContext context)
+#endif
 	{
 		base.GetObjectData(info, context);
 		info.AddValue(nameof(DataType), DataType);
@@ -125,10 +138,17 @@ public class StepConstraint : Constraint
 	/// </summary>
 	/// <param name="parameters">A list of strings to add the parameters to.</param>
 	/// <remarks>Override this method, if the constraint makes use of parameters. Add the parameters in the order that they should be provided to <see cref="SetParameters"/>.</remarks>
+#if NETSTD20
 	protected override void GetParameters(IList<string> parameters)
+#else
+	protected override void GetParameters([System.Diagnostics.CodeAnalysis.NotNull] IList<string> parameters)
+#endif
 	{
 		base.GetParameters(parameters);
+#pragma warning disable IDE0079
+#pragma warning disable CS8604 // Possible null reference argument.
 		parameters.Add(ParameterConvert.ToString(StepSize, DataType, null));
+#pragma warning restore CS8604, IDE0079 // Possible null reference argument.
 	}
 
 	/// <summary>
@@ -139,7 +159,11 @@ public class StepConstraint : Constraint
 	/// <exception cref="CodedArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
 	/// <exception cref="CodedArgumentOutOfRangeException"><paramref name="dataType"/> is <see cref="ParameterDataType.None"/>.</exception>
 	/// <exception cref="ConstraintConfigurationException"><paramref name="parameters"/> contains no elements, or an invalid element.</exception>
+#if NETSTD20
 	protected override void SetParameters(IReadOnlyList<string> parameters, ParameterDataType dataType)
+#else
+	protected override void SetParameters([System.Diagnostics.CodeAnalysis.NotNull] IReadOnlyList<string> parameters, ParameterDataType dataType)
+#endif
 	{
 		base.SetParameters(parameters, dataType);
 		if (parameters.Count != 1)
@@ -149,7 +173,7 @@ public class StepConstraint : Constraint
 
 		try
 		{
-			StepSize = CheckValueType(ParameterConvert.ToDataType(parameters[0], dataType, null));
+			StepSize = CheckValue(ParameterConvert.ToDataType(parameters[0], dataType, null)!);
 		}
 		catch (ParameterConversionException ex)
 		{
@@ -161,9 +185,14 @@ public class StepConstraint : Constraint
 	/// Checks that the specified data type is supported by the <see cref="StepConstraint"/>, and sets the appropriate expected and alternative data types.
 	/// </summary>
 	/// <returns>The default value supported by the data type.</returns>
-	private object CheckDataType()
+#if NET50
+	[System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_expectedNetType))]
+	[System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_expectedTypeCode))]
+	[return: System.Diagnostics.CodeAnalysis.NotNull]
+#endif
+	internal object CheckType(ParameterDataType dataType)
 	{
-		switch (DataType)
+		switch (dataType)
 		{
 			case ParameterDataType.Byte:
 				_expectedNetType = typeof(byte);
@@ -202,11 +231,14 @@ public class StepConstraint : Constraint
 				_expectedTypeCode = TypeCode.UInt64;
 				return (ulong)1;
 			default:
-				throw new CodedArgumentException(HResult.Create(ErrorCodes.StepConstraint_CheckDataType_TypeNotSupported), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckDataType_NotSupported, Name), "dataType");
+				throw new CodedArgumentException(HResult.Create(ErrorCodes.StepConstraint_CheckDataType_TypeNotSupported), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckDataType_NotSupported, Name), nameof(dataType));
 		}
 	}
 
-	private object CheckValueType(object value)
+#if NET50
+	[return: System.Diagnostics.CodeAnalysis.NotNull]
+#endif
+	private object CheckValue(object value)
 	{
 		Type type = value.GetType();
 		object checkedValue;
@@ -215,7 +247,7 @@ public class StepConstraint : Constraint
 		{
 			checkedValue = value;
 		}
-		else
+		else if (_expectedTypeCode != TypeCode.Empty)
 		{
 			try
 			{
@@ -225,6 +257,11 @@ public class StepConstraint : Constraint
 			{
 				throw new ParameterConversionException(HResult.Create(ErrorCodes.StepConstraint_CheckValueType_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckValueType_NotConvertible, type.Name, _expectedNetType.Name), DataType, value, ex);
 			}
+		}
+		else
+		{
+			// DateTimeOffset, TimeSpan, Version cannot be converted from another type
+			throw new ParameterConversionException(HResult.Create(ErrorCodes.StepConstraint_CheckValueType_TypeMismatch), string.Format(CultureInfo.CurrentCulture, TextResources.Global_CheckValueType_NotConvertible, type.Name, _expectedNetType.Name), DataType, value);
 		}
 
 		return checkedValue;
